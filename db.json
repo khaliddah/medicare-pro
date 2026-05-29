@@ -1,0 +1,2853 @@
+{
+  "patients": [
+    {
+      "id": 1,
+      "cin": "BK123456",
+      "nom": "Benali",
+      "prenom": "Mohammed",
+      "dateNaissance": "1975-03-16",
+      "age": 51,
+      "sexe": "M",
+      "telephone": "0661234567",
+      "email": "mbenali@gmail.com",
+      "adresse": "12 Rue Ibn Battouta",
+      "ville": "Casablanca",
+      "mutuelle": "cnops",
+      "groupeSanguin": "A+",
+      "antecedents": [
+        "Diabète type 2",
+        "HTA"
+      ],
+      "allergies": [
+        "Pénicilline"
+      ],
+      "dateCreation": "2021-06-11",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 2,
+      "cin": "AB987654",
+      "nom": "Alaoui",
+      "prenom": "Fatima",
+      "dateNaissance": "1988-07-23",
+      "age": 37,
+      "sexe": "F",
+      "telephone": "0612345678",
+      "email": "falaoui@yahoo.com",
+      "adresse": "45 Avenue Hassan II",
+      "ville": "Rabat",
+      "mutuelle": "cnss",
+      "groupeSanguin": "O+",
+      "antecedents": [
+        "Asthme"
+      ],
+      "allergies": [],
+      "dateCreation": "2022-01-16",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 3,
+      "cin": "CD654321",
+      "nom": "Cherkaoui",
+      "prenom": "Youssef",
+      "dateNaissance": "1960-11-09",
+      "age": 65,
+      "sexe": "M",
+      "telephone": "0671111222",
+      "adresse": "8 Rue Al Massira",
+      "ville": "Fès",
+      "groupeSanguin": "B+",
+      "antecedents": [
+        "Insuffisance cardiaque",
+        "Diabète type 2",
+        "HTA"
+      ],
+      "allergies": [
+        "Aspirine",
+        "Ibuprofène"
+      ],
+      "dateCreation": "2020-03-21",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 4,
+      "cin": "EF321098",
+      "nom": "El Mansouri",
+      "prenom": "Amina",
+      "dateNaissance": "1995-05-01",
+      "age": 30,
+      "sexe": "F",
+      "telephone": "0622333444",
+      "email": "amina.elmansouri@hotmail.com",
+      "adresse": "22 Boulevard Zerktouni",
+      "ville": "Marrakech",
+      "mutuelle": "rma",
+      "groupeSanguin": "AB-",
+      "antecedents": [],
+      "allergies": [],
+      "dateCreation": "2023-08-02",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 5,
+      "cin": "GH098765",
+      "nom": "Hamdouni",
+      "prenom": "Rachid",
+      "dateNaissance": "1970-09-13",
+      "age": 55,
+      "sexe": "M",
+      "telephone": "0699888777",
+      "adresse": "5 Rue des Orangers",
+      "ville": "Tanger",
+      "mutuelle": "cnops",
+      "groupeSanguin": "O-",
+      "antecedents": [
+        "Ulcère gastrique"
+      ],
+      "allergies": [],
+      "dateCreation": "2021-11-26",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 6,
+      "cin": "IJ765432",
+      "nom": "Idrissi",
+      "prenom": "Nadia",
+      "dateNaissance": "1983-12-06",
+      "age": 42,
+      "sexe": "F",
+      "telephone": "0655444333",
+      "email": "nadia.idrissi@gmail.com",
+      "adresse": "17 Rue Moulay Youssef",
+      "ville": "Casablanca",
+      "groupeSanguin": "A-",
+      "antecedents": [
+        "Hypothyroïdie"
+      ],
+      "allergies": [
+        "Latex"
+      ],
+      "dateCreation": "2022-05-19",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 7,
+      "cin": "KL543210",
+      "nom": "Khadiri",
+      "prenom": "Omar",
+      "dateNaissance": "1948-06-19",
+      "age": 77,
+      "sexe": "M",
+      "telephone": "0631122334",
+      "adresse": "3 Derb Sidi Bouloukate",
+      "ville": "Fès",
+      "groupeSanguin": "B-",
+      "antecedents": [
+        "HTA",
+        "Insuffisance rénale chronique",
+        "BPCO"
+      ],
+      "allergies": [
+        "Sulfamides"
+      ],
+      "dateCreation": "2019-12-11",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 8,
+      "cin": "MN210987",
+      "nom": "Moussaoui",
+      "prenom": "Sara",
+      "dateNaissance": "1997-02-15",
+      "age": 29,
+      "sexe": "F",
+      "telephone": "0644556677",
+      "email": "sara.moussaoui@outlook.com",
+      "adresse": "89 Avenue Mohammed V",
+      "ville": "Agadir",
+      "mutuelle": "cnss",
+      "groupeSanguin": "O+",
+      "antecedents": [],
+      "allergies": [],
+      "dateCreation": "2024-03-06",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 9,
+      "cin": "OP109876",
+      "nom": "Ouazzani",
+      "prenom": "Hamid",
+      "dateNaissance": "1967-08-26",
+      "age": 58,
+      "sexe": "M",
+      "telephone": "0677889900",
+      "adresse": "33 Rue Allal Ben Abdellah",
+      "ville": "Rabat",
+      "mutuelle": "cnops",
+      "groupeSanguin": "AB+",
+      "antecedents": [
+        "Diabète type 2"
+      ],
+      "allergies": [],
+      "dateCreation": "2023-01-21",
+      "dernierVisite": "2026-05-26"
+    },
+    {
+      "id": 10,
+      "cin": "QR876543",
+      "nom": "Rachidi",
+      "prenom": "Zineb",
+      "dateNaissance": "2000-01-11",
+      "age": 26,
+      "sexe": "F",
+      "telephone": "0666777888",
+      "email": "zineb.rachidi@gmail.com",
+      "adresse": "14 Rue Ibn Tofail",
+      "ville": "Casablanca",
+      "groupeSanguin": "A+",
+      "antecedents": [],
+      "allergies": [],
+      "dateCreation": "2024-06-16",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 11,
+      "cin": "ST654321",
+      "nom": "Tazi",
+      "prenom": "Khalid",
+      "dateNaissance": "1980-05-21",
+      "age": 45,
+      "sexe": "M",
+      "telephone": "0688990011",
+      "email": "khalid.tazi@gmail.com",
+      "adresse": "56 Boulevard Anfa",
+      "ville": "Casablanca",
+      "mutuelle": "rma",
+      "groupeSanguin": "O+",
+      "antecedents": [
+        "HTA"
+      ],
+      "allergies": [],
+      "dateCreation": "2022-09-13",
+      "dernierVisite": "2026-05-29"
+    },
+    {
+      "id": 12,
+      "cin": "UV432109",
+      "nom": "Bensouda",
+      "prenom": "Houda",
+      "dateNaissance": "1978-10-04",
+      "age": 47,
+      "sexe": "F",
+      "telephone": "0651122334",
+      "adresse": "7 Quartier Hay Riad",
+      "ville": "Rabat",
+      "mutuelle": "cnops",
+      "groupeSanguin": "B+",
+      "antecedents": [
+        "Migraine chronique"
+      ],
+      "allergies": [
+        "Triptans (certains)"
+      ],
+      "dateCreation": "2021-04-09",
+      "dernierVisite": "2026-05-24"
+    },
+    {
+      "id": 13,
+      "cin": "BB67688",
+      "nom": "AHMED",
+      "prenom": "AHMED",
+      "dateNaissance": "1990-04-11",
+      "age": 36,
+      "sexe": "M",
+      "telephone": "060666667",
+      "adresse": "",
+      "ville": "",
+      "mutuelle": "cnops",
+      "groupeSanguin": "Inconnu",
+      "antecedents": [],
+      "allergies": [],
+      "dateCreation": "2026-04-06T13:04:15.070Z",
+      "statut": "actif",
+      "dernierVisite": "2026-05-25"
+    },
+    {
+      "id": 14,
+      "cin": "",
+      "nom": "Mohamed",
+      "prenom": "",
+      "dateNaissance": "1985-01-02",
+      "age": 41,
+      "sexe": "M",
+      "telephone": "",
+      "adresse": "",
+      "ville": "",
+      "groupeSanguin": "",
+      "antecedents": [],
+      "allergies": [],
+      "dateCreation": "2026-04-14T19:55:00.279Z",
+      "statut": "actif",
+      "dernierVisite": "2026-05-03"
+    }
+  ],
+  "rendezVous": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-05",
+      "heure": "08:30",
+      "type": "controle",
+      "motif": "Contrôle diabète trimestriel",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 2,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-05",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "Renouvellement ordonnance asthme",
+      "statut": "arrive",
+      "duree": 20
+    },
+    {
+      "id": 3,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "date": "2026-05-05",
+      "heure": "09:30",
+      "type": "urgence",
+      "motif": "Douleurs thoraciques",
+      "statut": "arrive",
+      "duree": 45
+    },
+    {
+      "id": 4,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "date": "2026-05-05",
+      "heure": "10:00",
+      "type": "consultation",
+      "motif": "Consultation générale",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 5,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "date": "2026-05-05",
+      "heure": "10:30",
+      "type": "controle",
+      "motif": "Résultats analyses",
+      "statut": "confirme",
+      "duree": 30
+    },
+    {
+      "id": 6,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "date": "2026-05-05",
+      "heure": "11:00",
+      "type": "consultation",
+      "motif": "Suivi thyroïde",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 7,
+      "patientId": 9,
+      "patientNom": "Ouazzani Hamid",
+      "date": "2026-05-05",
+      "heure": "11:30",
+      "type": "controle",
+      "motif": "HbA1c résultats",
+      "statut": "confirme",
+      "duree": 30
+    },
+    {
+      "id": 8,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "date": "2026-05-05",
+      "heure": "14:00",
+      "type": "consultation",
+      "motif": "Suivi insuffisance rénale",
+      "statut": "confirme",
+      "duree": 45
+    },
+    {
+      "id": 9,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-05",
+      "heure": "09:00",
+      "type": "controle",
+      "motif": "Bilan mensuel",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 10,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-05",
+      "heure": "10:00",
+      "type": "consultation",
+      "motif": "Toux persistante",
+      "statut": "arrive",
+      "duree": 20
+    },
+    {
+      "id": 11,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "date": "2026-05-05",
+      "heure": "11:00",
+      "type": "consultation",
+      "motif": "Fatigue chronique",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 21,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-29",
+      "heure": "08:30",
+      "type": "controle",
+      "motif": "Contrôle tension artérielle",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 22,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-29",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "Renouvellement ordonnance asthme",
+      "statut": "arrive",
+      "duree": 20
+    },
+    {
+      "id": 23,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "date": "2026-05-29",
+      "heure": "09:30",
+      "type": "urgence",
+      "motif": "Douleurs thoraciques",
+      "statut": "arrive",
+      "duree": 45
+    },
+    {
+      "id": 24,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "date": "2026-05-29",
+      "heure": "10:00",
+      "type": "consultation",
+      "motif": "Consultation générale",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 25,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "date": "2026-05-29",
+      "heure": "10:30",
+      "type": "controle",
+      "motif": "Résultats fibroscopie",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 26,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "date": "2026-05-29",
+      "heure": "11:00",
+      "type": "consultation",
+      "motif": "Suivi thyroïde",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 27,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "date": "2026-05-29",
+      "heure": "11:30",
+      "type": "consultation",
+      "motif": "Suivi insuffisance rénale",
+      "statut": "arrive",
+      "duree": 45
+    },
+    {
+      "id": 28,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "date": "2026-05-29",
+      "heure": "12:00",
+      "type": "consultation",
+      "motif": "Fatigue chronique",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "id": 29,
+      "patientId": 10,
+      "patientNom": "Rachidi Zineb",
+      "date": "2026-05-29",
+      "heure": "13:00",
+      "type": "consultation",
+      "motif": "Douleurs abdominales",
+      "statut": "annule",
+      "duree": 20
+    },
+    {
+      "id": 30,
+      "patientId": 11,
+      "patientNom": "Tazi Khalid",
+      "date": "2026-05-29",
+      "heure": "13:30",
+      "type": "consultation",
+      "motif": "Hypertension contrôle",
+      "statut": "arrive",
+      "duree": 30
+    },
+    {
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-29",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 31
+    },
+    {
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-29",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 32
+    },
+    {
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-29",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 33
+    },
+    {
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "date": "2026-05-29",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 34
+    },
+    {
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-06-17",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 35
+    },
+    {
+      "patientId": 13,
+      "patientNom": "AHMED AHMED",
+      "date": "2026-06-17",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 36
+    },
+    {
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "date": "2026-06-17",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 37
+    },
+    {
+      "patientId": 11,
+      "patientNom": "Tazi Khalid",
+      "date": "2026-06-17",
+      "heure": "09:00",
+      "type": "consultation",
+      "motif": "",
+      "statut": "arrive",
+      "id": 38
+    }
+  ],
+  "consultations": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-05",
+      "type": "controle",
+      "motif": "Contrôle diabète trimestriel",
+      "anamnese": "Patient diabétique type 2 sous Metformine 1g. Contrôle trimestriel habituel. Bon suivi.",
+      "examenClinique": "Poids 78kg stable. Examen cardiopulmonaire normal.",
+      "tension": "130/80",
+      "temperature": "36.7",
+      "poids": "78",
+      "taille": "176",
+      "imc": 25.2,
+      "diagnostic": "Diabète type 2 équilibré. HTA contrôlée.",
+      "traitement": "Renouvellement Metformine 1g + Ramipril 5mg",
+      "observations": "HbA1c 7.2%. Bonne observance.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 2,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-05",
+      "type": "consultation",
+      "motif": "Renouvellement ordonnance asthme",
+      "anamnese": "Patiente asthmatique stable.",
+      "examenClinique": "Auscultation pulmonaire normale.",
+      "tension": "115/72",
+      "temperature": "36.5",
+      "poids": "62",
+      "taille": "165",
+      "imc": 22.8,
+      "diagnostic": "Asthme bronchique bien contrôlé.",
+      "traitement": "Renouvellement Ventoline + Béclométasone",
+      "observations": "RDV dans 3 mois.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 3,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "date": "2026-05-05",
+      "type": "urgence",
+      "motif": "Douleurs thoraciques",
+      "anamnese": "Douleurs thoraciques oppressives.",
+      "examenClinique": "TA 150/95, FC 105 bpm.",
+      "tension": "150/95",
+      "temperature": "37.1",
+      "poids": "82",
+      "taille": "170",
+      "imc": 28.4,
+      "diagnostic": "Syndrome coronarien à écarter.",
+      "traitement": "ECG en urgence.",
+      "observations": "Transfert recommandé.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 4,
+      "patientId": 10,
+      "patientNom": "Rachidi Zineb",
+      "date": "2026-05-05",
+      "type": "consultation",
+      "motif": "Douleurs abdominales",
+      "anamnese": "Douleurs épigastriques.",
+      "examenClinique": "Abdomen souple.",
+      "tension": "110/70",
+      "temperature": "36.8",
+      "poids": "58",
+      "taille": "163",
+      "imc": 21.8,
+      "diagnostic": "Gastrite aiguë probable.",
+      "traitement": "Oméprazole 20mg.",
+      "observations": "RDV J7.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 5,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-05",
+      "type": "controle",
+      "motif": "Bilan mensuel",
+      "anamnese": "Contrôle mensuel HTA.",
+      "examenClinique": "Examen général normal.",
+      "tension": "125/78",
+      "temperature": "36.6",
+      "poids": "78",
+      "taille": "176",
+      "imc": 25.2,
+      "diagnostic": "HTA et diabète bien contrôlés.",
+      "traitement": "Poursuite traitement.",
+      "observations": "Bonne observance.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 6,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-05",
+      "type": "consultation",
+      "motif": "Toux persistante",
+      "anamnese": "Toux sèche depuis 10 jours.",
+      "examenClinique": "Gorge érythémateuse.",
+      "tension": "118/74",
+      "temperature": "37.0",
+      "poids": "62",
+      "taille": "165",
+      "imc": 22.8,
+      "diagnostic": "Trachéite virale.",
+      "traitement": "Drill sirop + Rhinathiol.",
+      "observations": "Repos.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 7,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "date": "2026-05-05",
+      "type": "consultation",
+      "motif": "Fatigue chronique",
+      "anamnese": "Fatigue intense depuis 1 mois.",
+      "examenClinique": "Pâleur légère.",
+      "tension": "112/68",
+      "temperature": "36.6",
+      "poids": "60",
+      "taille": "167",
+      "imc": 21.5,
+      "diagnostic": "Fatigue chronique à explorer.",
+      "traitement": "Bilan biologique demandé.",
+      "observations": "RDV 15 jours.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 18,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "date": "2026-05-29",
+      "type": "controle",
+      "motif": "Contrôle tension artérielle",
+      "anamnese": "Contrôle mensuel habituel.",
+      "examenClinique": "TA 126/80. FC 70.",
+      "tension": "126/80",
+      "temperature": "36.6",
+      "poids": "78",
+      "taille": "176",
+      "imc": 25.2,
+      "diagnostic": "HTA contrôlée.",
+      "traitement": "Poursuite traitement.",
+      "observations": "Bonne évolution.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 19,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "date": "2026-05-29",
+      "type": "consultation",
+      "motif": "Renouvellement ordonnance asthme",
+      "anamnese": "Asthme stable, pas de crise.",
+      "examenClinique": "Auscultation normale. DEP 380.",
+      "tension": "115/72",
+      "temperature": "36.5",
+      "poids": "62",
+      "taille": "165",
+      "imc": 22.8,
+      "diagnostic": "Asthme contrôlé.",
+      "traitement": "Renouvellement Ventoline + Béclométasone.",
+      "observations": "RDV 3 mois.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 20,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "date": "2026-05-29",
+      "type": "urgence",
+      "motif": "Douleurs thoraciques",
+      "anamnese": "Douleurs oppressives irradiant bras gauche.",
+      "examenClinique": "TA 152/96, FC 108 bpm, SpO2 94%.",
+      "tension": "152/96",
+      "temperature": "37.2",
+      "poids": "82",
+      "taille": "170",
+      "imc": 28.4,
+      "diagnostic": "Syndrome coronarien. Décompensation cardiaque.",
+      "traitement": "ECG urgent. Transfert SAMU.",
+      "observations": "Tachycardie sinusale. SAMU appelé.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 21,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "date": "2026-05-29",
+      "type": "consultation",
+      "motif": "Consultation générale",
+      "anamnese": "Consultation de routine.",
+      "examenClinique": "Examen général normal. TA 112/70.",
+      "tension": "112/70",
+      "temperature": "36.5",
+      "poids": "60",
+      "taille": "168",
+      "imc": 21.3,
+      "diagnostic": "État général satisfaisant.",
+      "traitement": "Aucun.",
+      "observations": "RDV annuel.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 22,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "date": "2026-05-29",
+      "type": "controle",
+      "motif": "Résultats fibroscopie",
+      "anamnese": "Ulcère gastrique. Résultats disponibles.",
+      "examenClinique": "Abdomen souple.",
+      "tension": "120/78",
+      "temperature": "36.6",
+      "poids": "74",
+      "taille": "172",
+      "imc": 25,
+      "diagnostic": "Ulcère gastrique en amélioration.",
+      "traitement": "Poursuite oméprazole.",
+      "observations": "RDV 6 semaines.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 23,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "date": "2026-05-29",
+      "type": "consultation",
+      "motif": "Suivi thyroïde",
+      "anamnese": "Hypothyroïdie sous Lévothyrox.",
+      "examenClinique": "Thyroïde non palpable.",
+      "tension": "118/72",
+      "temperature": "36.6",
+      "poids": "66",
+      "taille": "168",
+      "imc": 23.4,
+      "diagnostic": "Hypothyroïdie équilibrée.",
+      "traitement": "Renouvellement Lévothyrox 75mcg.",
+      "observations": "Bilan 6 mois.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 24,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "date": "2026-05-29",
+      "type": "consultation",
+      "motif": "Insuffisance rénale suivi",
+      "anamnese": "IRC stade 3. Suivi trimestriel.",
+      "examenClinique": "TA 138/85. Pas d'œdème.",
+      "tension": "138/85",
+      "temperature": "36.7",
+      "poids": "70",
+      "taille": "168",
+      "imc": 24.8,
+      "diagnostic": "IRC stade 3. Stable.",
+      "traitement": "Régime hypoprotidique.",
+      "observations": "Créatinine stable.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 25,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "date": "2026-05-29",
+      "type": "consultation",
+      "motif": "Fatigue chronique",
+      "anamnese": "Résultats bilan disponibles.",
+      "examenClinique": "Pâleur modérée des conjonctives.",
+      "tension": "112/68",
+      "temperature": "36.6",
+      "poids": "60",
+      "taille": "167",
+      "imc": 21.5,
+      "diagnostic": "Anémie ferriprive confirmée.",
+      "traitement": "Fer oral 80mg/jour. Régime enrichi.",
+      "observations": "Contrôle NFS 1 mois.",
+      "medecin": "Dr. Hassan Benkirane"
+    }
+  ],
+  "ordonnances": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-05",
+      "medicaments": [
+        {
+          "nom": "Metformine",
+          "dosage": "1000mg",
+          "forme": "Comprimé",
+          "posologie": "2 fois/jour",
+          "duree": "3 mois"
+        },
+        {
+          "nom": "Atorvastatine",
+          "dosage": "20mg",
+          "forme": "Comprimé",
+          "posologie": "1/soir",
+          "duree": "3 mois"
+        },
+        {
+          "nom": "Ramipril",
+          "dosage": "5mg",
+          "forme": "Comprimé",
+          "posologie": "1/matin",
+          "duree": "3 mois"
+        }
+      ],
+      "validite": 90,
+      "renouvelable": true,
+      "notes": "Régime pauvre en sucres.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 2,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-05",
+      "medicaments": [
+        {
+          "nom": "Ventoline",
+          "dosage": "100mcg",
+          "forme": "Spray",
+          "posologie": "2 bouffées si besoin",
+          "duree": "3 mois"
+        },
+        {
+          "nom": "Béclométasone",
+          "dosage": "250mcg",
+          "forme": "Spray",
+          "posologie": "2 bouffées matin/soir",
+          "duree": "3 mois"
+        }
+      ],
+      "validite": 90,
+      "renouvelable": true,
+      "notes": "Rincer bouche après béclométasone.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 3,
+      "patientId": 10,
+      "patientNom": "Rachidi Zineb",
+      "consultationId": 4,
+      "date": "2026-05-05",
+      "medicaments": [
+        {
+          "nom": "Oméprazole",
+          "dosage": "20mg",
+          "forme": "Gélule",
+          "posologie": "1 avant repas",
+          "duree": "1 mois"
+        },
+        {
+          "nom": "Spasfon",
+          "dosage": "80mg",
+          "forme": "Comprimé",
+          "posologie": "2 cp 3x/jour",
+          "duree": "7 jours"
+        }
+      ],
+      "validite": 30,
+      "renouvelable": false,
+      "notes": "Régime sans épices.",
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 10,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 18,
+      "date": "2026-05-29",
+      "medicaments": [
+        {
+          "nom": "Ramipril",
+          "dosage": "5mg",
+          "forme": "Comprimé",
+          "posologie": "1/jour matin",
+          "duree": "1 mois"
+        },
+        {
+          "nom": "Metformine",
+          "dosage": "1000mg",
+          "forme": "Comprimé",
+          "posologie": "2/jour repas",
+          "duree": "1 mois"
+        },
+        {
+          "nom": "Atorvastatine",
+          "dosage": "20mg",
+          "forme": "Comprimé",
+          "posologie": "1/soir",
+          "duree": "1 mois"
+        }
+      ],
+      "validite": 30,
+      "renouvelable": true,
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 11,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 19,
+      "date": "2026-05-29",
+      "medicaments": [
+        {
+          "nom": "Ventoline",
+          "dosage": "100mcg",
+          "forme": "Spray",
+          "posologie": "si besoin",
+          "duree": "3 mois"
+        },
+        {
+          "nom": "Béclométasone",
+          "dosage": "250mcg",
+          "forme": "Spray",
+          "posologie": "2x/jour",
+          "duree": "3 mois"
+        }
+      ],
+      "validite": 90,
+      "renouvelable": true,
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 12,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "consultationId": 23,
+      "date": "2026-05-29",
+      "medicaments": [
+        {
+          "nom": "Lévothyrox",
+          "dosage": "75mcg",
+          "forme": "Comprimé",
+          "posologie": "1/jour à jeun",
+          "duree": "6 mois"
+        }
+      ],
+      "validite": 180,
+      "renouvelable": true,
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 13,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "consultationId": 22,
+      "date": "2026-05-29",
+      "medicaments": [
+        {
+          "nom": "Oméprazole",
+          "dosage": "20mg",
+          "forme": "Gélule",
+          "posologie": "1 avant repas",
+          "duree": "1 mois"
+        }
+      ],
+      "validite": 30,
+      "renouvelable": false,
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 14,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "consultationId": 24,
+      "date": "2026-05-29",
+      "medicaments": [
+        {
+          "nom": "Furosémide",
+          "dosage": "40mg",
+          "forme": "Comprimé",
+          "posologie": "1/jour matin",
+          "duree": "1 mois"
+        },
+        {
+          "nom": "Bicarbonate de sodium",
+          "dosage": "500mg",
+          "forme": "Comprimé",
+          "posologie": "3/jour",
+          "duree": "1 mois"
+        }
+      ],
+      "validite": 30,
+      "renouvelable": true,
+      "medecin": "Dr. Hassan Benkirane"
+    },
+    {
+      "id": 15,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "consultationId": 25,
+      "date": "2026-05-29",
+      "medicaments": [
+        {
+          "nom": "Fer oral",
+          "dosage": "80mg",
+          "forme": "Comprimé",
+          "posologie": "1/jour à jeun",
+          "duree": "3 mois"
+        },
+        {
+          "nom": "Vitamine C",
+          "dosage": "500mg",
+          "forme": "Comprimé",
+          "posologie": "1/jour",
+          "duree": "3 mois"
+        }
+      ],
+      "validite": 90,
+      "renouvelable": true,
+      "medecin": "Dr. Hassan Benkirane"
+    }
+  ],
+  "examens": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "patientCin": "BK123456",
+      "consultationId": 1,
+      "date": "2026-05-05",
+      "analyses": [
+        "HbA1c",
+        "Glycémie à jeun",
+        "Bilan lipidique",
+        "Créatinine"
+      ],
+      "laboratoire": "Labo Al Amine",
+      "statut": "resultat_recu",
+      "urgence": false,
+      "resultat": "HbA1c 7.2%, Glycémie 1.45g/L, LDL 2.8mmol/L"
+    },
+    {
+      "id": 2,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "patientCin": "MN210987",
+      "consultationId": 7,
+      "date": "2026-05-05",
+      "analyses": [
+        "NFS",
+        "TSH",
+        "Ferritine",
+        "Bilan lipidique"
+      ],
+      "laboratoire": "Labo Ibn Sina",
+      "statut": "resultat_recu",
+      "urgence": false,
+      "resultat": "Hb 10.2g/dL, TSH 2.1, Ferritine 8 µg/L"
+    },
+    {
+      "id": 3,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "patientCin": "CD654321",
+      "consultationId": 3,
+      "date": "2026-05-05",
+      "analyses": [
+        "ECG"
+      ],
+      "laboratoire": "Cabinet",
+      "statut": "resultat_recu",
+      "urgence": false,
+      "resultat": "Rythme sinusal. FC 72 bpm. Normal."
+    },
+    {
+      "id": 10,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "patientCin": "BK123456",
+      "consultationId": 18,
+      "date": "2026-05-29",
+      "analyses": [
+        "HbA1c",
+        "Glycémie à jeun",
+        "Créatinine",
+        "Bilan lipidique"
+      ],
+      "laboratoire": "Labo Al Amine",
+      "statut": "en_attente",
+      "urgence": false,
+      "resultat": null
+    },
+    {
+      "id": 11,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "patientCin": "CD654321",
+      "consultationId": 20,
+      "date": "2026-05-29",
+      "analyses": [
+        "ECG",
+        "Échographie cardiaque",
+        "Troponine"
+      ],
+      "laboratoire": "Cabinet",
+      "statut": "en_attente",
+      "urgence": true,
+      "resultat": null
+    },
+    {
+      "id": 12,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "patientCin": "MN210987",
+      "consultationId": 25,
+      "date": "2026-05-29",
+      "analyses": [
+        "NFS",
+        "Ferritine",
+        "Réticulocytes"
+      ],
+      "laboratoire": "Labo Ibn Sina",
+      "statut": "en_attente",
+      "urgence": false,
+      "resultat": null
+    }
+  ],
+  "factures": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-05",
+      "lignes": [
+        {
+          "description": "Consultation contrôle",
+          "quantite": 1,
+          "prixUnitaire": 0,
+          "total": 0
+        }
+      ],
+      "sousTotal": 0,
+      "tva": 0,
+      "total": 0,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 0,
+      "reste": 0,
+      "type": "controle",
+      "datePaiement": "2026-05-05"
+    },
+    {
+      "id": 2,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-05",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-05"
+    },
+    {
+      "id": 3,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 3,
+      "date": "2026-05-05",
+      "lignes": [
+        {
+          "description": "Consultation urgence",
+          "quantite": 1,
+          "prixUnitaire": 300,
+          "total": 300
+        }
+      ],
+      "sousTotal": 300,
+      "tva": 0,
+      "total": 300,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 300,
+      "reste": 0,
+      "type": "urgence",
+      "datePaiement": "2026-05-05"
+    },
+    {
+      "id": 17,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-04-04",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-04-04"
+    },
+    {
+      "id": 50,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 18,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation contrôle",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "controle",
+      "datePaiement": "2026-05-29"
+    },
+    {
+      "id": 51,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 19,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-29"
+    },
+    {
+      "id": 52,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 20,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation urgence",
+          "quantite": 1,
+          "prixUnitaire": 300,
+          "total": 300
+        }
+      ],
+      "sousTotal": 300,
+      "tva": 0,
+      "total": 300,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 300,
+      "reste": 0,
+      "type": "urgence",
+      "datePaiement": "2026-05-29"
+    },
+    {
+      "id": 53,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "consultationId": 21,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-29"
+    },
+    {
+      "id": 54,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "consultationId": 22,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation contrôle",
+          "quantite": 1,
+          "prixUnitaire": 0,
+          "total": 0
+        }
+      ],
+      "sousTotal": 0,
+      "tva": 0,
+      "total": 0,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 0,
+      "reste": 0,
+      "type": "controle",
+      "datePaiement": "2026-05-29"
+    },
+    {
+      "id": 55,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "consultationId": 23,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-29"
+    },
+    {
+      "id": 56,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "consultationId": 24,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "en_attente",
+      "modePaiement": null,
+      "montantPaye": 0,
+      "reste": 200,
+      "type": "consultation",
+      "datePaiement": null
+    },
+    {
+      "id": 57,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "consultationId": 25,
+      "date": "2026-05-29",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "en_attente",
+      "modePaiement": null,
+      "montantPaye": 0,
+      "reste": 200,
+      "type": "consultation",
+      "datePaiement": null
+    },
+    {
+      "id": 60,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-23",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-23"
+    },
+    {
+      "id": 61,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-23",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-23"
+    },
+    {
+      "id": 62,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 3,
+      "date": "2026-05-23",
+      "lignes": [
+        {
+          "description": "Consultation urgence",
+          "quantite": 1,
+          "prixUnitaire": 300,
+          "total": 300
+        }
+      ],
+      "sousTotal": 300,
+      "tva": 0,
+      "total": 300,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 300,
+      "reste": 0,
+      "type": "urgence",
+      "datePaiement": "2026-05-23"
+    },
+    {
+      "id": 63,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "consultationId": 4,
+      "date": "2026-05-23",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-23"
+    },
+    {
+      "id": 64,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-24",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-24"
+    },
+    {
+      "id": 65,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-24",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-24"
+    },
+    {
+      "id": 66,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 3,
+      "date": "2026-05-24",
+      "lignes": [
+        {
+          "description": "Consultation urgence",
+          "quantite": 1,
+          "prixUnitaire": 300,
+          "total": 300
+        }
+      ],
+      "sousTotal": 300,
+      "tva": 0,
+      "total": 300,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 300,
+      "reste": 0,
+      "type": "urgence",
+      "datePaiement": "2026-05-24"
+    },
+    {
+      "id": 67,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "consultationId": 4,
+      "date": "2026-05-24",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-24"
+    },
+    {
+      "id": 68,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "consultationId": 5,
+      "date": "2026-05-24",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-24"
+    },
+    {
+      "id": 69,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-25",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-25"
+    },
+    {
+      "id": 70,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-25",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-25"
+    },
+    {
+      "id": 71,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 3,
+      "date": "2026-05-25",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-25"
+    },
+    {
+      "id": 72,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "consultationId": 4,
+      "date": "2026-05-26",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-26"
+    },
+    {
+      "id": 73,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "consultationId": 5,
+      "date": "2026-05-26",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-26"
+    },
+    {
+      "id": 74,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "consultationId": 6,
+      "date": "2026-05-26",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-26"
+    },
+    {
+      "id": 75,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "consultationId": 7,
+      "date": "2026-05-26",
+      "lignes": [
+        {
+          "description": "Consultation spécialisée",
+          "quantite": 1,
+          "prixUnitaire": 250,
+          "total": 250
+        }
+      ],
+      "sousTotal": 250,
+      "tva": 0,
+      "total": 250,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 250,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-26"
+    },
+    {
+      "id": 76,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-27",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-27"
+    },
+    {
+      "id": 77,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-27",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-27"
+    },
+    {
+      "id": 78,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 3,
+      "date": "2026-05-27",
+      "lignes": [
+        {
+          "description": "Consultation contrôle",
+          "quantite": 1,
+          "prixUnitaire": 0,
+          "total": 0
+        }
+      ],
+      "sousTotal": 0,
+      "tva": 0,
+      "total": 0,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 0,
+      "reste": 0,
+      "type": "controle",
+      "datePaiement": "2026-05-27"
+    },
+    {
+      "id": 79,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "consultationId": 1,
+      "date": "2026-05-28",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-28"
+    },
+    {
+      "id": 80,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "consultationId": 2,
+      "date": "2026-05-28",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "cheque",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-28"
+    },
+    {
+      "id": 81,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "consultationId": 3,
+      "date": "2026-05-28",
+      "lignes": [
+        {
+          "description": "Consultation",
+          "quantite": 1,
+          "prixUnitaire": 200,
+          "total": 200
+        }
+      ],
+      "sousTotal": 200,
+      "tva": 0,
+      "total": 200,
+      "statut": "payee",
+      "modePaiement": "especes",
+      "montantPaye": 200,
+      "reste": 0,
+      "type": "consultation",
+      "datePaiement": "2026-05-28"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "titre": "Patient URGENT en attente",
+      "message": "Cherkaoui Youssef — Douleurs thoraciques urgentes",
+      "type": "danger",
+      "patientId": 3,
+      "lue": false,
+      "date": "2026-05-10T09:20:00"
+    },
+    {
+      "id": 2,
+      "titre": "Longue attente",
+      "message": "Khadiri Omar — 45 min en salle d'attente",
+      "type": "warning",
+      "patientId": 7,
+      "lue": false,
+      "date": "2026-05-10T10:55:00"
+    },
+    {
+      "id": 3,
+      "titre": "Résultats disponibles",
+      "message": "Moussaoui Sara — NFS reçue : anémie ferriprive",
+      "type": "info",
+      "patientId": 8,
+      "lue": false,
+      "date": "2026-05-10T09:45:00"
+    },
+    {
+      "id": 4,
+      "titre": "Consultation terminée",
+      "message": "Benali Mohammed — Consultation terminée",
+      "type": "success",
+      "patientId": 1,
+      "lue": true,
+      "date": "2026-05-10T09:30:00"
+    },
+    {
+      "id": 5,
+      "titre": "Patient sans RDV",
+      "message": "Rachidi Zineb — Arrivée sans rendez-vous",
+      "type": "info",
+      "patientId": 10,
+      "lue": true,
+      "date": "2026-05-10T10:15:00"
+    }
+  ],
+  "stats": {
+    "totalPatients": 14,
+    "nouveauxPatients": 2,
+    "rdvAujourdhui": 10,
+    "consultationsMois": 52,
+    "revenuMois": 8650,
+    "tauxOccupation": 87,
+    "rdvParJour": [
+      {
+        "jour": "Lun",
+        "count": 6
+      },
+      {
+        "jour": "Mar",
+        "count": 8
+      },
+      {
+        "jour": "Mer",
+        "count": 7
+      },
+      {
+        "jour": "Jeu",
+        "count": 9
+      },
+      {
+        "jour": "Ven",
+        "count": 5
+      },
+      {
+        "jour": "Sam",
+        "count": 4
+      }
+    ],
+    "revenusParMois": [
+      {
+        "mois": "Oct",
+        "montant": 11500
+      },
+      {
+        "mois": "Nov",
+        "montant": 14800
+      },
+      {
+        "mois": "Déc",
+        "montant": 13100
+      },
+      {
+        "mois": "Jan",
+        "montant": 14250
+      },
+      {
+        "mois": "Fév",
+        "montant": 12800
+      },
+      {
+        "mois": "Mar",
+        "montant": 13600
+      },
+      {
+        "mois": "Avr",
+        "montant": 8650
+      }
+    ],
+    "diagnosticsFrequents": [
+      {
+        "diagnostic": "HTA",
+        "count": 18
+      },
+      {
+        "diagnostic": "Diabète T2",
+        "count": 14
+      },
+      {
+        "diagnostic": "IVRS",
+        "count": 11
+      },
+      {
+        "diagnostic": "Lombalgie",
+        "count": 9
+      },
+      {
+        "diagnostic": "Asthme",
+        "count": 7
+      }
+    ],
+    "repartitionAge": [
+      {
+        "tranche": "0-18",
+        "count": 5
+      },
+      {
+        "tranche": "19-35",
+        "count": 18
+      },
+      {
+        "tranche": "36-55",
+        "count": 32
+      },
+      {
+        "tranche": "56-70",
+        "count": 28
+      },
+      {
+        "tranche": "70+",
+        "count": 17
+      }
+    ]
+  },
+  "fileAttente": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "08:25",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-05"
+    },
+    {
+      "id": 2,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "08:55",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-05"
+    },
+    {
+      "id": 3,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "urgent",
+      "heureArrivee": "09:20",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-05"
+    },
+    {
+      "id": 100,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "08:30",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 101,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 102,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "urgent",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 103,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 104,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "10:20",
+      "statut": "termine",
+      "ordre": 5,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 105,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "type": "avec_rdv",
+      "heureArrivee": "10:45",
+      "statut": "termine",
+      "ordre": 6,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 106,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "type": "avec_rdv",
+      "heureArrivee": "11:00",
+      "statut": "termine",
+      "ordre": 7,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 107,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "type": "avec_rdv",
+      "heureArrivee": "11:30",
+      "statut": "termine",
+      "ordre": 8,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 108,
+      "patientId": 9,
+      "patientNom": "Ouazzani Hamid",
+      "type": "avec_rdv",
+      "heureArrivee": "12:00",
+      "statut": "termine",
+      "ordre": 9,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 109,
+      "patientId": 10,
+      "patientNom": "Rachidi Zineb",
+      "type": "sans_rdv",
+      "heureArrivee": "12:30",
+      "statut": "termine",
+      "ordre": 10,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 110,
+      "patientId": 11,
+      "patientNom": "Tazi Khalid",
+      "type": "avec_rdv",
+      "heureArrivee": "13:00",
+      "statut": "termine",
+      "ordre": 11,
+      "date": "2026-05-29"
+    },
+    {
+      "id": 111,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-23"
+    },
+    {
+      "id": 112,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-23"
+    },
+    {
+      "id": 113,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "avec_rdv",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-23"
+    },
+    {
+      "id": 114,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:30",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-23"
+    },
+    {
+      "id": 115,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "11:00",
+      "statut": "termine",
+      "ordre": 5,
+      "date": "2026-05-23"
+    },
+    {
+      "id": 116,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "type": "avec_rdv",
+      "heureArrivee": "11:30",
+      "statut": "termine",
+      "ordre": 6,
+      "date": "2026-05-23"
+    },
+    {
+      "id": 117,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 118,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 119,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "urgent",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 120,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:30",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 121,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "11:00",
+      "statut": "termine",
+      "ordre": 5,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 122,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "type": "avec_rdv",
+      "heureArrivee": "11:30",
+      "statut": "termine",
+      "ordre": 6,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 123,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "type": "avec_rdv",
+      "heureArrivee": "12:00",
+      "statut": "termine",
+      "ordre": 7,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 124,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "type": "sans_rdv",
+      "heureArrivee": "12:30",
+      "statut": "termine",
+      "ordre": 8,
+      "date": "2026-05-24"
+    },
+    {
+      "id": 125,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 126,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 127,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "avec_rdv",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 128,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:30",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 129,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "11:00",
+      "statut": "termine",
+      "ordre": 5,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 130,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "type": "avec_rdv",
+      "heureArrivee": "11:30",
+      "statut": "termine",
+      "ordre": 6,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 131,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "type": "avec_rdv",
+      "heureArrivee": "12:00",
+      "statut": "termine",
+      "ordre": 7,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 132,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 133,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 134,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "avec_rdv",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 135,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:30",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 136,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "11:00",
+      "statut": "termine",
+      "ordre": 5,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 137,
+      "patientId": 6,
+      "patientNom": "Idrissi Nadia",
+      "type": "avec_rdv",
+      "heureArrivee": "11:30",
+      "statut": "termine",
+      "ordre": 6,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 138,
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "type": "avec_rdv",
+      "heureArrivee": "12:00",
+      "statut": "termine",
+      "ordre": 7,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 139,
+      "patientId": 8,
+      "patientNom": "Moussaoui Sara",
+      "type": "avec_rdv",
+      "heureArrivee": "12:30",
+      "statut": "termine",
+      "ordre": 8,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 140,
+      "patientId": 9,
+      "patientNom": "Ouazzani Hamid",
+      "type": "avec_rdv",
+      "heureArrivee": "13:00",
+      "statut": "termine",
+      "ordre": 9,
+      "date": "2026-05-26"
+    },
+    {
+      "id": 141,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-27"
+    },
+    {
+      "id": 142,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-27"
+    },
+    {
+      "id": 143,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "avec_rdv",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-27"
+    },
+    {
+      "id": 144,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:30",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-27"
+    },
+    {
+      "id": 145,
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "11:00",
+      "statut": "termine",
+      "ordre": 5,
+      "date": "2026-05-27"
+    },
+    {
+      "id": 146,
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "09:00",
+      "statut": "termine",
+      "ordre": 1,
+      "date": "2026-05-28"
+    },
+    {
+      "id": 147,
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "09:30",
+      "statut": "termine",
+      "ordre": 2,
+      "date": "2026-05-28"
+    },
+    {
+      "id": 148,
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "avec_rdv",
+      "heureArrivee": "10:00",
+      "statut": "termine",
+      "ordre": 3,
+      "date": "2026-05-28"
+    },
+    {
+      "id": 149,
+      "patientId": 4,
+      "patientNom": "El Mansouri Amina",
+      "type": "avec_rdv",
+      "heureArrivee": "10:30",
+      "statut": "termine",
+      "ordre": 4,
+      "date": "2026-05-28"
+    },
+    {
+      "patientId": 5,
+      "patientNom": "Hamdouni Rachid",
+      "type": "avec_rdv",
+      "heureArrivee": "13:26",
+      "statut": "termine",
+      "ordre": 12,
+      "date": "2026-05-29",
+      "id": 150
+    },
+    {
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "type": "avec_rdv",
+      "heureArrivee": "13:49",
+      "statut": "termine",
+      "ordre": 14,
+      "date": "2026-05-29",
+      "id": 151
+    },
+    {
+      "patientId": 11,
+      "patientNom": "Tazi Khalid",
+      "type": "avec_rdv",
+      "heureArrivee": "13:52",
+      "statut": "termine",
+      "ordre": 13,
+      "date": "2026-05-29",
+      "id": 152
+    },
+    {
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "14:27",
+      "statut": "termine",
+      "ordre": 15,
+      "date": "2026-05-29",
+      "id": 153
+    },
+    {
+      "patientId": 2,
+      "patientNom": "Alaoui Fatima",
+      "type": "avec_rdv",
+      "heureArrivee": "14:32",
+      "statut": "en_consultation",
+      "ordre": 16,
+      "date": "2026-05-29",
+      "id": 154
+    },
+    {
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "14:33",
+      "statut": "en_attente",
+      "ordre": 17,
+      "date": "2026-05-29",
+      "id": 155
+    },
+    {
+      "patientId": 3,
+      "patientNom": "Cherkaoui Youssef",
+      "type": "avec_rdv",
+      "heureArrivee": "14:33",
+      "statut": "en_attente",
+      "ordre": 18,
+      "date": "2026-05-29",
+      "id": 156
+    },
+    {
+      "patientId": 1,
+      "patientNom": "Benali Mohammed",
+      "type": "avec_rdv",
+      "heureArrivee": "19:21",
+      "statut": "en_attente",
+      "ordre": 2,
+      "date": "2026-06-17",
+      "id": 157
+    },
+    {
+      "patientId": 13,
+      "patientNom": "AHMED AHMED",
+      "type": "avec_rdv",
+      "heureArrivee": "19:32",
+      "statut": "en_consultation",
+      "ordre": 1,
+      "date": "2026-06-17",
+      "id": 158
+    },
+    {
+      "patientId": 7,
+      "patientNom": "Khadiri Omar",
+      "type": "avec_rdv",
+      "heureArrivee": "19:33",
+      "statut": "en_attente",
+      "ordre": 4,
+      "date": "2026-06-17",
+      "id": 159
+    },
+    {
+      "patientId": 11,
+      "patientNom": "Tazi Khalid",
+      "type": "avec_rdv",
+      "heureArrivee": "19:33",
+      "statut": "en_attente",
+      "ordre": 3,
+      "date": "2026-06-17",
+      "id": 160
+    }
+  ]
+}

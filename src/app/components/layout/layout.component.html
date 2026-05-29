@@ -1,0 +1,140 @@
+<div class="app-shell">
+
+  <!-- ══ TOPBAR ══ -->
+  <header class="topbar">
+
+    <!-- BRAND -->
+    <div class="tb-brand">
+      <div class="tb-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L3 6.5V12C3 16.75 6.8 21.1 12 22.5C17.2 21.1 21 16.75 21 12V6.5L12 2Z" fill="white"/>
+          <rect x="11" y="8" width="2" height="8" rx="1" fill="#0d9488"/>
+          <rect x="8" y="11" width="8" height="2" rx="1" fill="#0d9488"/>
+        </svg>
+      </div>
+      <div class="tb-logo-text">
+        <span class="tb-logo-name">MediCare+</span>
+      </div>
+    </div>
+
+    <!-- NAV CENTER -->
+    <nav class="tb-nav">
+      <a class="tb-nav-item" [class.active]="isActive('/dashboard')" (click)="navigateTo('/dashboard')">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+      </a>
+      <a class="tb-nav-item" [class.active]="isActive('/patients')" (click)="navigateTo('/patients')">
+        <i class="bi bi-people-fill"></i>
+        <span>Patients</span>
+        <span class="tb-nb" *ngIf="totalPatientsCount > 0">{{ totalPatientsCount }}</span>
+      </a>
+      <a class="tb-nav-item" [class.active]="isActive('/file-attente')" (click)="navigateTo('/file-attente')">
+        <i class="bi bi-list-ol"></i>
+        <span>File</span>
+        <span class="tb-nb" *ngIf="fileAttenteEnAttenteCount > 0">{{ fileAttenteEnAttenteCount }}</span>
+      </a>
+      <a class="tb-nav-item" [class.active]="isActive('/agenda')" (click)="navigateTo('/agenda')">
+        <i class="bi bi-calendar3"></i>
+        <span>Agenda</span>
+        <span class="tb-nb" *ngIf="rdvTodayCount > 0">{{ rdvTodayCount }}</span>
+      </a>
+
+      <!-- PLUS DROPDOWN -->
+      <div class="plus-wrapper"
+           (mouseenter)="showPlusMenu = true"
+           (mouseleave)="showPlusMenu = false">
+        <a class="tb-nav-item" [class.active]="isPlusActive()">
+          <i class="bi bi-three-dots"></i>
+          <span>Plus</span>
+        </a>
+        <div class="tb-plus-dropdown" *ngIf="showPlusMenu">
+          <a class="tb-plus-item"
+             [class.active]="isActive('/consultation') || isActive('/ordonnance') || isActive('/examens')"
+             (click)="navigateTo('/consultation')">
+            <i class="bi bi-clipboard2-pulse"></i>
+            Consult.
+          </a>
+          <a class="tb-plus-item" [class.active]="isActive('/facturation')" (click)="navigateTo('/facturation')">
+            <i class="bi bi-credit-card"></i>
+            Factures
+          </a>
+          <a class="tb-plus-item" [class.active]="isActive('/statistiques')" (click)="navigateTo('/statistiques')">
+            <i class="bi bi-bar-chart-fill"></i>
+            Stats
+          </a>
+          <a class="tb-plus-item" [class.active]="isActive('/parametres')" (click)="navigateTo('/parametres')">
+            <i class="bi bi-gear-fill"></i>
+            Paramètres
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- RIGHT ZONE -->
+    <div class="tb-right">
+
+      <!-- EN CONSULTATION badge -->
+      <ng-container *ngIf="enConsultationSidebar; else noConsult">
+        <div class="tb-ec-pill" (click)="navigateTo('/patients/' + enConsultationSidebar.patientId)">
+          <span class="tb-ec-dot"></span>
+          <span class="tb-ec-label">EN CONSULT.</span>
+          <span class="tb-ec-name">{{ enConsultationSidebar.patientNom }}</span>
+        </div>
+      </ng-container>
+      <ng-template #noConsult>
+        <div class="tb-idle-pill">
+          <span class="tb-idle-dot"></span>
+          <span>Disponible</span>
+        </div>
+      </ng-template>
+
+      <!-- Pipe separator -->
+      <span class="tb-pipe">|</span>
+
+      <!-- Date -->
+      <span class="tb-date">{{ currentDate }}</span>
+
+      <!-- Notifications -->
+      <div class="notif-wrapper" (clickOutside)="showNotifDropdown = false">
+        <button class="tb-icon-btn" (click)="toggleNotifDropdown()">
+          <i class="bi bi-bell"></i>
+          <span class="notif-badge" *ngIf="unreadCount > 0"></span>
+        </button>
+
+        <div class="notif-dropdown" *ngIf="showNotifDropdown">
+          <div class="notif-hd">
+            <span class="notif-hd-title">Notifications</span>
+            <span class="notif-hd-count" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+            <button class="notif-read-all" (click)="markAllRead()" *ngIf="unreadCount > 0">Tout lire</button>
+          </div>
+          <div class="notif-list">
+            <div class="notif-item unread"
+                 *ngFor="let n of unreadNotifications"
+                 [style.borderLeftColor]="getNotifBorderColor(n.type)"
+                 (click)="markAsRead(n.id); navigateTo(n.lien || '')">
+              <i class="bi {{ getNotifIcon(n.type) }} notif-icon"></i>
+              <div class="notif-body">
+                <div class="notif-title">{{ n.titre }}</div>
+                <div class="notif-msg" *ngIf="n.message">{{ n.message }}</div>
+                <div class="notif-time">{{ getTimeAgo(n.date) }}</div>
+              </div>
+            </div>
+            <div class="notif-empty" *ngIf="unreadNotifications.length === 0">Aucune notification</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avatar -->
+      <div class="tb-avatar">HB</div>
+
+    </div>
+  </header>
+
+  <!-- ══ MAIN ══ -->
+  <div class="main-wrapper">
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</div>

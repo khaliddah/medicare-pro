@@ -1,0 +1,284 @@
+.agenda-page { width: 100%; }
+
+/* ── BANNER ── */
+.comp-banner {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  border-radius: 12px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.comp-banner-left { display: flex; align-items: center; gap: 16px; }
+.comp-banner-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  flex-shrink: 0;
+}
+.comp-banner-text { display: flex; flex-direction: column; gap: 2px; }
+.comp-banner-title { font-size: 1.3rem; font-weight: 800; color: white; margin: 0; }
+.comp-banner-sub { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0; }
+.comp-banner-actions { display: flex; align-items: center; gap: 8px; }
+.comp-banner-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  color: #0d9488;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: box-shadow 150ms;
+}
+.comp-banner-btn:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.view-toggle {
+  display: flex;
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
+  padding: 3px;
+}
+.vt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background 120ms, color 120ms;
+}
+.vt-btn.vt-active {
+  background: white;
+  color: #0d9488;
+  font-weight: 700;
+}
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+.page-title { font-size: 24px; font-weight: 700; color: #0f172a; margin: 0 0 4px; }
+.page-subtitle { color: #64748b; font-size: 14px; margin: 0; }
+.header-actions { display: flex; gap: 12px; align-items: center; }
+
+.view-toggle { display: flex; background: #f0f4f8; border-radius: 10px; padding: 4px; }
+.view-toggle button { background: none; border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 6px; }
+.view-toggle button.active { background: white; color: var(--teal); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+/* ===== STATS PILLS ===== */
+.stats-pills-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.agenda-pill {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 20px;
+  font-size: 13px; font-weight: 600;
+}
+.pill-total { background: #e0f2fe; color: #0369a1; }
+.pill-confirme { background: #d1fae5; color: #065f46; }
+.pill-arrive { background: #dbeafe; color: #1e40af; }
+.pill-annule { background: #fee2e2; color: #991b1b; }
+
+/* ===== NEW RDV FORM ===== */
+.new-rdv-panel {
+  background: white; border-radius: 14px; padding: 20px; margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-left: 4px solid var(--teal);
+}
+
+/* ===== PATIENT AUTOCOMPLETE ===== */
+.patient-autocomplete { position: relative; }
+.patient-dropdown {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: white; border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.14);
+  border: 1px solid #e8edf2; z-index: 200;
+  max-height: 240px; overflow-y: auto;
+}
+.patient-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; cursor: pointer; transition: background 0.12s;
+}
+.patient-option:hover { background: #f8fafb; }
+.opt-avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--teal);
+  color: white; font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.opt-name { font-size: 13px; font-weight: 600; color: #0f172a; }
+.opt-sub { font-size: 11px; color: #64748b; }
+.patient-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--teal-light); color: var(--teal);
+  padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;
+}
+.chip-remove {
+  background: none; border: none; color: var(--teal); cursor: pointer;
+  font-size: 16px; line-height: 1; padding: 0 0 0 2px;
+}
+
+/* ===== CALENDAR ===== */
+.calendar-card { border: none; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; }
+.calendar-header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f0f4f8; background: white; }
+.cal-month { flex: 1; text-align: center; font-size: 17px; font-weight: 700; margin: 0; color: #0f172a; }
+.cal-nav { background: none; border: 1px solid #e8edf2; border-radius: 8px; padding: 6px 12px; cursor: pointer; color: #5a6b7a; font-size: 14px; }
+.cal-nav:hover { background: #f0f4f8; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); background: white; }
+.cal-day-name { text-align: center; padding: 10px; font-size: 12px; font-weight: 600; color: #64748b; background: #f8fafb; border-bottom: 1px solid #f0f4f8; }
+.cal-day { min-height: 88px; padding: 6px; border-right: 1px solid #f5f7fa; border-bottom: 1px solid #f5f7fa; cursor: pointer; transition: background 0.15s; }
+.cal-day:hover { background: #f8fafb; }
+.cal-day.selected { background: #f0fdf9; }
+.cal-day.today .day-number { background: var(--teal); color: white; }
+.cal-day.other-month { opacity: 0.35; }
+.day-number { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.day-rdvs { display: flex; flex-direction: column; gap: 2px; }
+.rdv-pill { border-radius: 4px; padding: 2px 5px; font-size: 10px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rdv-more { font-size: 10px; color: #64748b; padding-left: 4px; }
+
+/* ===== TODAY SECTION ===== */
+.today-section { }
+.today-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.today-title { font-size: 15px; font-weight: 700; color: #0f172a; }
+.today-count { background: var(--teal); color: white; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 9999px; }
+.today-list { background: white; border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }
+.today-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px 16px; border-bottom: 1px solid #f5f7fa;
+  transition: background 0.12s;
+}
+.today-item:last-child { border-bottom: none; }
+.today-item:hover { background: #f8fafb; }
+.today-item.rdv-annule { opacity: 0.5; }
+.today-time {
+  background: var(--teal-light);
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.today-stripe { width: 3px; height: 36px; border-radius: 2px; flex-shrink: 0; }
+.today-info { flex: 1; min-width: 0; }
+.today-actions { display: flex; gap: 6px; }
+
+/* TODAY ITEM — inline name + motif */
+.today-info { flex: 1; min-width: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px; }
+.today-name { font-size: 14px; font-weight: 700; color: #0f172a; white-space: nowrap; }
+.today-sep { font-size: 13px; color: #94a3b8; margin: 0 2px; }
+.today-motif { font-size: 13px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.rdv-arrive { background: #f0fdf9; }
+
+/* DANS LA FILE badge */
+.dans-file-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #d1fae5; color: #065f46;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* INLINE CONFIRM */
+.inline-confirm {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff7ed; border: 1px solid #fed7aa;
+  border-radius: 8px; padding: 5px 10px;
+}
+.confirm-text { font-size: 12px; color: #92400e; font-weight: 500; white-space: nowrap; }
+.confirm-oui {
+  background: #ef4444; color: white; border: none;
+  padding: 3px 10px; border-radius: 6px; font-size: 12px;
+  font-weight: 600; cursor: pointer;
+}
+.confirm-oui:hover { background: #dc2626; }
+.confirm-non {
+  background: #f1f5f9; color: #475569; border: none;
+  padding: 3px 10px; border-radius: 6px; font-size: 12px;
+  font-weight: 600; cursor: pointer;
+}
+.confirm-non:hover { background: #e2e8f0; }
+
+/* Day panel states */
+.item-annule { opacity: 0.45; }
+.item-arrive { background: #f0fdf9; border-left: 3px solid #10b981; padding-left: 9px; }
+.name-annule { text-decoration: line-through; }
+.day-item-actions { display: flex; gap: 6px; }
+
+/* ===== ACTION BUTTONS ===== */
+.action-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 8px; font-size: 12px;
+  border: none; cursor: pointer; font-weight: 600; transition: all 0.12s;
+}
+.action-arrive { background: #dbeafe; color: #1e40af; }
+.action-arrive:hover { background: #bfdbfe; }
+.action-annuler { background: #fee2e2; color: #991b1b; }
+.action-annuler:hover { background: #fecaca; }
+
+/* ===== LIST VIEW ===== */
+.card-header-custom { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f0f4f8; }
+.card-title-custom { font-size: 15px; font-weight: 600; margin: 0; color: #0f172a; }
+.rdv-list-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 20px; border-bottom: 1px solid #f5f7fa; transition: background 0.15s;
+}
+.rdv-list-item:hover { background: #f8fafb; }
+.rdv-date-col { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
+.rdv-date-day { font-size: 20px; font-weight: 700; color: #0f172a; line-height: 1; }
+.rdv-date-month { font-size: 11px; color: #64748b; text-transform: uppercase; }
+.rdv-type-stripe { width: 3px; height: 40px; border-radius: 2px; flex-shrink: 0; }
+.rdv-info { flex: 1; }
+.rdv-patient-name { font-size: 14px; font-weight: 600; color: #0f172a; }
+.rdv-detail { font-size: 12px; color: #64748b; }
+.list-actions { display: flex; gap: 6px; }
+
+/* ===== BADGES ===== */
+.rdv-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.statut-confirme { background: #d4edda; color: #155724; }
+.statut-attente { background: #fff3cd; color: #856404; }
+.statut-annule { background: #f8d7da; color: #721c24; }
+.statut-termine { background: #e2e3e5; color: #383d41; }
+.statut-arrive { background: #dbeafe; color: #1e40af; }
+
+/* ===== DAY PANEL ===== */
+.day-panel { border: none; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); height: fit-content; }
+.day-panel-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f0f4f8; }
+.day-panel-header h6 { font-weight: 600; margin: 0; color: #0f172a; text-transform: capitalize; font-size: 14px; }
+.rdv-count { background: var(--teal); color: white; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+.day-panel-body { padding: 8px 0; }
+.day-rdv-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 20px; border-bottom: 1px solid #f5f7fa; }
+.day-rdv-item:last-child { border-bottom: none; }
+.time-slot {
+  background: var(--teal-light);
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.type-line { width: 3px; min-height: 50px; border-radius: 2px; flex-shrink: 0; }
+.rdv-details { flex: 1; }
+.rdv-pname { font-size: 14px; font-weight: 600; color: #0f172a; }
+.rdv-pmotif { font-size: 12px; color: #64748b; margin-bottom: 6px; }
+.rdv-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.rdv-duree { font-size: 11px; color: #aab; display: flex; align-items: center; gap: 3px; }
+.day-item-actions { display: flex; gap: 6px; }
+.empty-state-day { text-align: center; padding: 40px 20px; color: #aab; }
+.empty-state-day i { font-size: 36px; display: block; margin-bottom: 8px; }
+.empty-state-day p { font-size: 13px; }

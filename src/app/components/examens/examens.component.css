@@ -1,0 +1,167 @@
+/* ═══════════ PAGE ═══════════ */
+.examens-page { max-width: 1200px; }
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.page-title { font-size: 24px; font-weight: 700; color: #1e2a3a; margin: 0 0 4px; }
+.page-subtitle { color: #7a8b9a; font-size: 14px; margin: 0; }
+
+/* ═══════════ ONGLETS ═══════════ */
+.tabs-nav { display: flex; gap: 4px; background: #f0f4f8; border-radius: 12px; padding: 4px; width: fit-content; }
+.tab-btn { background: none; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-size: 14px; color: #7a8b9a; display: flex; align-items: center; gap: 6px; }
+.tab-btn.active { background: white; color: #1a6b4a; font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+/* ═══════════ FILTRES ═══════════ */
+.filter-card { border: none; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.stat-pills { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.stat-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 20px; }
+.attente-pill  { background: #fff3cd; color: #856404; }
+.resultat-pill { background: #d4edda; color: #155724; }
+
+/* ═══════════ KANBAN ═══════════ */
+.kanban-col { background: #f8fafb; border-radius: 16px; overflow: hidden; }
+.kanban-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; font-weight: 600; font-size: 14px; }
+.attente-header  { background: #fff3cd; color: #856404; }
+.resultat-header { background: #d4edda; color: #155724; }
+.kanban-count { margin-left: auto; background: rgba(0,0,0,0.1); border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
+.kanban-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
+
+/* ═══════════ CARTES EXAMEN ═══════════ */
+.examen-card { background: white; border-radius: 12px; padding: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid transparent; transition: all 0.2s; }
+.examen-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.examen-card.urgent { border-color: #e74c3c; }
+.examen-card.critique { border-color: #e74c3c; border-width: 2px; }
+.resultat-card { border-left: 3px solid #1a6b4a; }
+
+.examen-card-header { margin-bottom: 10px; }
+.patient-name { font-size: 14px; color: #1e2a3a; }
+
+.urgence-badge { background: #e74c3c; color: white; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+
+/* Liste analyses dans les cartes */
+.analyses-list { margin: 0 0 8px; padding-left: 18px; }
+.analyses-list li { font-size: 12px; color: #3a4a5a; line-height: 1.8; }
+
+/* Alerte critique */
+.critique-alert { display: flex; align-items: center; gap: 8px; background: #fde8e8; border: 1px solid #f5c6c6; border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 12px; color: #b91c1c; font-weight: 600; }
+
+/* Résultat box */
+.resultat-box { display: flex; gap: 8px; align-items: flex-start; background: #f0f9f4; border: 1px solid #b8dcc8; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+.resultat-box i { color: #1a6b4a; font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.resultat-text { margin: 0; font-size: 11px; color: #1e2a3a; line-height: 1.7; white-space: pre-wrap; font-family: inherit; }
+
+.examen-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: 11px; color: #9ab; margin-top: 8px; }
+
+/* État vide */
+.empty-col { text-align: center; padding: 40px 16px; color: #aab; }
+.empty-col i { font-size: 32px; display: block; margin-bottom: 8px; }
+.empty-col p { font-size: 13px; margin: 0; }
+
+/* ═══════════ NOUVELLE DEMANDE ═══════════ */
+.section-card { background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; }
+.section-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px; border-bottom: 1px solid #f0f4f8; background: #f8fafb; }
+.section-header h5 { margin: 0; font-size: 15px; font-weight: 600; color: #1e2a3a; }
+.section-header i { font-size: 18px; }
+.section-body { padding: 20px 24px; }
+
+.patient-header-readonly {
+  background: linear-gradient(135deg, #e8f4ef, #f0f9f4);
+  border: 1px solid #b8dcc8; border-radius: 12px; padding: 16px 20px;
+}
+.patient-identity { display: flex; align-items: flex-start; gap: 14px; }
+.patient-avatar {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, #1a6b4a, #00c9a7);
+  border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; font-size: 16px; font-weight: 700;
+  color: white; flex-shrink: 0; text-transform: uppercase;
+}
+.patient-name { font-size: 17px; font-weight: 700; color: #1e2a3a; margin-bottom: 5px; }
+.patient-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: #4a5568; }
+.patient-meta span { display: flex; align-items: center; }
+
+.patient-mini-banner {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: #f0f9f4; border: 1px solid #b8dcc8;
+  border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 28px;
+}
+
+.analyse-group-label {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #1a6b4a;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 2px solid #d1fae5;
+}
+.form-check-label { font-size: 13px; cursor: pointer; }
+
+.form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.saved-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #065f46; font-weight: 500; }
+
+/* ═══════════ MODAL RÉSULTATS ═══════════ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1050; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.modal-box { background: white; border-radius: 16px; width: 100%; max-width: 560px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); overflow: hidden; }
+
+.modal-header-custom { display: flex; align-items: flex-start; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #f0f4f8; background: #f8fafb; }
+.modal-title-custom { margin: 0 0 2px; font-size: 15px; font-weight: 600; color: #1e2a3a; }
+.btn-close-modal { background: none; border: none; cursor: pointer; padding: 4px 8px; color: #7a8b9a; font-size: 16px; border-radius: 6px; }
+.btn-close-modal:hover { background: #f0f4f8; color: #1e2a3a; }
+
+.modal-body-custom { padding: 20px; }
+.modal-footer-custom { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid #f0f4f8; background: #fafbfc; }
+
+.modal-analyses-recap { background: #f8fafb; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; }
+
+.critique-check-zone { padding: 12px 14px; border-radius: 10px; border: 1px solid #e0e0e0; background: #fafafa; transition: all 0.2s; }
+.critique-check-zone.is-critique { background: #fff5f5; border-color: #f5c6c6; }
+.critique-info { font-size: 12px; color: #b91c1c; margin-top: 6px; padding-left: 24px; }
+
+/* ═══════════ PRINT ZONE ═══════════ */
+.print-zone { display: none; }
+
+@media print {
+  .examens-page { display: none !important; }
+
+  .print-zone {
+    display: block !important;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt; color: #000;
+    padding: 12mm 18mm; max-width: 210mm; margin: 0 auto;
+  }
+
+  .print-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 10px; border-bottom: 2px solid #000; margin-bottom: 14px;
+  }
+  .doctor-name { font-size: 16pt; font-weight: bold; }
+  .doctor-spec { font-size: 10pt; font-style: italic; margin-bottom: 3px; }
+  .doctor-info { font-size: 9pt; color: #333; }
+  .print-date-block { text-align: right; }
+  .print-date-label { font-size: 9pt; color: #555; }
+  .print-date-val { font-size: 12pt; font-weight: bold; }
+
+  .print-patient-box { background: #f5f5f5; border: 1px solid #ccc; padding: 8px 12px; margin-bottom: 14px; }
+  .print-patient-table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+  .print-patient-table td { padding: 3px 10px 3px 0; }
+
+  .print-title {
+    text-align: center; font-size: 14pt; font-weight: bold;
+    letter-spacing: 2px; margin: 16px 0; padding: 7px 0;
+    border-top: 1px solid #000; border-bottom: 1px solid #000;
+  }
+
+  .urgent-stamp {
+    text-align: center; font-size: 18pt; font-weight: bold;
+    color: #cc0000; border: 3px solid #cc0000;
+    padding: 6px; margin: 12px 0; letter-spacing: 3px;
+  }
+
+  .print-section { margin-bottom: 12px; }
+  .print-section-title {
+    font-size: 10pt; font-weight: bold; text-transform: uppercase;
+    letter-spacing: 1px; border-bottom: 1px solid #ccc; padding-bottom: 3px; margin-bottom: 5px;
+  }
+  .print-section p { margin: 0; line-height: 1.6; }
+  .print-analyse-list { margin: 0; padding-left: 18px; font-size: 10pt; line-height: 1.8; }
+
+  .print-footer { margin-top: 40px; display: flex; justify-content: flex-end; }
+  .print-signature { text-align: center; font-size: 9pt; color: #555; }
+  .sig-line { width: 150px; border-bottom: 1px solid #000; margin: 0 auto 6px; }
+}

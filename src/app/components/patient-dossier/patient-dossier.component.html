@@ -1,0 +1,576 @@
+<!-- LOADING -->
+<div class="loading-page" *ngIf="loading">
+  <div class="spinner-border text-primary"></div>
+</div>
+
+<!-- NOT FOUND -->
+<div class="not-found" *ngIf="!loading && !patient">
+  <i class="bi bi-person-x"></i>
+  <h4>Patient introuvable</h4>
+  <button class="btn btn-primary" (click)="goBack()">
+    <i class="bi bi-arrow-left me-1"></i>Retour aux patients
+  </button>
+</div>
+
+<!-- DOSSIER -->
+<div class="dossier-page" *ngIf="!loading && patient">
+
+  <!-- STICKY BANNER -->
+  <div class="consult-banner" *ngIf="enConsultationRecord">
+    <div class="banner-left">
+      <span class="banner-dot"></span>
+      <span class="banner-text">En cours de consultation • Arrivé à {{ enConsultationRecord.heureArrivee }} • {{ typeLabel(enConsultationRecord.type) }}</span>
+    </div>
+    <div class="banner-right">
+      <button class="btn btn-primary btn-sm"
+              [routerLink]="['/consultation']"
+              [queryParams]="{patientId: patient!.id, fileAttenteId: enConsultationRecord.id}">
+        📋 Nouvelle consultation
+      </button>
+      <button class="btn btn-outline-secondary btn-sm" (click)="terminerConsultation()">
+        ✕ Terminer sans consultation
+      </button>
+    </div>
+  </div>
+
+  <!-- PATIENT HEADER CARD -->
+  <div class="patient-header-card">
+    <div class="ph-left">
+      <div class="ph-av" [style.background]="getAvatarColor(patient.id)">
+        {{ getInitials(patient) }}
+      </div>
+      <div class="blood-badge" *ngIf="patient.groupeSanguin && patient.groupeSanguin !== 'Inconnu'">
+        🩸 {{ patient.groupeSanguin }}
+      </div>
+    </div>
+
+    <div class="ph-center">
+      <h2 class="ph-name">{{ patient.prenom }} {{ patient.nom }}</h2>
+      <div class="ph-meta">
+        {{ patient.cin }}
+        <span class="meta-sep">•</span>
+        {{ calculateAge(patient.dateNaissance) }} ans
+        <span class="meta-sep">•</span>
+        {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}
+      </div>
+      <div class="ph-pills">
+        <span class="info-pill" *ngIf="patient.mutuelle && patient.mutuelle !== 'aucune'">
+          <i class="bi bi-shield-check"></i> {{ patient.mutuelle }}
+        </span>
+        <span class="info-pill" *ngIf="patient.ville">
+          <i class="bi bi-geo-alt"></i> {{ patient.ville }}
+        </span>
+        <span class="info-pill" *ngIf="patient.telephone">
+          <i class="bi bi-telephone"></i> {{ patient.telephone }}
+        </span>
+      </div>
+
+      <div class="allergy-alert-card" *ngIf="patient.allergies.length > 0">
+        <span class="allergy-label">⚠️ Allergie(s) connue(s) :</span>
+        <div class="allergy-tags">
+          <span class="allergy-tag" *ngFor="let a of patient.allergies">{{ a }}</span>
+        </div>
+      </div>
+
+      <div class="ph-derniere-visite" *ngIf="patient.dernierVisite">
+        <i class="bi bi-calendar-check"></i>
+        Dernière visite : {{ patient.dernierVisite | date:'dd MMM yyyy' | uppercase }}
+      </div>
+
+      <div class="antecedent-tags" *ngIf="patient.antecedents.length > 0">
+        <span class="tag-teal" *ngFor="let a of patient.antecedents">{{ a }}</span>
+      </div>
+    </div>
+
+    <div class="ph-right">
+      <button class="btn btn-outline-secondary btn-sm" (click)="openEditForm()">
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+      <button class="btn btn-primary btn-sm"
+              [routerLink]="['/consultation']"
+              [queryParams]="{patientId: patient.id}">
+        <i class="bi bi-clipboard2-pulse me-1"></i>Nouvelle consultation
+      </button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn" [class.active]="activeTab === 0" (click)="selectTab(0)">
+      Informations
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 1" (click)="selectTab(1)">
+      Historique consultations
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 2" (click)="selectTab(2)">
+      Factures
+    </button>
+  </div>
+
+  <!-- TAB CONTENT -->
+  <div class="tab-content">
+
+    <!-- ─── TAB 0: INFORMATIONS ─── -->
+    <div *ngIf="activeTab === 0">
+      <div class="row g-4">
+
+        <div class="col-lg-6">
+          <div class="info-card">
+            <div class="info-card-title">Informations personnelles</div>
+            <div class="info-rows">
+              <div class="info-row"><span class="info-lbl">Nom complet</span><span>{{ patient.prenom }} {{ patient.nom }}</span></div>
+              <div class="info-row"><span class="info-lbl">CIN</span><span>{{ patient.cin }}</span></div>
+              <div class="info-row"><span class="info-lbl">Date de naissance</span><span>{{ patient.dateNaissance | date:'dd/MM/yyyy' }}</span></div>
+              <div class="info-row"><span class="info-lbl">Âge</span><span>{{ calculateAge(patient.dateNaissance) }} ans</span></div>
+              <div class="info-row"><span class="info-lbl">Sexe</span><span>{{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}</span></div>
+              <div class="info-row"><span class="info-lbl">Ville</span><span>{{ patient.ville || '—' }}</span></div>
+              <div class="info-row"><span class="info-lbl">Adresse</span><span>{{ patient.adresse || '—' }}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="info-card">
+            <div class="info-card-title">Contact &amp; Couverture</div>
+            <div class="info-rows">
+              <div class="info-row"><span class="info-lbl">Téléphone</span><span>{{ patient.telephone }}</span></div>
+              <div class="info-row"><span class="info-lbl">Email</span><span>{{ patient.email || '—' }}</span></div>
+              <div class="info-row"><span class="info-lbl">Mutuelle</span><span>{{ patient.mutuelle || 'Aucune' }}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="info-card">
+            <div class="info-card-title">Informations médicales</div>
+            <div class="info-rows">
+              <div class="info-row">
+                <span class="info-lbl">Groupe sanguin</span>
+                <span class="blood-badge-lg">{{ patient.groupeSanguin }}</span>
+              </div>
+            </div>
+            <div class="mt-4" *ngIf="patient.antecedents.length > 0">
+              <div class="info-lbl mb-2">Antécédents médicaux</div>
+              <div class="tags-wrap">
+                <span class="tag-teal" *ngFor="let a of patient.antecedents">{{ a }}</span>
+              </div>
+            </div>
+            <div class="mt-3" *ngIf="patient.allergies.length > 0">
+              <div class="info-lbl mb-2" style="color:var(--danger)">Allergies</div>
+              <div class="tags-wrap">
+                <span class="allergy-tag" *ngFor="let a of patient.allergies">{{ a }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB LOADING -->
+    <div class="tab-loading" *ngIf="activeTab > 0 && tabLoading">
+      <div class="spinner-border" style="color:var(--teal)"></div>
+    </div>
+
+    <!-- ─── TAB 1: HISTORIQUE CONSULTATIONS ─── -->
+    <div *ngIf="activeTab === 1 && !tabLoading">
+
+      <div class="hist-empty" *ngIf="consultations.length === 0">
+        <i class="bi bi-stethoscope"></i>
+        <p>Aucune consultation enregistrée</p>
+        <button class="btn btn-primary btn-sm"
+                [routerLink]="['/consultation']"
+                [queryParams]="{patientId: patient!.id}">
+          <i class="bi bi-plus-lg me-1"></i>Nouvelle consultation
+        </button>
+      </div>
+
+      <div class="timeline" *ngIf="consultations.length > 0">
+        <div class="timeline-item" *ngFor="let c of consultations"
+             [class.timeline-open]="expandedConsultationId === c.id">
+
+          <div class="timeline-dot"
+               [class.dot-teal]="!c.type || c.type === 'consultation'"
+               [class.dot-orange]="c.type === 'controle'"></div>
+
+          <div class="timeline-card"
+               [class.border-teal]="!c.type || c.type === 'consultation'"
+               [class.border-orange]="c.type === 'controle'">
+
+            <!-- HEADER -->
+            <div class="tc-header" (click)="toggleConsultation(c.id)">
+              <div class="tc-header-left">
+                <span class="tc-date-pill">
+                  {{ c.date | date:'dd MMM yyyy' | uppercase }}
+                </span>
+                <span class="tc-motif">{{ c.motif }}</span>
+              </div>
+              <div class="tc-header-right">
+                <span class="tc-type-badge tc-badge-teal" *ngIf="!c.type || c.type === 'consultation'">
+                  Consultation
+                </span>
+                <span class="tc-type-badge tc-badge-grey" *ngIf="c.type === 'controle'">
+                  Contrôle
+                </span>
+                <span class="tc-icon-badge" *ngIf="getOrdonnanceForConsultation(c.id)" title="Ordonnance">💊</span>
+                <span class="tc-icon-badge" *ngIf="getExamenForConsultation(c.id)" title="Analyses">🔬</span>
+                <button class="tc-chevron" [class.rotated]="expandedConsultationId === c.id">
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- PREVIEW -->
+            <div class="tc-preview" *ngIf="c.anamnese">{{ c.anamnese }}</div>
+
+            <!-- EXPANDED -->
+            <div class="tc-body" *ngIf="expandedConsultationId === c.id">
+              <hr class="tc-divider">
+
+              <!-- RAPPORT -->
+              <div class="tc-section" *ngIf="c.anamnese">
+                <div class="tc-section-title teal">📋 Rapport</div>
+                <div class="tc-rapport-text">{{ c.anamnese }}</div>
+              </div>
+
+              <!-- ORDONNANCE -->
+              <ng-container *ngIf="getOrdonnanceForConsultation(c.id) as ordo">
+                <div class="tc-section">
+                  <div class="tc-section-hd">
+                    <div class="tc-section-title teal">💊 Ordonnance</div>
+                    <button class="tc-print-btn" (click)="printOrdonnance(ordo)">
+                      <i class="bi bi-printer me-1"></i>Imprimer
+                    </button>
+                  </div>
+                  <div class="tc-inner-box">
+                    <div class="med-row" *ngFor="let m of ordo.medicaments; let i = index">
+                      <span class="med-num">{{ i + 1 }}</span>
+                      <div class="med-info">
+                        <span class="med-name">{{ m.nom }}</span>
+                        <span class="med-dosage" *ngIf="m.dosage">{{ m.dosage }}</span>
+                      </div>
+                      <div class="med-meta">
+                        <span *ngIf="m.posologie">{{ m.posologie }}</span>
+                        <span *ngIf="m.duree"> — {{ m.duree }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- ANALYSES -->
+              <ng-container *ngIf="getExamenForConsultation(c.id) as exam">
+                <div class="tc-section">
+                  <div class="tc-section-hd">
+                    <div class="tc-section-title teal">🔬 Analyses</div>
+                    <div class="tc-section-actions">
+                      <span class="urgent-pill" *ngIf="exam.urgence">URGENT</span>
+                      <button class="tc-saisir-btn"
+                              *ngIf="saisirResultatsId !== exam.id && hasUnfilledResults(exam)"
+                              (click)="openSaisirResultats(exam)">
+                        <i class="bi bi-pencil-square me-1"></i>Saisir résultats
+                      </button>
+                      <button class="tc-print-btn" (click)="printAnalyses(exam)">
+                        <i class="bi bi-printer me-1"></i>Imprimer
+                      </button>
+                    </div>
+                  </div>
+                  <div class="tc-inner-box">
+
+                    <ng-container *ngIf="saisirResultatsId !== exam.id">
+                      <div class="result-row" *ngFor="let a of exam.analyses">
+                        <ng-container *ngIf="exam.resultats && exam.resultats[a]; else noRes">
+                          <span class="result-tag result-done">✅ {{ a }}: {{ exam.resultats[a] }}</span>
+                        </ng-container>
+                        <ng-template #noRes>
+                          <span class="result-tag result-pending">{{ a }}: —</span>
+                        </ng-template>
+                      </div>
+                      <div class="labo-row" *ngIf="exam.laboratoire">
+                        <i class="bi bi-building me-1"></i>{{ exam.laboratoire }}
+                      </div>
+                    </ng-container>
+
+                    <div class="resultat-form" *ngIf="saisirResultatsId === exam.id">
+                      <div class="rf-row" *ngFor="let a of exam.analyses">
+                        <label class="rf-label">{{ a }}</label>
+                        <input class="rf-input" type="text"
+                               [(ngModel)]="resultatsForm[a]"
+                               [placeholder]="'Ex: 5.2 g/dL'">
+                      </div>
+                      <div class="rf-actions">
+                        <button class="rf-cancel" (click)="saisirResultatsId = null">Annuler</button>
+                        <button class="rf-save" (click)="saveResultats(exam)" [disabled]="savingResultats">
+                          <span *ngIf="savingResultats" class="spinner-border spinner-border-sm"></span>
+                          <i *ngIf="!savingResultats" class="bi bi-check-lg"></i>
+                          Enregistrer
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </ng-container>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── TAB 2: FACTURES ─── -->
+    <div *ngIf="activeTab === 2 && !tabLoading">
+      <div class="empty-tab" *ngIf="factures.length === 0">
+        <i class="bi bi-receipt-cutoff"></i>
+        <p>Aucune facture enregistrée pour ce patient</p>
+      </div>
+
+      <div class="factures-card" *ngIf="factures.length > 0">
+        <table class="factures-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Montant</th>
+              <th>Mode</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of factures">
+              <td>{{ f.date | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <span *ngFor="let l of f.lignes; let last = last">
+                  {{ l.description }}<span *ngIf="!last">, </span>
+                </span>
+              </td>
+              <td class="fw-700">{{ f.total }} DH</td>
+              <td>{{ f.modePaiement || '—' }}</td>
+              <td>
+                <span class="statut-badge statut-payee" *ngIf="f.statut === 'payee'">Payée</span>
+                <span class="statut-badge statut-impayee" *ngIf="f.statut === 'impayee'">Impayée</span>
+                <span class="statut-badge statut-partielle" *ngIf="f.statut === 'partielle'">Partielle</span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2" class="fw-700">Total</td>
+              <td class="fw-700" style="color:var(--teal)">
+                {{ getTotalFactures() }} DH
+              </td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /tab-content -->
+</div><!-- /dossier-page -->
+
+
+<!-- ═══════════════════════════════════════════════
+     EDIT PATIENT SLIDE PANEL
+════════════════════════════════════════════════ -->
+<div class="slide-overlay" *ngIf="showEditForm" (click)="closeEditForm()">
+  <div class="slide-panel" (click)="$event.stopPropagation()">
+    <div class="slide-panel-header">
+      <h5>Modifier le patient</h5>
+      <button class="btn-close-panel" (click)="closeEditForm()"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <div class="slide-panel-body">
+      <div class="row g-3">
+        <div class="col-12"><div class="form-section-title"><i class="bi bi-person me-2"></i>Identité</div></div>
+        <div class="col-md-6">
+          <label class="form-label">Nom</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.nom">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Prénom</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.prenom">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">CIN</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.cin">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Date de naissance</label>
+          <input type="date" class="form-control"
+                 [ngModel]="formatDateInput(patientForm.dateNaissance)"
+                 (ngModelChange)="patientForm.dateNaissance = $event">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Sexe</label>
+          <select class="form-select" [(ngModel)]="patientForm.sexe">
+            <option value="M">Masculin</option>
+            <option value="F">Féminin</option>
+          </select>
+        </div>
+
+        <div class="col-12"><div class="form-section-title"><i class="bi bi-telephone me-2"></i>Contact</div></div>
+        <div class="col-md-4">
+          <label class="form-label">Téléphone</label>
+          <input type="tel" class="form-control" [(ngModel)]="patientForm.telephone">
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [(ngModel)]="patientForm.email">
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Adresse</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.adresse">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Ville</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.ville">
+        </div>
+
+        <div class="col-12"><div class="form-section-title"><i class="bi bi-heart-pulse me-2"></i>Informations médicales</div></div>
+        <div class="col-md-6">
+          <label class="form-label">Groupe sanguin</label>
+          <select class="form-select" [(ngModel)]="patientForm.groupeSanguin">
+            <option *ngFor="let g of groupesSanguins" [value]="g">{{ g }}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Mutuelle</label>
+          <select class="form-select" [(ngModel)]="patientForm.mutuelle">
+            <option *ngFor="let m of mutuelles" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Antécédents médicaux</label>
+          <div class="tag-input-wrapper">
+            <div class="tags-display" *ngIf="patientForm.antecedents!.length > 0">
+              <span class="tag-antecedent tag-removable" *ngFor="let a of patientForm.antecedents; let i = index">
+                {{ a }}<button type="button" (click)="removeAntecedent(i)"><i class="bi bi-x"></i></button>
+              </span>
+            </div>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" [(ngModel)]="antecedentInput"
+                     placeholder="Ajouter" (keyup.enter)="addAntecedent()">
+              <button class="btn btn-outline-secondary" type="button" (click)="addAntecedent()"><i class="bi bi-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Allergies</label>
+          <div class="tag-input-wrapper">
+            <div class="tags-display" *ngIf="patientForm.allergies!.length > 0">
+              <span class="tag-allergie tag-removable" *ngFor="let a of patientForm.allergies; let i = index">
+                {{ a }}<button type="button" (click)="removeAllergie(i)"><i class="bi bi-x"></i></button>
+              </span>
+            </div>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" [(ngModel)]="allergieInput"
+                     placeholder="Ajouter" (keyup.enter)="addAllergie()">
+              <button class="btn btn-outline-secondary" type="button" (click)="addAllergie()"><i class="bi bi-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-panel-footer">
+      <button class="btn btn-outline-secondary" (click)="closeEditForm()">Annuler</button>
+      <button class="btn btn-primary" (click)="saveEdit()" [disabled]="formSaving">
+        <span *ngIf="formSaving" class="spinner-border spinner-border-sm"></span>
+        <i *ngIf="!formSaving" class="bi bi-check-lg"></i>
+        Enregistrer
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PRINT ZONE — ORDONNANCE -->
+<div class="dossier-print-zone" *ngIf="printOrdo && patient">
+  <div class="print-header">
+    <div class="print-doctor">
+      <div class="doctor-name">{{ medecin.nom }}</div>
+      <div class="doctor-spec">{{ medecin.specialite }}</div>
+      <div class="doctor-info">INPE : {{ medecin.inpe }}</div>
+      <div class="doctor-info">{{ medecin.adresse }} — {{ medecin.ville }}</div>
+      <div class="doctor-info">Tél : {{ medecin.telephone }}</div>
+    </div>
+    <div class="print-date-block">
+      <div class="print-date-label">Casablanca, le</div>
+      <div class="print-date-val">{{ today | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+  <div class="print-patient-box">
+    <table class="print-patient-table">
+      <tr>
+        <td><strong>Patient :</strong> {{ patient.prenom }} {{ patient.nom }}</td>
+        <td><strong>CIN :</strong> {{ patient.cin }}</td>
+      </tr>
+      <tr>
+        <td><strong>Âge :</strong> {{ calculateAge(patient.dateNaissance) }} ans</td>
+        <td><strong>Sexe :</strong> {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="print-title">ORDONNANCE MÉDICALE</div>
+  <div class="print-meds">
+    <div class="print-med" *ngFor="let m of printOrdo!.medicaments; let i = index">
+      <div class="med-line-title">{{ i + 1 }}. <strong>{{ m.nom }}</strong><span *ngIf="m.dosage"> {{ m.dosage }}</span></div>
+      <div class="med-line-detail" *ngIf="m.posologie">
+        Posologie : {{ m.posologie }}<span *ngIf="m.duree"> — pendant {{ m.duree }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="print-footer">
+    <div class="print-signature"><div class="sig-line"></div><div>Signature &amp; Cachet du médecin</div></div>
+  </div>
+</div>
+
+<!-- PRINT ZONE — ANALYSES -->
+<div class="dossier-print-zone" *ngIf="printExamen && patient">
+  <div class="print-header">
+    <div class="print-doctor">
+      <div class="doctor-name">{{ medecin.nom }}</div>
+      <div class="doctor-spec">{{ medecin.specialite }}</div>
+      <div class="doctor-info">INPE : {{ medecin.inpe }}</div>
+      <div class="doctor-info">{{ medecin.adresse }} — {{ medecin.ville }}</div>
+      <div class="doctor-info">Tél : {{ medecin.telephone }}</div>
+    </div>
+    <div class="print-date-block">
+      <div class="print-date-label">Date</div>
+      <div class="print-date-val">{{ today | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+  <div class="print-patient-box">
+    <table class="print-patient-table">
+      <tr>
+        <td><strong>Patient :</strong> {{ patient.prenom }} {{ patient.nom }}</td>
+        <td><strong>CIN :</strong> {{ patient.cin }}</td>
+      </tr>
+      <tr>
+        <td><strong>Âge :</strong> {{ calculateAge(patient.dateNaissance) }} ans</td>
+        <td><strong>Sexe :</strong> {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="print-title">DEMANDE D'ANALYSES</div>
+  <div class="urgent-stamp" *ngIf="printExamen!.urgence">⚠ URGENT ⚠</div>
+  <div class="print-section">
+    <ul class="print-analyse-list">
+      <li *ngFor="let a of printExamen!.analyses">
+        {{ a }}
+        <span *ngIf="printExamen!.resultats && printExamen!.resultats[a]"> — <strong>{{ printExamen!.resultats[a] }}</strong></span>
+        <span *ngIf="!printExamen!.resultats || !printExamen!.resultats[a]"> — En attente</span>
+      </li>
+    </ul>
+  </div>
+  <div class="print-section" *ngIf="printExamen!.laboratoire">
+    <div class="print-section-title">LABORATOIRE RECOMMANDÉ</div>
+    <p>{{ printExamen!.laboratoire }}</p>
+  </div>
+  <div class="print-footer">
+    <div class="print-signature"><div class="sig-line"></div><div>Signature &amp; Cachet du médecin</div></div>
+  </div>
+</div>

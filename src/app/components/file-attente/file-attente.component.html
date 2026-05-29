@@ -1,0 +1,235 @@
+<div class="fa-page">
+
+  <!-- PAGE BANNER -->
+  <div class="fa-banner">
+    <div class="fa-banner-left">
+      <div class="fa-banner-icon">
+        <i class="bi bi-list-ol"></i>
+      </div>
+      <div class="fa-banner-text">
+        <h2 class="fa-banner-title">File d'attente</h2>
+        <p class="fa-banner-sub">{{ enAttente.length }} patient(s) en attente aujourd'hui</p>
+      </div>
+    </div>
+    <div class="fa-banner-actions">
+      <button class="fa-btn-primary" (click)="openAddModal()">
+        <i class="bi bi-plus-lg"></i>
+        Ajouter un patient arrivé
+      </button>
+    </div>
+  </div>
+
+  <!-- EN CONSULTATION -->
+  <div class="consult-card" *ngIf="enConsultation">
+    <div class="consult-left">
+      <div class="consult-dot"></div>
+      <div>
+        <div class="consult-name">{{ enConsultation.patientNom }}</div>
+        <div class="consult-meta">Arrivé à {{ enConsultation.heureArrivee }}</div>
+      </div>
+    </div>
+    <button class="btn btn-outline-secondary btn-sm" (click)="ouvrirConsultation(enConsultation)">
+      Ouvrir le dossier →
+    </button>
+  </div>
+
+  <!-- APPELER LE SUIVANT -->
+  <button class="call-next-btn"
+          (click)="appellerSuivant()"
+          [disabled]="enAttente.length === 0">
+    <i class="bi bi-play-fill"></i>
+    Appeler le suivant
+    <span *ngIf="enAttente.length > 0"> — {{ enAttente[0].patientNom }}</span>
+  </button>
+
+  <!-- WAITING LIST TABLE -->
+  <div class="queue-card">
+    <div class="queue-card-hd">
+      <span class="queue-card-title">Patients en attente</span>
+      <span class="avg-wait-badge" *ngIf="avgWait > 0">
+        <i class="bi bi-clock"></i> Moy. {{ avgWait }} min
+      </span>
+    </div>
+
+    <div class="queue-empty-state" *ngIf="enAttente.length === 0">
+      <i class="bi bi-check-circle" style="font-size:36px;color:var(--success);display:block;margin-bottom:8px"></i>
+      <p>La file d'attente est vide</p>
+    </div>
+
+    <div class="queue-table" *ngIf="enAttente.length > 0">
+      <div class="q-thead">
+        <span class="qc-num">N°</span>
+        <span class="qc-patient">Patient</span>
+        <span class="qc-type">Type</span>
+        <span class="qc-heure">Arrivée</span>
+        <span class="qc-attente">Attente</span>
+        <span class="qc-actions">Actions</span>
+      </div>
+
+      <div class="q-trow"
+           *ngFor="let item of enAttente; let i = index"
+           [class.row-urgent]="item.type === 'urgent'">
+        <span class="qc-num">
+          <span class="num-circle" [class.num-urgent]="item.type === 'urgent'">{{ i + 1 }}</span>
+        </span>
+        <span class="qc-patient">
+          <div class="q-av">{{ item.patientNom[0] }}</div>
+          <div>
+            <div class="q-name">{{ item.patientNom }}</div>
+          </div>
+        </span>
+        <span class="qc-type">
+          <span class="type-pill" [class]="'tp-' + item.type">
+            {{ typeLabel(item.type) }}
+          </span>
+        </span>
+        <span class="qc-heure">{{ item.heureArrivee }}</span>
+        <span class="qc-attente">
+          <span class="attente-pill tp-avec_rdv">{{ getWaitMinutes(item.heureArrivee) }} min</span>
+        </span>
+        <span class="qc-actions">
+          <button class="ico-btn" (click)="moveUp(item)" [disabled]="i === 0 || isSwapping" title="Monter">
+            <i class="bi bi-chevron-up"></i>
+          </button>
+          <button class="ico-btn" (click)="moveDown(item)" [disabled]="i === enAttente.length - 1 || isSwapping" title="Descendre">
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <button class="ico-btn ico-danger" (click)="removeFromQueue(item)" title="Retirer">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RDV AUJOURD'HUI -->
+  <div class="rdv-card" *ngIf="rdvAujourdhui.length > 0">
+    <div class="queue-card-hd">
+      <span class="queue-card-title">RDV prévus aujourd'hui</span>
+    </div>
+    <div class="rdv-list">
+      <div class="rdv-row" *ngFor="let rdv of rdvAujourdhui">
+        <span class="rdv-heure">{{ rdv.heure }}</span>
+        <div class="rdv-patient">
+          <span class="rdv-name">{{ rdv.patientNom }}<span class="rdv-sep" *ngIf="rdv.motif">&nbsp;·&nbsp;</span><span class="rdv-motif" *ngIf="rdv.motif">{{ rdv.motif }}</span></span>
+        </div>
+        <button class="arrive-btn" *ngIf="!isAlreadyArrived(rdv)" (click)="marquerArrive(rdv)">
+          <i class="bi bi-person-check me-1"></i>Marquer arrivé
+        </button>
+        <span class="dans-file" *ngIf="isAlreadyArrived(rdv)">
+          <i class="bi bi-check-circle-fill me-1"></i>Dans la file
+        </span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE PANEL — Ajouter patient
+     ════════════════════════════ -->
+<div class="slide-overlay" *ngIf="showAddModal" (click)="closeAddModal()">
+  <div class="slide-panel" (click)="$event.stopPropagation()">
+
+    <div class="slide-panel-header">
+      <h5>Ajouter à la file d'attente</h5>
+      <button class="btn-close-panel" (click)="closeAddModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="slide-panel-body">
+
+      <!-- TYPE SELECTOR -->
+      <div class="mb-4">
+        <label class="form-label">Type de visite</label>
+        <div class="type-pills-row">
+          <label class="type-pill-btn" [class.active]="addType==='sans_rdv'">
+            <input type="radio" name="addType" value="sans_rdv" [(ngModel)]="addType" hidden>
+            <i class="bi bi-person-walking"></i> Sans RDV
+          </label>
+          <label class="type-pill-btn" [class.active]="addType==='avec_rdv'">
+            <input type="radio" name="addType" value="avec_rdv" [(ngModel)]="addType" hidden>
+            <i class="bi bi-calendar-check"></i> Avec RDV
+          </label>
+          <label class="type-pill-btn type-pill-urgent" [class.active]="addType==='urgent'">
+            <input type="radio" name="addType" value="urgent" [(ngModel)]="addType" hidden>
+            <i class="bi bi-exclamation-triangle-fill"></i> Urgent
+          </label>
+        </div>
+      </div>
+
+      <!-- SEARCH PATIENT -->
+      <ng-container *ngIf="!createMode">
+        <label class="form-label">Rechercher un patient</label>
+        <div class="patient-search-wrap">
+          <i class="bi bi-search search-ico"></i>
+          <input class="patient-search-input" type="text"
+                 [(ngModel)]="searchQuery"
+                 (ngModelChange)="onSearch()"
+                 placeholder="Nom, prénom ou téléphone...">
+          <button class="search-clear" *ngIf="searchQuery" (click)="searchQuery='';searchResults=[];selectedPatient=null">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <div class="search-results" *ngIf="searchResults.length > 0">
+          <div class="search-result-row" *ngFor="let p of searchResults" (click)="selectPatient(p)">
+            <div class="result-av">{{ p.prenom[0] }}{{ p.nom[0] }}</div>
+            <div>
+              <div class="result-name">{{ p.prenom }} {{ p.nom }}</div>
+              <div class="result-meta">{{ p.telephone }} · {{ p.ville }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="selected-patient" *ngIf="selectedPatient">
+          <i class="bi bi-check-circle-fill" style="color:var(--success)"></i>
+          <span><strong>{{ selectedPatient.prenom }} {{ selectedPatient.nom }}</strong> — {{ selectedPatient.telephone }}</span>
+        </div>
+
+        <div class="not-found-msg" *ngIf="searchQuery.length>=2 && searchResults.length===0 && !selectedPatient">
+          <i class="bi bi-person-x"></i>
+          <span>Patient non trouvé.</span>
+          <button class="create-link" (click)="switchToCreate()">Créer rapidement →</button>
+        </div>
+      </ng-container>
+
+      <!-- CREATE NEW PATIENT -->
+      <ng-container *ngIf="createMode">
+        <div class="create-header">
+          <label class="form-label">Nouveau patient</label>
+          <button class="back-link" (click)="createMode=false">← Retour</button>
+        </div>
+        <div class="row g-3">
+          <div class="col-6">
+            <label class="form-label">Nom *</label>
+            <input class="form-control" type="text" [(ngModel)]="createNom" placeholder="Nom">
+          </div>
+          <div class="col-6">
+            <label class="form-label">Prénom *</label>
+            <input class="form-control" type="text" [(ngModel)]="createPrenom" placeholder="Prénom">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Téléphone</label>
+            <input class="form-control" type="tel" [(ngModel)]="createTel" placeholder="0661234567">
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <div class="slide-panel-footer">
+      <button class="btn btn-outline-secondary" (click)="closeAddModal()">Annuler</button>
+      <button class="btn btn-primary"
+              (click)="confirmerAjout()"
+              [disabled]="addingToQueue||(!selectedPatient&&!createMode)||(createMode&&(!createNom.trim()||!createPrenom.trim()))">
+        <span *ngIf="addingToQueue" class="spinner-border spinner-border-sm"></span>
+        <i *ngIf="!addingToQueue" class="bi bi-plus-lg"></i>
+        Ajouter à la file
+      </button>
+    </div>
+
+  </div>
+</div>

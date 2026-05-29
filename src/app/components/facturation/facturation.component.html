@@ -1,0 +1,280 @@
+<div class="fact-page">
+
+  <!-- PAGE BANNER -->
+  <div class="comp-banner">
+    <div class="comp-banner-left">
+      <div class="comp-banner-icon"><i class="bi bi-receipt"></i></div>
+      <div class="comp-banner-text">
+        <h2 class="comp-banner-title">Facturation</h2>
+        <p class="comp-banner-sub">Gestion des paiements et encaissements</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="fact-stats">
+    <div class="fact-stat-card fact-stat-green">
+      <div class="fact-stat-icon"><i class="bi bi-cash-coin"></i></div>
+      <div class="fact-stat-body">
+        <div class="fact-stat-value">{{ todayCollected | number:'1.0-0' }} DH</div>
+        <div class="fact-stat-lbl">Encaissé aujourd'hui</div>
+      </div>
+    </div>
+    <div class="fact-stat-card fact-stat-orange">
+      <div class="fact-stat-icon"><i class="bi bi-hourglass-split"></i></div>
+      <div class="fact-stat-body">
+        <div class="fact-stat-value">
+          {{ facturesAttente.length }}
+          <span class="fact-stat-sub">· {{ pendingSum | number:'1.0-0' }} DH</span>
+        </div>
+        <div class="fact-stat-lbl">En attente de paiement</div>
+      </div>
+    </div>
+    <div class="fact-stat-card fact-stat-blue">
+      <div class="fact-stat-icon"><i class="bi bi-calendar-check"></i></div>
+      <div class="fact-stat-body">
+        <div class="fact-stat-value">{{ monthTotal | number:'1.0-0' }} DH</div>
+        <div class="fact-stat-lbl">Total encaissé ce mois</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="fact-tabs-bar">
+    <button class="fact-tab" [class.fact-tab-active]="activeTab === 'attente'"
+            (click)="activeTab = 'attente'">
+      <span class="fact-tab-dot"></span>
+      En attente
+      <span class="fact-tab-count" *ngIf="facturesAttente.length">{{ facturesAttente.length }}</span>
+    </button>
+    <button class="fact-tab" [class.fact-tab-active]="activeTab === 'payee'"
+            (click)="activeTab = 'payee'">
+      <i class="bi bi-check-circle-fill" style="color:#10B981"></i>
+      Payées
+      <span class="fact-tab-count fact-tab-count-green" *ngIf="facturesPayees.length">{{ facturesPayees.length }}</span>
+    </button>
+    <button class="fact-tab" [class.fact-tab-active]="activeTab === 'toutes'"
+            (click)="activeTab = 'toutes'">
+      <i class="bi bi-list-ul"></i>
+      Toutes
+    </button>
+  </div>
+
+  <!-- ═══ EN ATTENTE ═══ -->
+  <div *ngIf="activeTab === 'attente'">
+    <div class="fact-empty" *ngIf="facturesAttente.length === 0">
+      <i class="bi bi-check-circle" style="color:#10B981;font-size:44px;display:block;margin-bottom:12px"></i>
+      <p>Aucune facture en attente</p>
+    </div>
+
+    <div class="fact-list" *ngIf="facturesAttente.length > 0">
+      <div class="fact-list-header">
+        <span class="fcol-patient">Patient</span>
+        <span class="fcol-date">Date</span>
+        <span class="fcol-service">Service</span>
+        <span class="fcol-montant">Montant</span>
+        <span class="fcol-action"></span>
+      </div>
+
+      <ng-container *ngFor="let f of facturesAttente">
+        <div class="fact-row" [class.fact-row-expanded]="encaisserFactureId === f.id">
+          <span class="fcol-patient">
+            <strong>{{ f.patientNom }}</strong>
+          </span>
+          <span class="fcol-date">{{ f.date | date:'dd/MM/yyyy' }}</span>
+          <span class="fcol-service">{{ f.lignes && f.lignes[0] ? f.lignes[0].description : (f.type || '—') }}</span>
+          <span class="fcol-montant">
+            <span class="fact-amount">{{ f.total | number:'1.0-0' }} DH</span>
+          </span>
+          <span class="fcol-action">
+            <button class="fact-encaisser-btn"
+                    *ngIf="encaisserFactureId !== f.id"
+                    (click)="openEncaisser(f)">
+              <i class="bi bi-cash-coin"></i> Encaisser
+            </button>
+            <button class="fact-cancel-inline-btn"
+                    *ngIf="encaisserFactureId === f.id"
+                    (click)="cancelEncaisser()">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </span>
+        </div>
+
+        <!-- INLINE PAYMENT FORM -->
+        <div class="fact-encaisser-form" *ngIf="encaisserFactureId === f.id">
+          <div class="encaisser-form-inner">
+
+            <div class="encaisser-label">Mode de paiement</div>
+            <div class="encaisser-modes">
+              <label class="mode-pill" *ngFor="let m of ['especes','cheque','virement']"
+                     [class.mode-pill-active]="encaisserForm.modePaiement === m">
+                <input type="radio" [value]="m" [(ngModel)]="encaisserForm.modePaiement">
+                <i class="bi {{ modeIcon(m) }}"></i> {{ modeLabel(m) }}
+              </label>
+            </div>
+
+            <div class="encaisser-montant-row">
+              <label class="encaisser-label">Montant reçu (DH)</label>
+              <input class="encaisser-montant-input" type="number"
+                     [(ngModel)]="encaisserForm.montant" min="0" [max]="f.total">
+            </div>
+
+            <div class="encaisser-actions">
+              <button class="encaisser-cancel-btn" (click)="cancelEncaisser()">Annuler</button>
+              <button class="encaisser-confirm-btn" (click)="confirmPaiement(f)" [disabled]="confirming">
+                <span *ngIf="confirming" class="spinner-border spinner-border-sm"></span>
+                <i *ngIf="!confirming" class="bi bi-check-lg"></i>
+                Confirmer le paiement
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- ═══ PAYÉES ═══ -->
+  <div *ngIf="activeTab === 'payee'">
+    <div class="fact-empty" *ngIf="facturesPayees.length === 0">
+      <i class="bi bi-receipt" style="color:#CBD5E1;font-size:44px;display:block;margin-bottom:12px"></i>
+      <p>Aucune facture payée</p>
+    </div>
+
+    <div class="fact-list" *ngIf="facturesPayees.length > 0">
+      <div class="fact-list-header">
+        <span class="fcol-patient">Patient</span>
+        <span class="fcol-date">Date paiement</span>
+        <span class="fcol-service">Service</span>
+        <span class="fcol-montant">Montant</span>
+        <span class="fcol-mode">Mode</span>
+        <span class="fcol-action"></span>
+      </div>
+
+      <div class="fact-row fact-row-payee" *ngFor="let f of facturesPayees">
+        <span class="fcol-patient"><strong>{{ f.patientNom }}</strong></span>
+        <span class="fcol-date">{{ (f.datePaiement || f.date) | date:'dd/MM/yyyy' }}</span>
+        <span class="fcol-service">{{ f.lignes && f.lignes[0] ? f.lignes[0].description : (f.type || '—') }}</span>
+        <span class="fcol-montant">
+          <span class="fact-amount fact-amount-green">{{ f.montantPaye | number:'1.0-0' }} DH</span>
+        </span>
+        <span class="fcol-mode">
+          <span class="fact-mode-badge">
+            <i class="bi {{ modeIcon(f.modePaiement) }}"></i>
+            {{ modeLabel(f.modePaiement) }}
+          </span>
+        </span>
+        <span class="fcol-action">
+          <button class="fact-print-btn" (click)="printRecu(f)">
+            <i class="bi bi-printer"></i> Imprimer reçu
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TOUTES ═══ -->
+  <div *ngIf="activeTab === 'toutes'">
+    <div class="fact-empty" *ngIf="factures.length === 0">
+      <i class="bi bi-receipt" style="color:#CBD5E1;font-size:44px;display:block;margin-bottom:12px"></i>
+      <p>Aucune facture enregistrée</p>
+    </div>
+
+    <div class="fact-list" *ngIf="factures.length > 0">
+      <div class="fact-list-header">
+        <span class="fcol-patient">Patient</span>
+        <span class="fcol-date">Date</span>
+        <span class="fcol-service">Service</span>
+        <span class="fcol-montant">Montant</span>
+        <span class="fcol-mode">Mode</span>
+        <span class="fcol-action">Statut</span>
+      </div>
+
+      <div class="fact-row" *ngFor="let f of factures">
+        <span class="fcol-patient"><strong>{{ f.patientNom }}</strong></span>
+        <span class="fcol-date">{{ f.date | date:'dd/MM/yyyy' }}</span>
+        <span class="fcol-service">{{ f.lignes && f.lignes[0] ? f.lignes[0].description : (f.type || '—') }}</span>
+        <span class="fcol-montant">
+          <span class="fact-amount" [class.fact-amount-green]="f.statut === 'payee'">
+            {{ f.total | number:'1.0-0' }} DH
+          </span>
+        </span>
+        <span class="fcol-mode">
+          <span class="fact-mode-badge" *ngIf="f.modePaiement">
+            <i class="bi {{ modeIcon(f.modePaiement) }}"></i>
+            {{ modeLabel(f.modePaiement) }}
+          </span>
+          <span class="text-muted" *ngIf="!f.modePaiement">—</span>
+        </span>
+        <span class="fcol-action">
+          <span class="fact-statut-badge fact-statut-payee" *ngIf="f.statut === 'payee'">
+            <i class="bi bi-check-circle-fill"></i> Payée
+          </span>
+          <span class="fact-statut-badge fact-statut-attente"
+                *ngIf="f.statut === 'en_attente' || f.statut === 'impayee'">
+            <i class="bi bi-hourglass-split"></i> En attente
+          </span>
+          <span class="fact-statut-badge fact-statut-partielle" *ngIf="f.statut === 'partielle'">
+            <i class="bi bi-slash-circle"></i> Partielle
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     PRINT ZONE — REÇU DE PAIEMENT
+     ══════════════════════════════════ -->
+<div class="fact-print-zone" *ngIf="printFacture">
+  <div class="precu-header">
+    <div class="precu-cabinet">
+      <div class="precu-cabinet-name">CABINET DR. HASSAN BENKIRANE</div>
+      <div class="precu-cabinet-spec">Médecin Généraliste</div>
+      <div class="precu-cabinet-info">45 Boulevard Anfa — Casablanca 20000</div>
+      <div class="precu-cabinet-info">Tél : 0522 123 456 · INPE : 12345</div>
+    </div>
+    <div class="precu-num-block">
+      <div class="precu-num-label">N° Reçu</div>
+      <div class="precu-num-val">REC-{{ printFacture.id.toString().padStart(4,'0') }}</div>
+      <div class="precu-num-date">{{ today | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="precu-patient-box">
+    <div><strong>Patient :</strong> {{ printFacture.patientNom }}</div>
+    <div><strong>Date de la consultation :</strong> {{ printFacture.date | date:'dd/MM/yyyy' }}</div>
+  </div>
+
+  <div class="precu-title">REÇU DE PAIEMENT</div>
+
+  <table class="precu-table">
+    <thead>
+      <tr><th>Désignation</th><th>Montant</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let l of printFacture.lignes">
+        <td>{{ l.description }}</td>
+        <td class="precu-td-right">{{ l.total | number:'1.0-0' }} DH</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><td><strong>TOTAL PAYÉ</strong></td>
+          <td class="precu-td-right"><strong>{{ printFacture.montantPaye | number:'1.0-0' }} DH</strong></td></tr>
+    </tfoot>
+  </table>
+
+  <div class="precu-mode-row">
+    <span>Mode de paiement :</span>
+    <strong>{{ modeLabel(printFacture.modePaiement) }}</strong>
+  </div>
+
+  <div class="precu-footer">
+    <div class="precu-signature">
+      <div class="precu-sig-line"></div>
+      <div>Signature &amp; Cachet du médecin</div>
+    </div>
+    <div class="precu-thanks">Merci de votre visite !</div>
+  </div>
+</div>

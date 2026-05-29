@@ -1,0 +1,305 @@
+<div class="agenda-page">
+  <!-- PAGE BANNER -->
+  <div class="comp-banner">
+    <div class="comp-banner-left">
+      <div class="comp-banner-icon"><i class="bi bi-calendar3"></i></div>
+      <div class="comp-banner-text">
+        <h2 class="comp-banner-title">Agenda</h2>
+        <p class="comp-banner-sub">Gestion des rendez-vous</p>
+      </div>
+    </div>
+    <div class="comp-banner-actions">
+      <div class="view-toggle">
+        <button class="vt-btn" [class.vt-active]="viewMode === 'month'" (click)="viewMode = 'month'">
+          <i class="bi bi-calendar3"></i> Mois
+        </button>
+        <button class="vt-btn" [class.vt-active]="viewMode === 'list'" (click)="viewMode = 'list'">
+          <i class="bi bi-list-ul"></i> Liste
+        </button>
+      </div>
+      <button class="comp-banner-btn" (click)="showNewRdvForm = !showNewRdvForm">
+        <i class="bi bi-plus-lg"></i> Nouveau RDV
+      </button>
+    </div>
+  </div>
+
+  <!-- STATS PILLS -->
+  <div class="stats-pills-row">
+    <div class="agenda-pill pill-total">
+      <i class="bi bi-calendar2-check"></i>
+      <span>{{ statsToday.total }} RDV aujourd'hui</span>
+    </div>
+    <div class="agenda-pill pill-confirme">
+      <i class="bi bi-check-circle"></i>
+      <span>{{ statsToday.confirme }} confirmés</span>
+    </div>
+    <div class="agenda-pill pill-arrive">
+      <i class="bi bi-person-check"></i>
+      <span>{{ statsToday.arrive }} arrivés</span>
+    </div>
+    <div class="agenda-pill pill-annule" *ngIf="statsToday.annule > 0">
+      <i class="bi bi-x-circle"></i>
+      <span>{{ statsToday.annule }} annulés</span>
+    </div>
+  </div>
+
+  <!-- NEW RDV FORM -->
+  <div class="new-rdv-panel" *ngIf="showNewRdvForm">
+    <div class="row g-3 align-items-end">
+
+      <!-- Patient autocomplete -->
+      <div class="col-md-3">
+        <label class="form-label">Patient</label>
+        <div class="patient-autocomplete">
+          <div class="patient-selected" *ngIf="selectedPatient">
+            <span class="patient-chip">
+              {{ selectedPatient.nom }} {{ selectedPatient.prenom }}
+              <button type="button" class="chip-remove" (click)="clearPatient()">×</button>
+            </span>
+          </div>
+          <input *ngIf="!selectedPatient"
+                 type="text"
+                 class="form-control"
+                 [(ngModel)]="patientQuery"
+                 (input)="onPatientInput()"
+                 placeholder="Rechercher un patient..."
+                 autocomplete="off">
+          <div class="patient-dropdown" *ngIf="showPatientDropdown">
+            <div class="patient-option" *ngFor="let p of filteredPatients" (click)="selectPatient(p)">
+              <div class="opt-avatar">{{ p.nom[0] }}</div>
+              <div class="opt-info">
+                <div class="opt-name">{{ p.nom }} {{ p.prenom }}</div>
+                <div class="opt-sub">{{ p.telephone }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="col-md-2">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-control" [(ngModel)]="newRdv.date" [min]="todayString">
+      </div>
+
+      <!-- Heure -->
+      <div class="col-md-2">
+        <label class="form-label">Heure</label>
+        <select class="form-select" [(ngModel)]="newRdv.heure">
+          <option *ngFor="let t of timeSlots" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+
+      <!-- Type -->
+      <div class="col-md-2">
+        <label class="form-label">Type</label>
+        <select class="form-select" [(ngModel)]="newRdv.type">
+          <option value="consultation">Consultation</option>
+          <option value="controle">Contrôle</option>
+          <option value="urgence">Urgence</option>
+        </select>
+      </div>
+
+      <!-- Motif -->
+      <div class="col-md-2">
+        <label class="form-label">Motif</label>
+        <input type="text" class="form-control" [(ngModel)]="newRdv.motif" placeholder="Motif du RDV">
+      </div>
+
+      <!-- Save -->
+      <div class="col-md-1">
+        <button class="btn btn-success w-100"
+                (click)="saveRdv()"
+                [disabled]="saving || (!selectedPatient && !patientQuery.trim())">
+          <i class="bi bi-check-lg"></i>{{ saving ? '...' : 'OK' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- CALENDAR -->
+    <div class="col-lg-8" *ngIf="viewMode === 'month'">
+      <div class="card calendar-card">
+        <div class="calendar-header">
+          <button class="cal-nav" (click)="prevMonth()"><i class="bi bi-chevron-left"></i></button>
+          <h5 class="cal-month">{{ monthLabel }}</h5>
+          <button class="cal-nav" (click)="nextMonth()"><i class="bi bi-chevron-right"></i></button>
+          <button class="btn btn-sm btn-outline-primary ms-3" (click)="goToToday()">Aujourd'hui</button>
+        </div>
+        <div class="calendar-grid">
+          <div class="cal-day-name" *ngFor="let j of jours">{{ j }}</div>
+          <div class="cal-day" *ngFor="let day of calendarDays"
+               [class.other-month]="!day.isCurrentMonth"
+               [class.today]="day.isToday"
+               [class.selected]="selectedDate && isSameDay(day.date, selectedDate)"
+               (click)="selectDay(day.date)">
+            <span class="day-number">{{ day.date.getDate() }}</span>
+            <div class="day-rdvs">
+              <div class="rdv-pill"
+                   *ngFor="let rdv of day.rdvs.slice(0, 3)"
+                   [style.background]="rdv.statut === 'annule' ? '#cbd5e1' : getTypeColor(rdv.type)"
+                   [title]="rdv.heure + ' — ' + rdv.patientNom + ' (' + rdv.statut + ')'">
+                <span>{{ rdv.heure }} {{ rdv.patientNom.split(' ')[0] }}</span>
+              </div>
+              <div class="rdv-more" *ngIf="day.rdvs.length > 3">+{{ day.rdvs.length - 3 }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODAY'S RDVs -->
+      <div class="today-section mt-4" *ngIf="todayRdvs.length > 0">
+        <div class="today-header">
+          <span class="today-title">Rendez-vous d'aujourd'hui</span>
+          <span class="today-count">{{ statsToday.total }}</span>
+        </div>
+        <div class="today-list">
+          <div class="today-item"
+               *ngFor="let rdv of todayRdvs"
+               [class.rdv-annule]="rdv.statut === 'annule'"
+               [class.rdv-arrive]="rdv.statut === 'arrive'">
+
+            <div class="today-time">{{ rdv.heure }}</div>
+            <div class="today-stripe" [style.background]="getTypeColor(rdv.type)"></div>
+
+            <div class="today-info">
+              <span class="today-name">{{ rdv.patientNom }}</span>
+              <span class="today-sep" *ngIf="rdv.motif"> — </span>
+              <span class="today-motif">{{ rdv.motif }}</span>
+            </div>
+
+            <!-- ANNULÉ state -->
+            <span class="rdv-badge statut-annule" *ngIf="rdv.statut === 'annule'">Annulé</span>
+
+            <!-- ARRIVÉ state -->
+            <span class="dans-file-badge" *ngIf="rdv.statut === 'arrive'">
+              <i class="bi bi-check-circle-fill"></i> Dans la file
+            </span>
+
+            <!-- CONFIRME / ATTENTE state -->
+            <ng-container *ngIf="rdv.statut === 'confirme' || rdv.statut === 'attente'">
+              <!-- Inline confirm for annuler -->
+              <div class="inline-confirm" *ngIf="confirmingCancel === rdv.id">
+                <span class="confirm-text">Annuler ce RDV ?</span>
+                <button class="confirm-oui" (click)="confirmAnnuler(rdv); $event.stopPropagation()">Oui</button>
+                <button class="confirm-non" (click)="cancelConfirm(); $event.stopPropagation()">Non</button>
+              </div>
+              <div class="today-actions" *ngIf="confirmingCancel !== rdv.id">
+                <button class="action-btn action-arrive" (click)="markArrive(rdv); $event.stopPropagation()">
+                  <i class="bi bi-person-check"></i> Arrivé
+                </button>
+                <button class="action-btn action-annuler" (click)="requestCancel(rdv); $event.stopPropagation()">
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIST VIEW -->
+    <div class="col-lg-8" *ngIf="viewMode === 'list'">
+      <div class="card">
+        <div class="card-header-custom">
+          <h5 class="card-title-custom">Prochains rendez-vous</h5>
+        </div>
+        <div class="rdv-list-view">
+          <div class="rdv-list-item" *ngFor="let rdv of upcomingRdvs">
+            <div class="rdv-date-col">
+              <span class="rdv-date-day">{{ rdv.date | date:'dd' }}</span>
+              <span class="rdv-date-month">{{ rdv.date | date:'MMM' }}</span>
+            </div>
+            <div class="rdv-type-stripe" [style.background]="getTypeColor(rdv.type)"></div>
+            <div class="rdv-info">
+              <div class="rdv-patient-name">{{ rdv.patientNom }}</div>
+              <div class="rdv-detail">{{ rdv.heure }}<span *ngIf="rdv.motif"> — {{ rdv.motif }}</span></div>
+            </div>
+            <span class="rdv-badge {{ getStatutClass(rdv.statut) }}">{{ rdv.statut }}</span>
+            <ng-container *ngIf="rdv.statut === 'confirme' || rdv.statut === 'attente'">
+              <div class="inline-confirm" *ngIf="confirmingCancel === rdv.id">
+                <span class="confirm-text">Annuler ?</span>
+                <button class="confirm-oui" (click)="confirmAnnuler(rdv)">Oui</button>
+                <button class="confirm-non" (click)="cancelConfirm()">Non</button>
+              </div>
+              <div class="list-actions" *ngIf="confirmingCancel !== rdv.id">
+                <button class="action-btn action-arrive" (click)="markArrive(rdv)">
+                  <i class="bi bi-person-check"></i>
+                </button>
+                <button class="action-btn action-annuler" (click)="requestCancel(rdv)">
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+          <div class="empty-state-day" *ngIf="upcomingRdvs.length === 0">
+            <i class="bi bi-calendar-x"></i>
+            <p>Aucun rendez-vous à venir</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELECTED DAY PANEL -->
+    <div class="col-lg-4">
+      <div class="card day-panel">
+        <div class="day-panel-header">
+          <h6 *ngIf="selectedDate">
+            {{ selectedDate | date:'EEEE d MMMM yyyy' : '' : 'fr' }}
+          </h6>
+          <span class="rdv-count">{{ selectedDayRdvs.length }} RDV</span>
+        </div>
+        <div class="day-panel-body">
+          <div class="day-rdv-item"
+               *ngFor="let rdv of selectedDayRdvs"
+               [class.item-annule]="rdv.statut === 'annule'"
+               [class.item-arrive]="rdv.statut === 'arrive'">
+
+            <div class="time-slot" [style.color]="getTypeColor(rdv.type)">{{ rdv.heure }}</div>
+            <div class="type-line" [style.background]="getTypeColor(rdv.type)"></div>
+
+            <div class="rdv-details">
+              <div class="rdv-pname" [class.name-annule]="rdv.statut === 'annule'">{{ rdv.patientNom }}</div>
+              <div class="rdv-pmotif">{{ rdv.motif }}</div>
+
+              <!-- ANNULÉ -->
+              <span class="rdv-badge statut-annule" *ngIf="rdv.statut === 'annule'">Annulé</span>
+
+              <!-- ARRIVÉ -->
+              <span class="dans-file-badge" *ngIf="rdv.statut === 'arrive'">
+                <i class="bi bi-check-circle-fill"></i> Dans la file
+              </span>
+
+              <!-- TERMINÉ -->
+              <span class="rdv-badge statut-termine" *ngIf="rdv.statut === 'termine'">Terminé</span>
+
+              <!-- CONFIRME / ATTENTE -->
+              <ng-container *ngIf="rdv.statut === 'confirme' || rdv.statut === 'attente'">
+                <span class="rdv-badge {{ getStatutClass(rdv.statut) }}">{{ rdv.statut }}</span>
+                <div class="inline-confirm mt-2" *ngIf="confirmingCancel === rdv.id">
+                  <span class="confirm-text">Annuler ce RDV ?</span>
+                  <button class="confirm-oui" (click)="confirmAnnuler(rdv)">Oui</button>
+                  <button class="confirm-non" (click)="cancelConfirm()">Non</button>
+                </div>
+                <div class="day-item-actions mt-2" *ngIf="confirmingCancel !== rdv.id">
+                  <button class="action-btn action-arrive" (click)="markArrive(rdv)">
+                    <i class="bi bi-person-check"></i> Arrivé
+                  </button>
+                  <button class="action-btn action-annuler" (click)="requestCancel(rdv)">
+                    <i class="bi bi-x"></i> Annuler
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="empty-state-day" *ngIf="selectedDayRdvs.length === 0">
+            <i class="bi bi-calendar-x"></i>
+            <p>Aucun rendez-vous ce jour</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

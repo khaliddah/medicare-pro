@@ -1,0 +1,418 @@
+<div class="consultation-page">
+
+  <!-- PAGE BANNER -->
+  <div class="comp-banner">
+    <div class="comp-banner-left">
+      <div class="comp-banner-icon"><i class="bi bi-clipboard2-pulse"></i></div>
+      <div class="comp-banner-text">
+        <h2 class="comp-banner-title">Consultation</h2>
+        <p class="comp-banner-sub">Nouvelle consultation médicale</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALLERGIES ALERT -->
+  <div class="allergies-alert" *ngIf="selectedPatient?.allergies?.length">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <div>
+      <strong>ATTENTION — Allergies connues :</strong>
+      <span *ngFor="let a of selectedPatient!.allergies" class="allergy-tag">{{ a }}</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION PATIENT ═══════════════ -->
+  <div class="section-card mb-4" id="section-consultation">
+    <div class="section-header">
+      <i class="bi bi-person-check text-primary"></i>
+      <h5>Patient</h5>
+    </div>
+    <div class="section-body">
+
+      <!-- Readonly (navigated with ?patientId=X) -->
+      <div *ngIf="patientLocked && selectedPatient" class="patient-header-readonly">
+        <div class="patient-identity">
+          <div class="patient-avatar">{{ selectedPatient.prenom[0] }}{{ selectedPatient.nom[0] }}</div>
+          <div class="patient-details">
+            <div class="patient-name">{{ selectedPatient.prenom }} {{ selectedPatient.nom }}</div>
+            <div class="patient-meta">
+              <span><i class="bi bi-calendar3 me-1"></i>{{ calculateAge(selectedPatient.dateNaissance) }} ans</span>
+              <span><i class="bi bi-credit-card-2-front me-1"></i>{{ selectedPatient.cin }}</span>
+              <span *ngIf="selectedPatient.groupeSanguin">
+                <i class="bi bi-droplet-fill text-danger me-1"></i>{{ selectedPatient.groupeSanguin }}
+              </span>
+              <span *ngIf="selectedPatient.mutuelle && selectedPatient.mutuelle !== 'aucune'">
+                <i class="bi bi-shield-check text-success me-1"></i>{{ selectedPatient.mutuelle }}
+              </span>
+            </div>
+            <div class="patient-antecedents" *ngIf="selectedPatient.antecedents?.length">
+              <span class="ant-tag" *ngFor="let a of selectedPatient.antecedents">{{ a }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown -->
+      <div *ngIf="!patientLocked" class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label fw-semibold">
+            Sélectionner un patient <span class="text-danger">*</span>
+          </label>
+          <select class="form-select" [(ngModel)]="form.patientId" (change)="onPatientChange()">
+            <option value="0">-- Choisir un patient --</option>
+            <option *ngFor="let p of patients" [value]="p.id">
+              {{ p.nom }} {{ p.prenom }} ({{ p.cin }})
+            </option>
+          </select>
+        </div>
+        <div class="col-md-7" *ngIf="selectedPatient">
+          <div class="patient-mini-banner">
+            <strong>{{ selectedPatient.prenom }} {{ selectedPatient.nom }}</strong>
+            <span>{{ calculateAge(selectedPatient.dateNaissance) }} ans</span>
+            <span>{{ selectedPatient.cin }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION CONSULTATION ═══════════════ -->
+  <div class="section-card mb-5">
+    <div class="section-header">
+      <i class="bi bi-stethoscope text-success"></i>
+      <h5>Consultation</h5>
+    </div>
+    <div class="section-body">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label fw-semibold">
+            Motif de consultation <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" [(ngModel)]="form.motif"
+                 placeholder="Ex: Douleurs thoraciques, contrôle tension artérielle...">
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-semibold">Type de consultation</label>
+          <div class="consult-type-radios">
+            <label class="radio-pill" [class.radio-pill-active]="form.type === 'consultation'">
+              <input type="radio" name="consultType" value="consultation"
+                     [(ngModel)]="form.type" (change)="onTypeChange()">
+              <i class="bi bi-clipboard2-pulse"></i> Consultation
+            </label>
+            <label class="radio-pill" [class.radio-pill-active]="form.type === 'controle'">
+              <input type="radio" name="consultType" value="controle"
+                     [(ngModel)]="form.type" (change)="onTypeChange()">
+              <i class="bi bi-arrow-repeat"></i> Contrôle / Suivi
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-semibold">Rapport de consultation</label>
+          <textarea class="form-control" rows="7" [(ngModel)]="form.rapport"
+                    placeholder="Anamnèse, observations cliniques, diagnostic, recommandations..."></textarea>
+        </div>
+      </div>
+      <div class="saved-row mt-3" *ngIf="savedConsultation">
+        <i class="bi bi-check-circle-fill text-success"></i>
+        <span>Consultation enregistrée</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ DIVIDER: ORDONNANCE ═══════════════ -->
+  <div class="flow-divider mb-4">
+    <div class="divider-line"></div>
+    <div class="divider-badge"><i class="bi bi-file-medical me-2"></i>Ordonnance</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ═══════════════ SECTION ORDONNANCE ═══════════════ -->
+  <div class="section-card mb-5" id="section-ordonnance">
+    <div class="section-header">
+      <i class="bi bi-file-medical text-success"></i>
+      <h5>Ordonnance</h5>
+    </div>
+    <div class="section-body">
+
+      <div class="empty-hint mb-3" *ngIf="medicaments.length === 0">
+        <i class="bi bi-info-circle text-muted me-1"></i>
+        <small class="text-muted">Aucun médicament. Cliquez sur "Ajouter un médicament".</small>
+      </div>
+
+      <div class="med-table-wrapper" *ngIf="medicaments.length > 0">
+        <table class="med-table">
+          <thead>
+            <tr>
+              <th>Médicament</th>
+              <th>Dosage</th>
+              <th>Posologie</th>
+              <th>Durée</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of medicaments; let i = index">
+              <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.nom" placeholder="Nom du médicament"></td>
+              <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.dosage" placeholder="Ex: 500mg"></td>
+              <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.posologie" placeholder="Ex: 3×/jour"></td>
+              <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.duree" placeholder="Ex: 7 jours"></td>
+              <td>
+                <button class="btn btn-sm btn-outline-danger" (click)="removeMedicament(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-3 d-flex align-items-center gap-2 flex-wrap">
+        <button class="btn btn-outline-secondary" (click)="addMedicament()">
+          <i class="bi bi-plus-lg me-1"></i>Ajouter un médicament
+        </button>
+        <div class="saved-row ms-auto" *ngIf="savedOrdonnance">
+          <i class="bi bi-check-circle-fill text-success"></i>
+          <span>Ordonnance enregistrée</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ DIVIDER: ANALYSES ═══════════════ -->
+  <div class="flow-divider mb-4">
+    <div class="divider-line"></div>
+    <div class="divider-badge"><i class="bi bi-activity me-2"></i>Analyses demandées</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ═══════════════ SECTION ANALYSES ═══════════════ -->
+  <div class="section-card mb-4" id="section-analyses">
+    <div class="section-header">
+      <i class="bi bi-activity text-success"></i>
+      <h5>Analyses demandées</h5>
+    </div>
+    <div class="section-body">
+      <div class="row g-4 mb-3">
+        <div class="col-sm-6 col-lg-3" *ngFor="let group of analyseGroups">
+          <div class="analyse-group-label">{{ group.label }}</div>
+          <label class="form-check mb-1" *ngFor="let item of group.items">
+            <input type="checkbox" class="form-check-input"
+                   [checked]="isAnalyseChecked(item)"
+                   (change)="toggleAnalyse(item)">
+            <span class="form-check-label">{{ item }}</span>
+          </label>
+        </div>
+      </div>
+
+      <hr class="my-3">
+
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label class="form-check mb-0">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="urgentAnalyse">
+            <span class="form-check-label text-danger fw-bold">
+              <i class="bi bi-exclamation-diamond-fill me-1"></i>URGENT
+            </span>
+          </label>
+        </div>
+        <div class="col-md-5">
+          <input type="text" class="form-control" [(ngModel)]="laboratoire"
+                 placeholder="Laboratoire recommandé (optionnel)">
+        </div>
+        <div class="col-auto ms-auto" *ngIf="savedExamen">
+          <div class="saved-row">
+            <i class="bi bi-check-circle-fill text-success"></i>
+            <span>Analyses enregistrées</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION RÉSULTATS PRÉCÉDENTS (Contrôle uniquement) ═══════════════ -->
+  <ng-container *ngIf="form.type === 'controle'">
+
+    <!-- Loading -->
+    <div class="prev-loading-row mb-4" *ngIf="loadingPrevAnalyses">
+      <span class="spinner-border spinner-border-sm text-warning"></span>
+      <span>Chargement des analyses précédentes...</span>
+    </div>
+
+    <div class="prev-analyses-card mb-4" *ngIf="!loadingPrevAnalyses">
+
+      <!-- No previous analyses -->
+      <div class="prev-empty" *ngIf="!prevExamen">
+        <i class="bi bi-info-circle"></i>
+        <span>Aucune analyse précédente trouvée pour ce patient</span>
+      </div>
+
+      <!-- Previous examen found -->
+      <ng-container *ngIf="prevExamen">
+        <div class="prev-card-header">
+          <div class="prev-card-title">
+            <i class="bi bi-clock-history"></i>
+            Résultats des analyses
+            <span class="prev-card-date">{{ prevExamen.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <span class="prev-urgent-badge" *ngIf="prevExamen.urgence">URGENT</span>
+        </div>
+
+        <div class="prev-card-body">
+          <div class="prev-result-row" *ngFor="let a of prevExamen.analyses">
+            <span class="prev-result-label">{{ a }}</span>
+            <ng-container *ngIf="prevExamen.resultats && prevExamen.resultats[a]; else prevNoResult">
+              <span class="prev-result-filled">{{ prevExamen.resultats[a] }}</span>
+            </ng-container>
+            <ng-template #prevNoResult>
+              <input class="prev-result-input" type="text"
+                     [(ngModel)]="prevResultatsForm[a]"
+                     [placeholder]="'Résultat — ex: 5.2 g/dL'">
+            </ng-template>
+          </div>
+
+          <div class="prev-save-row" *ngIf="hasUnfilledPrevResults()">
+            <button class="prev-save-btn" (click)="savePrevResultats()" [disabled]="savingPrevResultats">
+              <span *ngIf="savingPrevResultats" class="spinner-border spinner-border-sm"></span>
+              <i *ngIf="!savingPrevResultats" class="bi bi-check-lg"></i>
+              Enregistrer les résultats
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+  </ng-container>
+
+  <!-- spacer so content isn't hidden behind fixed bar -->
+  <div style="height: 80px;"></div>
+
+</div>
+
+
+<!-- ═══════════════ FIXED BOTTOM SAVE BAR ═══════════════ -->
+<div class="bottom-save-bar">
+  <div class="bottom-bar-inner">
+    <button class="bar-btn bar-btn-primary" (click)="saveAll()" [disabled]="!canSave() || saving">
+      <span *ngIf="saving" class="spinner-border spinner-border-sm"></span>
+      <i *ngIf="!saving" class="bi bi-save"></i>Enregistrer tout
+    </button>
+    <button class="bar-btn bar-btn-outline" (click)="printOrdonnance()"
+            [disabled]="!selectedPatient || !filledMedicaments.length">
+      <i class="bi bi-printer"></i>Imprimer l'ordonnance
+    </button>
+    <button class="bar-btn bar-btn-outline" (click)="printAnalyses()"
+            [disabled]="!selectedPatient || !analysesChecked.length">
+      <i class="bi bi-printer"></i>Imprimer les analyses
+    </button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PRINT ZONE — ORDONNANCE
+     ══════════════════════════════════════════════════════ -->
+<div class="print-zone" *ngIf="printMode === 'ordonnance' && selectedPatient">
+  <div class="print-header">
+    <div class="print-doctor">
+      <div class="doctor-name">{{ medecin.nom }}</div>
+      <div class="doctor-spec">{{ medecin.specialite }}</div>
+      <div class="doctor-info">INPE : {{ medecin.inpe }}</div>
+      <div class="doctor-info">{{ medecin.adresse }} — {{ medecin.ville }}</div>
+      <div class="doctor-info">Tél : {{ medecin.telephone }}</div>
+    </div>
+    <div class="print-date-block">
+      <div class="print-date-label">Casablanca, le</div>
+      <div class="print-date-val">{{ today | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="print-patient-box">
+    <table class="print-patient-table">
+      <tr>
+        <td><strong>Patient :</strong> {{ selectedPatient.prenom }} {{ selectedPatient.nom }}</td>
+        <td><strong>CIN :</strong> {{ selectedPatient.cin }}</td>
+      </tr>
+      <tr>
+        <td><strong>Âge :</strong> {{ calculateAge(selectedPatient.dateNaissance) }} ans</td>
+        <td><strong>Sexe :</strong> {{ selectedPatient.sexe === 'M' ? 'Masculin' : 'Féminin' }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="print-title">ORDONNANCE MÉDICALE</div>
+
+  <div class="print-meds">
+    <div class="print-med"
+         *ngFor="let m of filledMedicaments; let i = index">
+      <div class="med-line-title">
+        {{ i + 1 }}. <strong>{{ m.nom }}</strong>
+        <span *ngIf="m.dosage"> {{ m.dosage }}</span>
+      </div>
+      <div class="med-line-detail" *ngIf="m.posologie">
+        Posologie : {{ m.posologie }}<span *ngIf="m.duree"> — pendant {{ m.duree }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-footer">
+    <div class="print-signature">
+      <div class="sig-line"></div>
+      <div>Signature &amp; Cachet du médecin</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PRINT ZONE — ANALYSES
+     ══════════════════════════════════════════════════════ -->
+<div class="print-zone" *ngIf="printMode === 'analyses' && selectedPatient">
+  <div class="print-header">
+    <div class="print-doctor">
+      <div class="doctor-name">{{ medecin.nom }}</div>
+      <div class="doctor-spec">{{ medecin.specialite }}</div>
+      <div class="doctor-info">INPE : {{ medecin.inpe }}</div>
+      <div class="doctor-info">{{ medecin.adresse }} — {{ medecin.ville }}</div>
+      <div class="doctor-info">Tél : {{ medecin.telephone }}</div>
+    </div>
+    <div class="print-date-block">
+      <div class="print-date-label">Date</div>
+      <div class="print-date-val">{{ today | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="print-patient-box">
+    <table class="print-patient-table">
+      <tr>
+        <td><strong>Patient :</strong> {{ selectedPatient.prenom }} {{ selectedPatient.nom }}</td>
+        <td><strong>CIN :</strong> {{ selectedPatient.cin }}</td>
+      </tr>
+      <tr>
+        <td><strong>Âge :</strong> {{ calculateAge(selectedPatient.dateNaissance) }} ans</td>
+        <td><strong>Sexe :</strong> {{ selectedPatient.sexe === 'M' ? 'Masculin' : 'Féminin' }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="print-title">DEMANDE D'ANALYSES</div>
+
+  <div class="urgent-stamp" *ngIf="urgentAnalyse">⚠ URGENT ⚠</div>
+
+  <div class="print-section" *ngFor="let group of checkedAnalysesByGroup">
+    <div class="print-section-title">{{ group.label }}</div>
+    <ul class="print-analyse-list">
+      <li *ngFor="let item of group.items">{{ item }}</li>
+    </ul>
+  </div>
+
+  <div class="print-section" *ngIf="laboratoire">
+    <div class="print-section-title">LABORATOIRE RECOMMANDÉ</div>
+    <p>{{ laboratoire }}</p>
+  </div>
+
+  <div class="print-footer">
+    <div class="print-signature">
+      <div class="sig-line"></div>
+      <div>Signature &amp; Cachet du médecin</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,339 @@
+<div class="patients-page">
+
+  <!-- ══ BANNER HEADER ══ -->
+  <div class="patients-banner">
+    <div class="banner-left">
+      <div class="banner-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
+      <div class="banner-text">
+        <h1 class="banner-title">Gestion des Patients</h1>
+        <p class="banner-sub">Consultez, ajoutez et gérez les dossiers patients</p>
+      </div>
+    </div>
+    <div class="banner-actions">
+      <button class="btn-banner-outline" (click)="exportPatients()">
+        <i class="bi bi-download"></i>
+        Exporter
+      </button>
+      <button class="btn-banner-primary" (click)="openAddForm()">
+        <i class="bi bi-person-plus-fill"></i>
+        Nouveau patient
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ KPI CARDS ══ -->
+  <div class="kpi-row">
+    <div class="kpi-card kpi-total">
+      <div class="kpi-left kpi-teal"></div>
+      <div class="kpi-icon-wrap" style="background:#F0FDFA; color:#0d9488;">
+        <i class="bi bi-people-fill"></i>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-value">{{ totalPatients }}</div>
+        <div class="kpi-label">Total patients</div>
+      </div>
+    </div>
+    <div class="kpi-card kpi-actifs">
+      <div class="kpi-left kpi-blue"></div>
+      <div class="kpi-icon-wrap" style="background:#EFF6FF; color:#3B82F6;">
+        <i class="bi bi-calendar-check"></i>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-value">{{ dossiersActifs }}</div>
+        <div class="kpi-label">Dossiers actifs</div>
+      </div>
+    </div>
+    <div class="kpi-card kpi-mutuelle">
+      <div class="kpi-left kpi-purple"></div>
+      <div class="kpi-icon-wrap" style="background:#F5F3FF; color:#7C3AED;">
+        <i class="bi bi-shield-check"></i>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-value">{{ avecMutuelle }}</div>
+        <div class="kpi-label">Avec mutuelle</div>
+      </div>
+    </div>
+    <div class="kpi-card kpi-mutuelles">
+      <div class="kpi-left kpi-orange"></div>
+      <div class="kpi-icon-wrap" style="background:#FFF7ED; color:#F97316;">
+        <i class="bi bi-heart-pulse"></i>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-value">{{ mutuellesActives }}</div>
+        <div class="kpi-label">Mutuelles actives</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FILTER BAR ══ -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <i class="search-icon bi bi-search"></i>
+      <input type="text" placeholder="Rechercher par nom, CIN, téléphone..." (input)="onSearch($event)" />
+    </div>
+
+    <div class="filter-dropdowns">
+      <select (change)="onFilterMutuelle($event)">
+        <option value="">Mutuelle</option>
+        <option value="cnops">CNOPS</option>
+        <option value="cnss">CNSS</option>
+        <option value="rma">RMA</option>
+      </select>
+
+      <select (change)="onFilterGenre($event)">
+        <option value="">Genre</option>
+        <option value="M">Homme</option>
+        <option value="F">Femme</option>
+      </select>
+
+      <select (change)="onFilterGroupe($event)">
+        <option value="">Groupe</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+    </div>
+
+    <button *ngIf="hasActiveFilters()" class="btn-reset" (click)="resetFilters()">✕ Réinitialiser</button>
+
+    <div class="colonnes-wrapper">
+      <button class="btn-colonnes" (click)="toggleColonnesDropdown()">
+        ⚙ Colonnes {{ colonnesVisiblesCount }}
+      </button>
+      <div class="colonnes-dropdown" *ngIf="showColonnesDropdown">
+        <div *ngFor="let col of colonnesDisponibles" class="col-option" (click)="toggleColonne(col.key)">
+          <input type="checkbox" [checked]="col.visible" readonly /> {{ col.label }}
+        </div>
+      </div>
+    </div>
+
+    <div class="results-count">{{ filteredPatients.length }} résultat(s)</div>
+  </div>
+
+  <!-- ══ LOADING ══ -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <!-- ══ TABLE ══ -->
+  <div class="table-card" *ngIf="!loading && filteredPatients.length > 0">
+    <div class="table-scroll">
+      <table class="patients-table">
+        <thead>
+          <tr>
+            <th class="th-check"><input type="checkbox"></th>
+            <th>PATIENT</th>
+            <th *ngIf="isColonneVisible('age')">ÂGE</th>
+            <th *ngIf="isColonneVisible('telephone')">TÉLÉPHONE</th>
+            <th *ngIf="isColonneVisible('ville')">VILLE</th>
+            <th *ngIf="isColonneVisible('mutuelle')">MUTUELLE</th>
+            <th *ngIf="isColonneVisible('groupeSanguin')">GROUPE</th>
+            <th *ngIf="isColonneVisible('dernierVisite')">DERNIÈRE VISITE</th>
+            <th class="th-actions">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="patient-row" *ngFor="let patient of filteredPatients"
+              (click)="viewPatient(patient)">
+            <td class="td-check" (click)="$event.stopPropagation()">
+              <input type="checkbox">
+            </td>
+            <td class="td-patient">
+              <div class="patient-av" [style.background]="getAvatarColor(patient.id)">
+                {{ getInitials(patient) }}
+              </div>
+              <div class="patient-info">
+                <div class="patient-name">{{ patient.prenom }} {{ patient.nom }}</div>
+                <div class="patient-cin" *ngIf="isColonneVisible('cin')">{{ patient.cin }}</div>
+              </div>
+            </td>
+            <td class="td-age" *ngIf="isColonneVisible('age')">
+              <span class="age-val">{{ calculateAge(patient.dateNaissance) }} ans</span>
+              <span class="sex-badge" [class.sex-m]="patient.sexe === 'M'" [class.sex-f]="patient.sexe !== 'M'">
+                {{ patient.sexe }}
+              </span>
+            </td>
+            <td class="td-phone" *ngIf="isColonneVisible('telephone')">{{ patient.telephone || '–' }}</td>
+            <td class="td-ville" *ngIf="isColonneVisible('ville')">{{ patient.ville || '–' }}</td>
+            <td class="td-mutuelle" *ngIf="isColonneVisible('mutuelle')">
+              <span class="mutuelle-badge" *ngIf="patient.mutuelle && patient.mutuelle !== 'aucune'">
+                {{ patient.mutuelle | uppercase }}
+              </span>
+              <span class="no-data" *ngIf="!patient.mutuelle || patient.mutuelle === 'aucune'">–</span>
+            </td>
+            <td class="td-blood" *ngIf="isColonneVisible('groupeSanguin')">
+              <span class="blood-badge" *ngIf="patient.groupeSanguin && patient.groupeSanguin !== 'Inconnu'">
+                {{ patient.groupeSanguin }}
+              </span>
+              <span class="no-data" *ngIf="!patient.groupeSanguin || patient.groupeSanguin === 'Inconnu'">–</span>
+            </td>
+            <td class="td-visit" *ngIf="isColonneVisible('dernierVisite')">
+              <span *ngIf="patient.dernierVisite">{{ patient.dernierVisite | date:'dd/MM/yyyy' }}</span>
+              <span class="no-data" *ngIf="!patient.dernierVisite">–</span>
+            </td>
+            <td class="td-actions" (click)="$event.stopPropagation()">
+              <button class="action-btn action-view" (click)="viewPatient(patient)" title="Voir le dossier">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="action-btn action-edit" (click)="openAddForm()" title="Modifier">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLE FOOTER / PAGINATION -->
+    <div class="table-footer">
+      <span class="table-count">Affichage de <strong>{{ filteredPatients.length }}</strong> patient(s)</span>
+    </div>
+  </div>
+
+  <!-- ══ EMPTY STATE ══ -->
+  <div class="empty-state" *ngIf="!loading && filteredPatients.length === 0">
+    <i class="bi bi-person-x"></i>
+    <h5>Aucun patient trouvé</h5>
+    <p>Modifiez vos critères de recherche ou ajoutez un nouveau patient.</p>
+    <button class="btn-banner-primary" (click)="resetFilters()">Réinitialiser les filtres</button>
+  </div>
+
+</div>
+
+
+<!-- ══ SLIDE PANEL — Nouveau/Modifier patient ══ -->
+<div class="slide-overlay" *ngIf="showPatientForm" (click)="closeForm()">
+  <div class="slide-panel" (click)="$event.stopPropagation()">
+
+    <div class="slide-panel-header">
+      <h5>{{ isEditMode ? 'Modifier le patient' : 'Nouveau patient' }}</h5>
+      <button class="btn-close-panel" (click)="closeForm()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="slide-panel-body">
+      <div class="row g-3">
+
+        <div class="col-12">
+          <div class="form-section-title"><i class="bi bi-person me-2"></i>Identité</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Nom <span class="req">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.nom" placeholder="Nom de famille">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Prénom <span class="req">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.prenom" placeholder="Prénom">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">CIN <span class="req">*</span></label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.cin" placeholder="BK123456">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Date de naissance</label>
+          <input type="date" class="form-control"
+                 [ngModel]="formatDateInput(patientForm.dateNaissance)"
+                 (ngModelChange)="patientForm.dateNaissance = $event">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Sexe</label>
+          <select class="form-select" [(ngModel)]="patientForm.sexe">
+            <option value="M">Masculin</option>
+            <option value="F">Féminin</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <div class="form-section-title"><i class="bi bi-telephone me-2"></i>Contact</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Téléphone <span class="req">*</span></label>
+          <input type="tel" class="form-control" [(ngModel)]="patientForm.telephone" placeholder="06XXXXXXXX">
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [(ngModel)]="patientForm.email" placeholder="email@exemple.com">
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Adresse</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.adresse" placeholder="Rue, quartier...">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Ville</label>
+          <input type="text" class="form-control" [(ngModel)]="patientForm.ville" placeholder="Casablanca">
+        </div>
+
+        <div class="col-12">
+          <div class="form-section-title"><i class="bi bi-heart-pulse me-2"></i>Informations médicales</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Groupe sanguin</label>
+          <select class="form-select" [(ngModel)]="patientForm.groupeSanguin">
+            <option *ngFor="let g of groupesSanguins" [value]="g">{{ g }}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Mutuelle</label>
+          <select class="form-select" [(ngModel)]="patientForm.mutuelle">
+            <option *ngFor="let m of mutuelles" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Antécédents médicaux</label>
+          <div class="tag-input-wrapper">
+            <div class="tags-display" *ngIf="patientForm.antecedents!.length > 0">
+              <span class="tag-antecedent tag-removable" *ngFor="let a of patientForm.antecedents; let i = index">
+                {{ a }}<button type="button" (click)="removeAntecedent(i)"><i class="bi bi-x"></i></button>
+              </span>
+            </div>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" [(ngModel)]="antecedentInput"
+                     placeholder="Ex: Diabète type 2" (keyup.enter)="addAntecedent()">
+              <button class="btn btn-outline-secondary" type="button" (click)="addAntecedent()">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Allergies</label>
+          <div class="tag-input-wrapper">
+            <div class="tags-display" *ngIf="patientForm.allergies!.length > 0">
+              <span class="tag-allergie tag-removable" *ngFor="let a of patientForm.allergies; let i = index">
+                {{ a }}<button type="button" (click)="removeAllergie(i)"><i class="bi bi-x"></i></button>
+              </span>
+            </div>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" [(ngModel)]="allergieInput"
+                     placeholder="Ex: Pénicilline" (keyup.enter)="addAllergie()">
+              <button class="btn btn-outline-secondary" type="button" (click)="addAllergie()">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slide-panel-footer">
+      <button class="btn btn-outline-secondary" (click)="closeForm()">Annuler</button>
+      <button class="btn btn-primary" (click)="savePatient()" [disabled]="formSaving">
+        <span *ngIf="formSaving" class="spinner-border spinner-border-sm"></span>
+        <i *ngIf="!formSaving" class="bi bi-check-lg"></i>
+        {{ isEditMode ? 'Enregistrer' : 'Créer le patient' }}
+      </button>
+    </div>
+
+  </div>
+</div>

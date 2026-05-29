@@ -1,0 +1,215 @@
+<div class="ordonnance-page">
+
+  <div class="page-header">
+    <h2 class="page-title"><i class="bi bi-file-medical me-2"></i>Ordonnances</h2>
+  </div>
+
+  <div class="tabs-nav mb-4">
+    <button class="tab-btn" [class.active]="activeTab === 'nouvelle'" (click)="activeTab = 'nouvelle'">
+      <i class="bi bi-plus-circle"></i> Nouvelle ordonnance
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'historique'" (click)="activeTab = 'historique'">
+      <i class="bi bi-archive"></i> Historique ({{ ordonnances.length }})
+    </button>
+  </div>
+
+  <!-- ═══════════ NOUVELLE ORDONNANCE ═══════════ -->
+  <div *ngIf="activeTab === 'nouvelle'">
+
+    <!-- ALLERGIES ALERT -->
+    <div class="allergies-alert" *ngIf="selectedPatient?.allergies?.length">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div>
+        <strong>ATTENTION — Allergies connues :</strong>
+        <span *ngFor="let a of selectedPatient!.allergies" class="allergy-tag">{{ a }}</span>
+      </div>
+    </div>
+
+    <!-- PATIENT -->
+    <div class="section-card mb-4">
+      <div class="section-header">
+        <i class="bi bi-person-check text-primary"></i>
+        <h5>Patient</h5>
+      </div>
+      <div class="section-body">
+
+        <!-- Readonly -->
+        <div *ngIf="patientLocked && selectedPatient" class="patient-header-readonly">
+          <div class="patient-identity">
+            <div class="patient-avatar">{{ selectedPatient.prenom[0] }}{{ selectedPatient.nom[0] }}</div>
+            <div class="patient-details">
+              <div class="patient-name">{{ selectedPatient.prenom }} {{ selectedPatient.nom }}</div>
+              <div class="patient-meta">
+                <span><i class="bi bi-calendar3 me-1"></i>{{ calculateAge(selectedPatient.dateNaissance) }} ans</span>
+                <span><i class="bi bi-credit-card-2-front me-1"></i>{{ selectedPatient.cin }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dropdown -->
+        <div *ngIf="!patientLocked" class="row g-3">
+          <div class="col-md-5">
+            <label class="form-label fw-semibold">Patient <span class="text-danger">*</span></label>
+            <select class="form-select" [(ngModel)]="patientId" (change)="onPatientChange()">
+              <option [value]="0">-- Choisir un patient --</option>
+              <option *ngFor="let p of patients" [value]="p.id">{{ p.nom }} {{ p.prenom }} ({{ p.cin }})</option>
+            </select>
+          </div>
+          <div class="col-md-7" *ngIf="selectedPatient">
+            <div class="patient-mini-banner">
+              <strong>{{ selectedPatient.prenom }} {{ selectedPatient.nom }}</strong>
+              <span>{{ calculateAge(selectedPatient.dateNaissance) }} ans</span>
+              <span>{{ selectedPatient.cin }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉDICAMENTS -->
+    <div class="section-card mb-4">
+      <div class="section-header">
+        <i class="bi bi-capsule text-success"></i>
+        <h5>Médicaments prescrits</h5>
+      </div>
+      <div class="section-body">
+
+        <div class="med-table-wrapper" *ngIf="medicaments.length > 0">
+          <table class="med-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Médicament</th>
+                <th>Dosage</th>
+                <th>Posologie</th>
+                <th>Durée</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let m of medicaments; let i = index">
+                <td class="num-cell">{{ i + 1 }}</td>
+                <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.nom" placeholder="Nom du médicament"></td>
+                <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.dosage" placeholder="Ex: 500mg"></td>
+                <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.posologie" placeholder="Ex: 3×/jour"></td>
+                <td><input type="text" class="form-control form-control-sm" [(ngModel)]="m.duree" placeholder="Ex: 7 jours"></td>
+                <td>
+                  <button class="btn btn-sm btn-outline-danger" (click)="removeMedicament(i)"
+                          [disabled]="medicaments.length === 1">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-actions mt-3">
+          <button class="btn btn-outline-secondary" (click)="addMedicament()">
+            <i class="bi bi-plus-lg me-1"></i>Ajouter un médicament
+          </button>
+          <div class="ms-auto d-flex gap-2 flex-wrap align-items-center">
+            <div class="saved-badge" *ngIf="savedOrdonnance">
+              <i class="bi bi-check-circle-fill text-success"></i> Ordonnance enregistrée
+            </div>
+            <button class="btn btn-outline-primary" (click)="print()"
+                    [disabled]="!canSave()">
+              <i class="bi bi-printer me-1"></i>Imprimer
+            </button>
+            <button class="btn btn-success" (click)="save()"
+                    [disabled]="!canSave() || saving">
+              <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>
+              <i *ngIf="!saving" class="bi bi-save me-1"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ HISTORIQUE ═══════════ -->
+  <div *ngIf="activeTab === 'historique'">
+    <div class="row g-4">
+      <div class="col-lg-6" *ngFor="let ordo of ordonnances">
+        <div class="ordo-history-card">
+          <div class="ordo-history-header">
+            <div>
+              <h6>{{ ordo.patientNom }}</h6>
+              <small class="text-muted">
+                {{ ordo.date | date:'dd/MM/yyyy' }} — {{ ordo.medicaments.length }} médicament(s)
+              </small>
+            </div>
+            <button class="btn btn-sm btn-outline-primary" (click)="print(ordo)">
+              <i class="bi bi-printer"></i>
+            </button>
+          </div>
+          <div class="ordo-meds-list">
+            <div class="ordo-med-item" *ngFor="let med of ordo.medicaments">
+              <i class="bi bi-capsule text-success"></i>
+              <div>
+                <strong>{{ med.nom }} {{ med.dosage }}</strong>
+                <small class="d-block text-muted">{{ med.posologie }} — {{ med.duree }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-center text-muted py-5" *ngIf="ordonnances.length === 0">
+        <i class="bi bi-inbox fs-2 d-block mb-2"></i>Aucune ordonnance enregistrée
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRINT ZONE ═══════════ -->
+<div class="print-zone" *ngIf="showPrint && savedOrdonnance && selectedPatient">
+  <div class="print-header">
+    <div class="print-doctor">
+      <div class="doctor-name">{{ medecin.nom }}</div>
+      <div class="doctor-spec">{{ medecin.specialite }}</div>
+      <div class="doctor-info">INPE : {{ medecin.inpe }}</div>
+      <div class="doctor-info">{{ medecin.adresse }} — {{ medecin.ville }}</div>
+      <div class="doctor-info">Tél : {{ medecin.telephone }}</div>
+    </div>
+    <div class="print-date-block">
+      <div class="print-date-label">Casablanca, le</div>
+      <div class="print-date-val">{{ savedOrdonnance.date | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="print-patient-box">
+    <table class="print-patient-table">
+      <tr>
+        <td><strong>Patient :</strong> {{ selectedPatient.prenom }} {{ selectedPatient.nom }}</td>
+        <td><strong>CIN :</strong> {{ selectedPatient.cin }}</td>
+      </tr>
+      <tr>
+        <td><strong>Âge :</strong> {{ calculateAge(selectedPatient.dateNaissance) }} ans</td>
+        <td><strong>Sexe :</strong> {{ selectedPatient.sexe === 'M' ? 'Masculin' : 'Féminin' }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="print-title">ORDONNANCE MÉDICALE</div>
+
+  <div class="print-meds">
+    <div class="print-med" *ngFor="let m of savedOrdonnance.medicaments; let i = index">
+      <div class="med-line-title">
+        {{ i + 1 }}. <strong>{{ m.nom }}</strong>
+        <span *ngIf="m.dosage"> {{ m.dosage }}</span>
+      </div>
+      <div class="med-line-detail" *ngIf="m.posologie">
+        Posologie : {{ m.posologie }}<span *ngIf="m.duree"> — pendant {{ m.duree }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-footer">
+    <div class="print-signature">
+      <div class="sig-line"></div>
+      <div>Signature &amp; Cachet du médecin</div>
+    </div>
+  </div>
+</div>

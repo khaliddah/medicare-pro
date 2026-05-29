@@ -1,0 +1,180 @@
+<div class="parametres-page">
+  <!-- PAGE BANNER -->
+  <div class="comp-banner">
+    <div class="comp-banner-left">
+      <div class="comp-banner-icon"><i class="bi bi-gear-fill"></i></div>
+      <div class="comp-banner-text">
+        <h2 class="comp-banner-title">Paramètres</h2>
+        <p class="comp-banner-sub">Configuration du cabinet</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs-nav mb-4">
+    <button class="tab-btn" [class.active]="activeTab === 'profil'" (click)="activeTab = 'profil'">
+      <i class="bi bi-person-circle"></i> Profil médecin
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'horaires'" (click)="activeTab = 'horaires'">
+      <i class="bi bi-clock"></i> Horaires
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'cabinet'" (click)="activeTab = 'cabinet'">
+      <i class="bi bi-building"></i> Cabinet
+    </button>
+  </div>
+
+  <div class="alert alert-success d-flex align-items-center gap-2" *ngIf="saved">
+    <i class="bi bi-check-circle-fill"></i> Paramètres sauvegardés avec succès !
+  </div>
+
+  <!-- ===== PROFIL ===== -->
+  <div *ngIf="activeTab === 'profil'">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="profile-card">
+          <div class="profile-avatar-big">HB</div>
+          <h5>Dr. {{ profil.prenom }} {{ profil.nom }}</h5>
+          <p class="text-muted">{{ profil.specialite }}</p>
+          <p class="text-muted small">INPE: {{ profil.inpe }}</p>
+          <button class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-camera me-1"></i>Changer photo
+          </button>
+          <hr>
+          <div class="profile-stats">
+            <div class="pstat">
+              <div class="pstat-value">12</div>
+              <div class="pstat-label">Patients</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-value">47</div>
+              <div class="pstat-label">Consultations/mois</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-value">5 ans</div>
+              <div class="pstat-label">Expérience</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="form-card">
+          <div class="form-card-header">
+            <i class="bi bi-person-vcard text-primary"></i>
+            <h5>Informations personnelles</h5>
+          </div>
+          <div class="form-card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Prénom</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.prenom">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Nom</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.nom">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Spécialité</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.specialite">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">N° INPE</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.inpe">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Téléphone</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.telephone">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" [(ngModel)]="profil.email">
+              </div>
+              <div class="col-12 text-end">
+                <button class="btn btn-primary" (click)="saveProfile()">
+                  <i class="bi bi-save me-1"></i>Sauvegarder
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HORAIRES ===== -->
+  <div *ngIf="activeTab === 'horaires'">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="form-card">
+          <div class="form-card-header">
+            <i class="bi bi-calendar-week text-success"></i>
+            <h5>Horaires du cabinet</h5>
+          </div>
+          <div class="form-card-body">
+            <div class="horaires-list">
+              <div class="horaire-row" *ngFor="let jour of horairesKeys">
+                <div class="jour-label">{{ horairesLabels[jour] }}</div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox"
+                         [(ngModel)]="getHoraire(jour).actif">
+                </div>
+                <div class="horaire-times" [class.disabled]="!getHoraire(jour).actif">
+                  <input type="time" class="form-control form-control-sm"
+                         [(ngModel)]="getHoraire(jour).debut"
+                         [disabled]="!getHoraire(jour).actif">
+                  <span>—</span>
+                  <input type="time" class="form-control form-control-sm"
+                         [(ngModel)]="getHoraire(jour).fin"
+                         [disabled]="!getHoraire(jour).actif">
+                </div>
+                <span class="ferme-label" *ngIf="!getHoraire(jour).actif">Fermé</span>
+              </div>
+            </div>
+            <div class="text-end mt-4">
+              <button class="btn btn-primary" (click)="saveProfile()">
+                <i class="bi bi-save me-1"></i>Sauvegarder
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CABINET ===== -->
+  <div *ngIf="activeTab === 'cabinet'">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="form-card">
+          <div class="form-card-header">
+            <i class="bi bi-building text-warning"></i>
+            <h5>Informations du cabinet</h5>
+          </div>
+          <div class="form-card-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Nom sur l'ordonnance</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.cnom">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Adresse</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.adresse">
+              </div>
+              <div class="col-md-8">
+                <label class="form-label">Ville</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.ville">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Code postal</label>
+                <input type="text" class="form-control" [(ngModel)]="profil.codePostal">
+              </div>
+              <div class="col-12 text-end">
+                <button class="btn btn-primary" (click)="saveProfile()">
+                  <i class="bi bi-save me-1"></i>Sauvegarder
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

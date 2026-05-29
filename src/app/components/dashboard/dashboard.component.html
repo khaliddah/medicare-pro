@@ -1,0 +1,394 @@
+<div class="dashboard" *ngIf="!loading">
+
+  <!-- ══ ROW 1 — 4 KPI CARDS ══ -->
+  <div class="row g-3 mb-4">
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card kpi-card kpi-patients" style="border-left-color:#0d9488">
+        <div class="kpi2-icon" style="background:#f0fdfa;color:#0d9488">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ patientsAujourdhuiTotal }}</div>
+          <div class="kpi2-label">Patients aujourd'hui</div>
+          <div class="kpi2-trend trend-neutral">
+            {{ enAttenteCount }} en attente · {{ vusAujourdhui }} vus
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card kpi-card kpi-consultations" style="border-left-color:#7c3aed">
+        <div class="kpi2-icon" style="background:#f5f3ff;color:#7c3aed">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h4"/>
+          </svg>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ consultationsTodayCount }}</div>
+          <div class="kpi2-label">Consultations</div>
+          <div class="kpi2-trend trend-neutral">
+            {{ consultationTypeCount }} consult. · {{ controleTypeCount }} contrôle
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card kpi-card kpi-encaisse" style="border-left-color:#d97706">
+        <div class="kpi2-icon" style="background:#fffbeb;color:#d97706">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 3H8L2 7h20l-6-4z"/>
+            <circle cx="12" cy="14" r="2"/>
+          </svg>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ encaisseAujourdhui | number:'1.0-0' }}<small> DH</small></div>
+          <div class="kpi2-label">Encaissé aujourd'hui</div>
+          <div class="kpi2-trend trend-neutral">
+            {{ recetteEnAttente | number:'1.0-0' }} DH en attente
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card kpi-card kpi-attente" style="border-left-color:#2563eb">
+        <div class="kpi2-icon" style="background:#eff6ff;color:#2563eb">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ avgWaitMinutes }}<small> min</small></div>
+          <div class="kpi2-label">Attente moyenne</div>
+          <div class="kpi2-trend" [style.color]="waitTrendColor">
+            {{ waitTrendIcon }} {{ waitTrendLabel }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row1 -->
+
+  <!-- ══ ROW 2 — FLUX HORAIRE + FILE D'ATTENTE ══ -->
+  <div class="row g-4 mb-4">
+
+    <!-- LEFT 60%: Flux horaire -->
+    <div class="col-lg-7">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Flux patients — Aujourd'hui</h6>
+          <span class="chart-header-sub">{{ patientsAujourdhuiTotal }} arrivées</span>
+        </div>
+        <div class="chart-body">
+          <div class="rev2-chart">
+            <div class="rev2-col" *ngFor="let slot of hourlyData">
+              <div class="rev2-bar-wrap">
+                <div class="rev2-bar"
+                     [class.rev2-bar-current]="slot.hour === currentHour"
+                     [class.rev2-bar-past]="slot.hour < currentHour && slot.count > 0"
+                     [class.rev2-bar-future]="slot.hour > currentHour"
+                     [style.height.%]="slot.count > 0 ? (slot.count / maxHourCount * 100) : 4">
+                  <span class="rev2-tooltip">{{ slot.count }} patients</span>
+                </div>
+              </div>
+              <span class="rev2-label">{{ slot.hour }}</span>
+            </div>
+          </div>
+          <!-- Summary pills -->
+          <div class="dash-pills">
+            <span class="dash-pill dash-pill-teal" *ngIf="picActivite !== null">
+              ⚡ Pic {{ picActivite }}h
+            </span>
+            <span class="dash-pill dash-pill-slate" *ngIf="heureCalme !== null">
+              😌 Calme {{ heureCalme }}h
+            </span>
+            <span class="dash-pill dash-pill-amber">
+              ⏱️ Moy {{ avgWaitMinutes }} min
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT 40%: File d'attente statut -->
+    <div class="col-lg-5">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>File d'attente</h6>
+          <span class="text-muted small">{{ totalFileCount }} total</span>
+        </div>
+        <div class="chart-body">
+          <div class="type-list">
+
+            <div class="type-item">
+              <div class="type-label">En attente</div>
+              <div class="type-track">
+                <div class="type-fill"
+                     [style.width.%]="totalFileCount > 0 ? (enAttenteFileCount / totalFileCount * 100) : 0"
+                     style="background:#d97706"></div>
+              </div>
+              <div class="type-stat">
+                {{ enAttenteFileCount }}
+                <span class="type-pct">({{ totalFileCount > 0 ? (enAttenteFileCount / totalFileCount * 100 | number:'1.0-0') : 0 }}%)</span>
+              </div>
+            </div>
+
+            <div class="type-item">
+              <div class="type-label">En consultation</div>
+              <div class="type-track">
+                <div class="type-fill"
+                     [style.width.%]="totalFileCount > 0 ? (enConsultationFileCount / totalFileCount * 100) : 0"
+                     style="background:#0d9488"></div>
+              </div>
+              <div class="type-stat">
+                {{ enConsultationFileCount }}
+                <span class="type-pct">({{ totalFileCount > 0 ? (enConsultationFileCount / totalFileCount * 100 | number:'1.0-0') : 0 }}%)</span>
+              </div>
+            </div>
+
+            <div class="type-item">
+              <div class="type-label">Terminés</div>
+              <div class="type-track">
+                <div class="type-fill"
+                     [style.width.%]="totalFileCount > 0 ? (terminesFileCount / totalFileCount * 100) : 0"
+                     style="background:#94a3b8"></div>
+              </div>
+              <div class="type-stat">
+                {{ terminesFileCount }}
+                <span class="type-pct">({{ totalFileCount > 0 ? (terminesFileCount / totalFileCount * 100 | number:'1.0-0') : 0 }}%)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Progress -->
+          <div class="recouvrement-bar" style="margin-top:16px;padding-top:16px;border-top:1px solid #f1f5f9">
+            <div class="recouvrement-header">
+              <span class="recouvrement-label">Journée complétée</span>
+              <span class="recouvrement-pct">{{ completionPct }}%</span>
+            </div>
+            <div class="recouvrement-track">
+              <div class="recouvrement-fill" [style.width.%]="completionPct"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row2 -->
+
+  <!-- ══ ROW 3 — MOTIFS · PRESCRIPTIONS · PAIEMENTS ══ -->
+  <div class="row g-4 mb-4">
+
+    <!-- CARD A: Top motifs -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Motifs du jour</h6>
+          <span class="chart-header-sub">{{ consultationsTodayCount }} consultations</span>
+        </div>
+        <div class="chart-body">
+          <div class="diag2-list" *ngIf="topMotifs.length > 0; else noMotifs">
+            <div class="diag2-item" *ngFor="let m of topMotifs; let i = index">
+              <div class="diag2-rank">{{ i + 1 }}</div>
+              <div class="diag2-name">{{ m.motif }}</div>
+              <div class="diag2-bar-wrap">
+                <div class="diag2-bar"
+                     [style.width.%]="topMotifs[0].count > 0 ? (m.count / topMotifs[0].count * 100) : 0">
+                </div>
+              </div>
+              <div class="diag2-badge">{{ m.count }}</div>
+            </div>
+          </div>
+          <ng-template #noMotifs>
+            <div class="empty-state">Aucune consultation aujourd'hui</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD B: Prescriptions -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Prescriptions du jour</h6>
+          <span class="text-muted small">{{ ordonnancesToday + examensToday }} total</span>
+        </div>
+        <div class="chart-body">
+          <div class="presc-grid">
+
+            <div class="presc-block presc-purple">
+              <div class="presc-emoji">💊</div>
+              <div class="presc-count" style="color:#7c3aed">{{ ordonnancesToday }}</div>
+              <div class="presc-lbl">Ordonnances</div>
+              <ng-container *ngIf="topMedicine">
+                <hr class="section-sep">
+                <div class="presc-detail" style="color:#7c3aed">{{ topMedicine }}</div>
+              </ng-container>
+            </div>
+
+            <div class="presc-block presc-blue">
+              <div class="presc-emoji">🔬</div>
+              <div class="presc-count" style="color:#2563eb">{{ examensToday }}</div>
+              <div class="presc-lbl">Analyses</div>
+              <ng-container *ngIf="examensToday > 0">
+                <hr class="section-sep" style="border-color:#dbeafe">
+                <div class="presc-detail" style="color:#2563eb">
+                  Bio {{ examBio }} · Cardio {{ examCardio }} · Radio {{ examRadio }}
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD C: Paiements du jour -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Paiements du jour</h6>
+          <span class="chart-header-sub">{{ recettePayee | number:'1.0-0' }} DH</span>
+        </div>
+        <div class="chart-body">
+          <div class="facture-rows">
+            <div class="facture-row">
+              <span class="facture-row-label">Encaissé</span>
+              <span class="facture-row-value" style="color:#0d9488">{{ recettePayee | number:'1.0-0' }} DH</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">En attente</span>
+              <span class="facture-row-value" style="color:#d97706">{{ recetteEnAttente | number:'1.0-0' }} DH</span>
+            </div>
+            <div class="facture-row" *ngIf="paiementModes.length > 0">
+              <span class="facture-row-label">Modes</span>
+              <div class="mode-chips">
+                <span class="mode-chip" *ngFor="let p of paiementModes">{{ p.label }}: {{ p.count }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="recouvrement-bar">
+            <div class="recouvrement-header">
+              <span class="recouvrement-label">Taux de recouvrement</span>
+              <span class="recouvrement-pct">{{ recouvPct }}%</span>
+            </div>
+            <div class="recouvrement-track">
+              <div class="recouvrement-fill" [style.width.%]="recouvPct"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row3 -->
+
+  <!-- ══ ROW 4 — COMPARAISON SEMAINE + RÉSUMÉ ══ -->
+  <div class="row g-4">
+
+    <!-- LEFT 60%: Comparaison semaine grouped bars -->
+    <div class="col-lg-7">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Cette semaine</h6>
+          <div class="week-legend">
+            <span class="week-legend-dot" style="background:#0d9488"></span>
+            <span class="week-legend-lbl">Patients</span>
+            <span class="week-legend-dot" style="background:#fed7aa;margin-left:10px"></span>
+            <span class="week-legend-lbl">Revenus</span>
+          </div>
+        </div>
+        <div class="chart-body">
+          <div class="rev2-chart">
+            <div class="week-col" *ngFor="let d of weekDays">
+              <div class="week-dual-wrap">
+                <div class="rev2-bar-wrap">
+                  <div class="rev2-bar"
+                       [class.rev2-bar-current]="d.isToday"
+                       [style.background]="d.isToday ? '#0d9488' : '#ccfbf1'"
+                       [style.height.px]="d.patientBarHeight">
+                    <span class="rev2-tooltip">{{ d.patients }} patients</span>
+                  </div>
+                </div>
+                <div class="rev2-bar-wrap">
+                  <div class="rev2-bar"
+                       [style.background]="d.isToday ? '#d97706' : '#fed7aa'"
+                       [style.height.px]="d.revenueBarHeight">
+                    <span class="rev2-tooltip">{{ d.revenue | number:'1.0-0' }} DH</span>
+                  </div>
+                </div>
+              </div>
+              <span class="rev2-label" [class.week-today-lbl]="d.isToday">
+                {{ d.label }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT 40%: Résumé semaine -->
+    <div class="col-lg-5">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Résumé de la semaine</h6>
+          <span class="text-muted small">Lun → aujourd'hui</span>
+        </div>
+        <div class="chart-body">
+          <div class="facture-rows">
+            <div class="facture-row">
+              <span class="facture-row-label">Consultations</span>
+              <span class="facture-row-value" style="color:#0d9488">{{ weekConsultations }}</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">Nouveaux patients</span>
+              <span class="facture-row-value" style="color:#7c3aed">{{ weekNewPatients }}</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">RDV honorés</span>
+              <span class="facture-row-value" style="color:#2563eb">{{ weekRdvHonores }}</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">Revenus semaine</span>
+              <span class="facture-row-value" style="color:#d97706">{{ weekRevenue | number:'1.0-0' }} DH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row4 -->
+
+</div><!-- /dashboard -->
+
+<!-- SKELETON -->
+<div class="dash-skeleton" *ngIf="loading">
+  <div class="sk-row sk-row-4">
+    <div class="sk-card" *ngFor="let i of [1,2,3,4]"></div>
+  </div>
+  <div class="sk-row sk-row-32">
+    <div class="sk-card sk-tall"></div>
+    <div class="sk-card sk-tall"></div>
+  </div>
+  <div class="sk-row sk-row-3">
+    <div class="sk-card" *ngFor="let i of [1,2,3]"></div>
+  </div>
+  <div class="sk-row sk-row-32">
+    <div class="sk-card sk-tall"></div>
+    <div class="sk-card sk-tall"></div>
+  </div>
+</div>

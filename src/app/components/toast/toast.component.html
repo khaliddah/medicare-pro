@@ -1,0 +1,20 @@
+<div class="toast-container">
+  <div class="toast-item"
+       *ngFor="let toast of toasts; trackBy: trackById"
+       [class.toast-success]="toast.type === 'success'"
+       [class.toast-error]="toast.type === 'error'"
+       [class.toast-warning]="toast.type === 'warning'"
+       [class.toast-info]="toast.type === 'info'">
+    <div class="toast-icon-wrap">
+      <i class="bi"
+         [class.bi-check-circle-fill]="toast.type === 'success'"
+         [class.bi-x-circle-fill]="toast.type === 'error'"
+         [class.bi-exclamation-triangle-fill]="toast.type === 'warning'"
+         [class.bi-info-circle-fill]="toast.type === 'info'"></i>
+    </div>
+    <span class="toast-message">{{ toast.message }}</span>
+    <button class="toast-close" (click)="dismiss(toast.id)">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,348 @@
+<div class="stats-page" *ngIf="!loading">
+
+  <!-- PAGE BANNER -->
+  <div class="comp-banner">
+    <div class="comp-banner-left">
+      <div class="comp-banner-icon"><i class="bi bi-bar-chart-fill"></i></div>
+      <div class="comp-banner-text">
+        <h2 class="comp-banner-title">Statistiques</h2>
+        <p class="comp-banner-sub">Analyse de l'activité du cabinet</p>
+      </div>
+    </div>
+    <div class="comp-banner-actions">
+      <div class="period-selector period-selector-banner">
+        <button class="period-pill-banner" [class.period-pill-banner-active]="selectedPeriode === 'mois'" (click)="selectPeriode('mois')">Ce mois</button>
+        <button class="period-pill-banner" [class.period-pill-banner-active]="selectedPeriode === '3mois'" (click)="selectPeriode('3mois')">3 mois</button>
+        <button class="period-pill-banner" [class.period-pill-banner-active]="selectedPeriode === '6mois'" (click)="selectPeriode('6mois')">6 mois</button>
+        <button class="period-pill-banner" [class.period-pill-banner-active]="selectedPeriode === 'annee'" (click)="selectPeriode('annee')">Année</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 1: KPI CARDS -->
+  <div class="row g-3 mb-4">
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card" style="border-left-color: #0d9488">
+        <div class="kpi2-icon" style="background: #f0fdfa; color: #0d9488">
+          <i class="bi bi-activity"></i>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ patientsVus }}</div>
+          <div class="kpi2-label">Patients vus</div>
+          <div class="kpi2-trend" [class.trend-up]="patientsVusTrend >= 0" [class.trend-down]="patientsVusTrend < 0">
+            <ng-container *ngIf="patientsVusTrend >= 0">+{{ patientsVusTrend }}</ng-container>
+            <ng-container *ngIf="patientsVusTrend < 0">{{ patientsVusTrend }}</ng-container>
+            vs période précédente
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card" style="border-left-color: #7c3aed">
+        <div class="kpi2-icon" style="background: #f5f3ff; color: #7c3aed">
+          <i class="bi bi-clipboard2-pulse"></i>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ nouvellesConsultations }}</div>
+          <div class="kpi2-label">Consultations</div>
+          <div class="kpi2-trend trend-neutral">
+            {{ nouvellesConsultations }} {{ selectedPeriode === 'mois' ? 'ce mois' : 'cette période' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card" style="border-left-color: #d97706">
+        <div class="kpi2-icon" style="background: #fffbeb; color: #d97706">
+          <i class="bi bi-cash-coin"></i>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ revenusPeriode | number:'1.0-0' }}<small> DH</small></div>
+          <div class="kpi2-label">Revenus période</div>
+          <div class="kpi2-trend" [class.trend-up]="revenusTrendPct >= 0" [class.trend-down]="revenusTrendPct < 0">
+            <ng-container *ngIf="revenusTrendPct >= 0">+{{ revenusTrendPct }}%</ng-container>
+            <ng-container *ngIf="revenusTrendPct < 0">{{ revenusTrendPct }}%</ng-container>
+            vs précédent
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="kpi2-card" style="border-left-color: #2563eb">
+        <div class="kpi2-icon" style="background: #eff6ff; color: #2563eb">
+          <i class="bi bi-percent"></i>
+        </div>
+        <div class="kpi2-body">
+          <div class="kpi2-value">{{ tauxOccupation }}%</div>
+          <div class="kpi2-label">Taux d'occupation</div>
+          <div class="kpi2-trend trend-neutral">{{ joursTravailles }} jours travaillés</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: REVENUS CHART + CONSULTATIONS PAR TYPE -->
+  <div class="row g-4 mb-4">
+
+    <!-- REVENUS CHART (60%) -->
+    <div class="col-lg-7">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Évolution des revenus</h6>
+          <span class="chart-header-sub">{{ revenusPeriode | number:'1.0-0' }} DH total</span>
+        </div>
+        <div class="chart-body">
+          <div class="rev2-chart" *ngIf="revenusChart.length > 0; else noDataRev">
+            <div class="rev2-col" *ngFor="let r of revenusChart">
+              <div class="rev2-bar-wrap">
+                <div class="rev2-bar"
+                     [style.height.%]="getBarWidth(r.montant, getMaxRevenu())"
+                     [class.rev2-bar-current]="r.isCurrent">
+                  <span class="rev2-tooltip">{{ r.montant | number:'1.0-0' }} DH</span>
+                </div>
+              </div>
+              <span class="rev2-label">{{ r.label }}</span>
+            </div>
+          </div>
+          <ng-template #noDataRev>
+            <div class="empty-state">Aucune donnée pour cette période</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSULTATIONS PAR TYPE (40%) -->
+    <div class="col-lg-5">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Répartition par type</h6>
+          <span class="text-muted small">{{ nouvellesConsultations }} total</span>
+        </div>
+        <div class="chart-body">
+          <div class="type-list" *ngIf="nouvellesConsultations > 0; else noDataType">
+            <div class="type-item" *ngFor="let c of consParType">
+              <div class="type-label">{{ c.type }}</div>
+              <div class="type-track">
+                <div class="type-fill"
+                     [style.width.%]="getBarWidth(c.count, getMaxCons())"
+                     [style.background]="c.type === 'Consultation' ? '#0d9488' : c.type === 'Contrôle' ? '#d97706' : '#dc2626'"></div>
+              </div>
+              <div class="type-stat">{{ c.count }} <span class="type-pct">({{ c.pct }}%)</span></div>
+            </div>
+          </div>
+          <ng-template #noDataType>
+            <div class="empty-state">Aucune donnée pour cette période</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 3: TOP DIAGNOSTICS + AGE + MUTUELLE+SEXE -->
+  <div class="row g-4 mb-4">
+
+    <!-- TOP DIAGNOSTICS -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Top motifs de consultation</h6>
+        </div>
+        <div class="chart-body">
+          <div class="diag2-list" *ngIf="topDiagnostics.length > 0; else noDataDiag">
+            <div class="diag2-item" *ngFor="let d of topDiagnostics; let i = index">
+              <div class="diag2-rank">{{ i + 1 }}</div>
+              <div class="diag2-name">{{ d.diagnostic }}</div>
+              <div class="diag2-bar-wrap">
+                <div class="diag2-bar" [style.width.%]="d.pct"></div>
+              </div>
+              <div class="diag2-badge">{{ d.count }}</div>
+            </div>
+          </div>
+          <ng-template #noDataDiag>
+            <div class="empty-state">Aucune donnée pour cette période</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- RÉPARTITION ÂGE -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Âge des patients</h6>
+          <span class="text-muted small">{{ allPatientsCount }} patients</span>
+        </div>
+        <div class="chart-body">
+          <div class="age-list">
+            <div class="age-item" *ngFor="let a of repartitionAge; let i = index">
+              <div class="age-label">{{ a.tranche }} ans</div>
+              <div class="hbar-track">
+                <div class="hbar-fill" [style.width.%]="getBarWidth(a.count, getMaxAge())" [style.background]="AGE_COLORS[i]"></div>
+              </div>
+              <div class="hbar-stat">{{ a.count }} <span class="hbar-pct">({{ a.pct }}%)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COUVERTURE MÉDICALE -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Couverture médicale</h6>
+          <span class="text-muted small">{{ allPatientsCount }} patients</span>
+        </div>
+        <div class="chart-body">
+          <!-- Mutuelle pills -->
+          <div class="mutuelle-pills" *ngIf="mutuelles.length > 0">
+            <div class="mutuelle-pill" *ngFor="let m of mutuelles"
+                 [style.background]="getMutuelleBg(m.nom)"
+                 [style.color]="getMutuelleColor(m.nom)"
+                 [style.border-color]="getMutuelleColor(m.nom) + '40'">
+              <span class="mut-name">{{ m.nom }}</span>
+              <div class="mut-right">
+                <span class="mut-count">{{ m.count }}</span>
+                <span class="mut-pct">{{ m.pct }}%</span>
+              </div>
+            </div>
+          </div>
+          <hr class="section-sep">
+          <!-- Sexe pills -->
+          <div class="sexe2-pills">
+            <div class="sexe2-pill">
+              <div class="sexe2-emoji">👨</div>
+              <div class="sexe2-label">Hommes</div>
+              <div class="sexe2-value">{{ hommes }}</div>
+              <div class="sexe2-pct">{{ hommesPct }}%</div>
+            </div>
+            <div class="sexe2-pill">
+              <div class="sexe2-emoji">👩</div>
+              <div class="sexe2-label">Femmes</div>
+              <div class="sexe2-value">{{ femmes }}</div>
+              <div class="sexe2-pct">{{ femmesPct }}%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 4: EXAMENS + FIDELITE + FACTURES -->
+  <div class="row g-4">
+
+    <!-- ANALYSES PAR CATÉGORIE (donuts) -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Examens demandés</h6>
+          <span class="text-muted small">{{ analysesTotal }} total</span>
+        </div>
+        <div class="chart-body">
+          <div class="donut-row" *ngIf="analysesTotal > 0; else noDataCat">
+            <div class="donut-item" *ngFor="let c of examensParCategorie; let i = index">
+              <svg width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                <circle cx="40" cy="40" r="32" fill="none"
+                        [attr.stroke]="['#0d9488','#dc2626','#7c3aed'][i]"
+                        stroke-width="8"
+                        [attr.stroke-dasharray]="getDonutDash(c.pct)"
+                        transform="rotate(-90 40 40)"
+                        stroke-linecap="round"/>
+                <text x="40" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">{{ c.pct }}%</text>
+              </svg>
+              <div class="donut-label">{{ c.categorie }}</div>
+              <div class="donut-count">{{ c.count }}</div>
+            </div>
+          </div>
+          <ng-template #noDataCat>
+            <div class="empty-state">Aucune donnée pour cette période</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIDÉLITÉ + MOYENNE -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Fidélité & Activité</h6>
+        </div>
+        <div class="chart-body">
+          <div class="fidelite-section">
+            <div class="fidel2-pct">{{ tauxRetourPatients }}%</div>
+            <div class="fidel2-sub">patients fidèles</div>
+            <div class="fidel2-gauge">
+              <svg viewBox="0 0 100 55" width="120">
+                <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#f0f4f8" stroke-width="10" stroke-linecap="round"/>
+                <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#0d9488" stroke-width="10" stroke-linecap="round"
+                      [attr.stroke-dasharray]="(tauxRetourPatients / 100 * 125.66) + ' 125.66'"
+                      stroke-dashoffset="0"/>
+              </svg>
+            </div>
+          </div>
+          <hr class="section-sep">
+          <div class="moyenne-section">
+            <div class="moyenne-value">{{ moyenneConsultationsJour }}</div>
+            <div class="moyenne-label">consult./jour</div>
+            <div class="moyenne-sub">sur {{ joursTravailles }} jours travaillés</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FACTURES & PAIEMENTS -->
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h6>Facturation période</h6>
+        </div>
+        <div class="chart-body">
+          <div class="facture-rows">
+            <div class="facture-row">
+              <span class="facture-row-label">Encaissé</span>
+              <span class="facture-row-value" style="color: #0d9488;">{{ encaissePeriode | number:'1.0-0' }} DH</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">Impayé</span>
+              <span class="facture-row-value" style="color: #d97706;">{{ impayePeriode | number:'1.0-0' }} DH</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">Nb factures</span>
+              <span class="facture-row-value" style="color: #475569;">{{ nbFacturesPeriode }}</span>
+            </div>
+            <div class="facture-row">
+              <span class="facture-row-label">Délai moyen paiement</span>
+              <span class="facture-row-value" style="color: #475569;">
+                {{ delaiMoyenPaiement > 0 ? delaiMoyenPaiement + ' j' : 'N/A' }}
+              </span>
+            </div>
+          </div>
+          <div class="recouvrement-bar">
+            <div class="recouvrement-header">
+              <span class="recouvrement-label">Taux de recouvrement</span>
+              <span class="recouvrement-pct">{{ tauxRecouvrement }}%</span>
+            </div>
+            <div class="recouvrement-track">
+              <div class="recouvrement-fill" [style.width.%]="tauxRecouvrement"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="text-center py-5" *ngIf="loading">
+  <div class="spinner-border text-primary"></div>
+  <p class="mt-3 text-muted">Chargement des statistiques...</p>
+</div>

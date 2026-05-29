@@ -1,0 +1,220 @@
+.stats-page { width: 100%; }
+
+/* ── BANNER ── */
+.comp-banner {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  border-radius: 12px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.comp-banner-left { display: flex; align-items: center; gap: 16px; }
+.comp-banner-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  flex-shrink: 0;
+}
+.comp-banner-text { display: flex; flex-direction: column; gap: 2px; }
+.comp-banner-title { font-size: 1.3rem; font-weight: 800; color: white; margin: 0; }
+.comp-banner-sub { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0; }
+.comp-banner-actions { display: flex; align-items: center; gap: 8px; }
+
+/* ===== HEADER ===== */
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.page-title { font-size: 24px; font-weight: 700; color: #0f172a; margin: 0 0 4px; }
+.page-subtitle { color: #64748b; font-size: 14px; margin: 0; }
+
+/* ===== PERIOD SELECTOR ===== */
+.period-selector { display: flex; gap: 6px; }
+.period-pill {
+  background: transparent; border: none; padding: 8px 16px;
+  border-radius: 9999px; font-size: 13px; font-weight: 500;
+  color: #64748b; cursor: pointer; transition: all 0.15s;
+}
+.period-pill:hover { background: #ccfbf1; color: #0d9488; }
+.period-pill-active { background: #0d9488 !important; color: white !important; font-weight: 600; }
+
+/* Period pills inside banner */
+.period-selector-banner { display: flex; gap: 6px; }
+.period-pill-banner {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  padding: 7px 16px; border-radius: 9999px; font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.8); cursor: pointer; transition: all 0.15s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.period-pill-banner:hover { background: rgba(255,255,255,0.25); color: white; }
+.period-pill-banner-active { background: white !important; color: #0d9488 !important; font-weight: 700; border-color: white !important; }
+
+/* ===== KPI CARDS (Row 1) ===== */
+.kpi2-card {
+  background: white; border-radius: 16px; padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border-left: 4px solid #0d9488;
+  display: flex; align-items: center; gap: 14px;
+}
+.kpi2-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.kpi2-body { flex: 1; min-width: 0; }
+.kpi2-value { font-size: 26px; font-weight: 800; color: #0f172a; line-height: 1; margin-bottom: 3px; }
+.kpi2-value small { font-size: 13px; font-weight: 500; color: #64748b; }
+.kpi2-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+.kpi2-trend { font-size: 12px; font-weight: 600; }
+.trend-up   { color: #16a34a; }
+.trend-down { color: #dc2626; }
+.trend-neutral { color: #64748b; }
+
+/* ===== CHART CARDS (shared) ===== */
+.chart-card {
+  background: white; border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; height: 100%;
+}
+.chart-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px; border-bottom: 1px solid #f0f4f8;
+}
+.chart-header h6 { margin: 0; font-size: 15px; font-weight: 600; color: #0f172a; }
+.chart-header-sub { color: #0d9488; font-size: 13px; font-weight: 700; }
+.chart-body { padding: 20px; }
+
+/* ===== REVENUE BAR CHART ===== */
+.rev2-chart {
+  display: flex; align-items: flex-end; gap: 8px; height: 140px;
+}
+.rev2-col {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%;
+}
+.rev2-bar-wrap {
+  flex: 1; width: 100%; display: flex; align-items: flex-end;
+}
+.rev2-bar {
+  width: 100%; background: #ccfbf1;
+  border-radius: 8px 8px 0 0; min-height: 6px;
+  transition: height 0.5s ease; position: relative; cursor: pointer;
+}
+.rev2-bar:hover { background: #0f766e; }
+.rev2-bar:hover .rev2-tooltip { display: block; }
+.rev2-bar-current { background: #0d9488; }
+.rev2-bar-current:hover { background: #0f766e; }
+.rev2-tooltip {
+  display: none; position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+  background: #0f172a; color: white; font-size: 10px;
+  padding: 3px 7px; border-radius: 5px; white-space: nowrap; z-index: 10;
+}
+.rev2-label { font-size: 11px; color: #94a3b8; text-align: center; }
+
+/* ===== CONSULTATIONS PAR TYPE ===== */
+.type-list { display: flex; flex-direction: column; gap: 16px; }
+.type-item { display: flex; flex-direction: column; gap: 5px; }
+.type-label { font-size: 13px; font-weight: 600; color: #374151; }
+.type-track { background: #f1f5f9; border-radius: 9999px; height: 12px; overflow: hidden; width: 100%; }
+.type-fill { height: 100%; border-radius: 9999px; transition: width 0.5s ease; }
+.type-stat { font-size: 13px; font-weight: 700; color: #0f172a; text-align: right; }
+.type-pct { font-size: 12px; font-weight: 400; color: #64748b; }
+
+/* ===== TOP DIAGNOSTICS ===== */
+.diag2-list { display: flex; flex-direction: column; gap: 14px; }
+.diag2-item { display: flex; align-items: center; gap: 10px; }
+.diag2-rank {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #f0fdfa; color: #0d9488;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.diag2-name {
+  font-size: 13px; font-weight: 600; color: #374151;
+  flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
+.diag2-bar-wrap { flex: 1; background: #f1f5f9; border-radius: 9999px; height: 8px; overflow: hidden; }
+.diag2-bar { height: 100%; background: #0d9488; border-radius: 9999px; transition: width 0.5s; }
+.diag2-badge {
+  background: #f0fdfa; color: #0d9488;
+  font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 9999px; flex-shrink: 0;
+}
+
+/* ===== HORIZONTAL BARS (shared) ===== */
+.hbar-track { flex: 1; background: #f0f4f8; border-radius: 9999px; height: 10px; overflow: hidden; }
+.hbar-fill { height: 100%; border-radius: 9999px; transition: width 0.5s ease; }
+.hbar-stat { font-size: 13px; font-weight: 600; color: #0f172a; min-width: 70px; text-align: right; }
+.hbar-pct { font-size: 12px; color: #64748b; font-weight: 400; }
+
+/* ===== AGE ===== */
+.age-list { display: flex; flex-direction: column; gap: 14px; }
+.age-item { display: flex; align-items: center; gap: 10px; }
+.age-label {
+  font-size: 13px; font-weight: 500; color: #374151;
+  min-width: 60px; flex-shrink: 0;
+}
+
+/* ===== MUTUELLE + SEXE ===== */
+.mutuelle-pills { display: flex; flex-direction: column; gap: 8px; }
+.mutuelle-pill {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 10px;
+  border: 1px solid transparent; font-size: 13px;
+}
+.mut-name { font-weight: 600; flex: 1; }
+.mut-right { display: flex; gap: 8px; align-items: center; }
+.mut-count { font-weight: 700; font-size: 14px; }
+.mut-pct { font-weight: 400; font-size: 12px; opacity: 0.7; }
+
+.section-sep { border: none; border-top: 1px solid #f1f5f9; margin: 14px 0; }
+
+.sexe2-pills { display: flex; gap: 10px; }
+.sexe2-pill {
+  flex: 1; background: #f1f5f9; border-radius: 12px;
+  padding: 12px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.sexe2-emoji { font-size: 20px; }
+.sexe2-label { font-size: 11px; color: #64748b; font-weight: 500; }
+.sexe2-value { font-size: 20px; font-weight: 800; color: #0d9488; line-height: 1; }
+.sexe2-pct { font-size: 12px; color: #94a3b8; }
+
+/* ===== DONUT CHARTS ===== */
+.donut-row {
+  display: flex; justify-content: space-around; align-items: flex-start; flex-wrap: wrap; gap: 16px;
+}
+.donut-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.donut-label { font-size: 12px; font-weight: 600; color: #374151; text-align: center; }
+.donut-count { font-size: 11px; color: #94a3b8; }
+
+/* ===== FIDÉLITÉ + MOYENNE ===== */
+.fidelite-section { text-align: center; padding-bottom: 4px; }
+.fidel2-pct { font-size: 36px; font-weight: 800; color: #0d9488; line-height: 1; }
+.fidel2-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+.fidel2-gauge { display: flex; justify-content: center; margin-top: 8px; }
+
+.moyenne-section { text-align: center; }
+.moyenne-value { font-size: 24px; font-weight: 700; color: #0f172a; line-height: 1; }
+.moyenne-label { font-size: 13px; color: #64748b; margin-top: 4px; font-weight: 600; }
+.moyenne-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+/* ===== FACTURES & PAIEMENTS ===== */
+.facture-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.facture-row { display: flex; justify-content: space-between; align-items: center; }
+.facture-row-label { font-size: 13px; color: #64748b; }
+.facture-row-value { font-size: 14px; font-weight: 700; }
+
+.recouvrement-bar { margin-top: 4px; }
+.recouvrement-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.recouvrement-label { font-size: 12px; color: #64748b; font-weight: 600; }
+.recouvrement-pct { font-size: 13px; color: #0d9488; font-weight: 700; }
+.recouvrement-track { background: #f1f5f9; border-radius: 9999px; height: 12px; overflow: hidden; }
+.recouvrement-fill { height: 100%; background: #0d9488; border-radius: 9999px; transition: width 0.5s ease; }
+
+/* ===== EMPTY STATE ===== */
+.empty-state { text-align: center; color: #94a3b8; font-size: 13px; padding: 20px 0; }
