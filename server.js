@@ -83,10 +83,12 @@ setInterval(() => {
   updateDatesIfNeeded();
 }, 1000 * 60 * 60); // every hour
 
+const express = require('express');
 const server = jsonServer.create();
 const router = jsonServer.router(dbPath);
 const middlewares = jsonServer.defaults();
 const port = process.env.PORT || 3000;
+const distPath = path.join(__dirname, 'dist/medicare-pro');
 
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -95,8 +97,16 @@ server.use((req, res, next) => {
   next();
 });
 
+// Serve Angular static files
+server.use(express.static(distPath));
+
 server.use(middlewares);
 server.use(router);
+
+// Fallback: serve Angular index.html for client-side routes
+server.use((req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
 
 server.listen(port, () => {
   console.log('MediCare+ API running on port', port);
