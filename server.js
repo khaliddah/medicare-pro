@@ -86,25 +86,29 @@ setInterval(() => {
 const express = require('express');
 const server = jsonServer.create();
 const router = jsonServer.router(dbPath);
-const middlewares = jsonServer.defaults();
+const middlewares = jsonServer.defaults({ noCors: true });
 const port = process.env.PORT || 3000;
 const distPath = path.join(__dirname, 'dist/medicare-pro');
 
+// CORS — handle preflight before anything else
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
   res.header('Access-Control-Allow-Methods', '*');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
 
-// Serve Angular static files
+// 1. Angular static assets (JS bundles, CSS, images, etc.)
 server.use(express.static(distPath));
 
-server.use(middlewares);
-server.use(router);
+// 2. json-server API — all routes are under /api prefix
+server.use('/api', middlewares);
+server.use('/api', router);
 
-// Fallback: serve Angular index.html for client-side routes
-server.use((req, res) => {
+// 3. Angular SPA fallback — only reached for non-API, non-asset requests
+server.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
   res.sendFile(path.join(distPath, 'index.html'));
 });
 
