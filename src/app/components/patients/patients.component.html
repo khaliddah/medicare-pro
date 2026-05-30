@@ -131,11 +131,11 @@
             <th class="th-check"><input type="checkbox"></th>
             <th>PATIENT</th>
             <th *ngIf="isColonneVisible('age')">ÂGE</th>
-            <th *ngIf="isColonneVisible('telephone')">TÉLÉPHONE</th>
-            <th *ngIf="isColonneVisible('ville')">VILLE</th>
-            <th *ngIf="isColonneVisible('mutuelle')">MUTUELLE</th>
-            <th *ngIf="isColonneVisible('groupeSanguin')">GROUPE</th>
-            <th *ngIf="isColonneVisible('dernierVisite')">DERNIÈRE VISITE</th>
+            <th *ngIf="isColonneVisible('telephone')" class="th-phone">TÉLÉPHONE</th>
+            <th *ngIf="isColonneVisible('ville')" class="th-ville">VILLE</th>
+            <th *ngIf="isColonneVisible('mutuelle')" class="th-mutuelle">MUTUELLE</th>
+            <th *ngIf="isColonneVisible('groupeSanguin')" class="th-blood">GROUPE</th>
+            <th *ngIf="isColonneVisible('dernierVisite')" class="th-visit">DERNIÈRE VISITE</th>
             <th class="th-actions">ACTIONS</th>
           </tr>
         </thead>

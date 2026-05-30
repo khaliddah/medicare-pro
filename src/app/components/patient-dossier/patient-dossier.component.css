@@ -656,3 +656,52 @@
 .print-footer { margin-top: 40px; display: flex; justify-content: flex-end; }
 .print-signature { text-align: center; }
 .sig-line { width: 200px; border-top: 1px solid #000; margin-bottom: 8px; }
+
+/* ═══════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════ */
+@media (max-width: 768px) {
+  /* Patient header card */
+  .patient-header-card { padding: 16px; gap: 16px; }
+  .ph-name { font-size: 20px; }
+  .ph-meta { font-size: 13px; gap: 6px; }
+  .ph-left { flex-direction: row; flex-wrap: wrap; }
+  .ph-av { width: 56px; height: 56px; font-size: 20px; }
+
+  /* Right actions: stacked */
+  .ph-right { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+  .ph-right .btn { flex: 1; min-width: 130px; justify-content: center; height: 44px; }
+
+  /* Consult banner */
+  .consult-banner { margin: -12px -12px 14px; padding: 10px 16px; }
+  .banner-right { width: 100%; }
+  .banner-right .btn { width: 100%; justify-content: center; }
+
+  /* Tabs: scrollable */
+  .tabs-bar { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  .tabs-bar::-webkit-scrollbar { display: none; }
+  .tab-btn { white-space: nowrap; flex-shrink: 0; padding: 10px 16px; }
+
+  /* Timeline */
+  .timeline { padding-left: 20px; }
+
+  /* Info card */
+  .info-card { padding: 14px; }
+  .info-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+
+  /* Resultat form */
+  .rf-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .rf-label { width: 100%; }
+  .rf-input { width: 100%; height: 44px; font-size: 15px; }
+  .rf-actions { width: 100%; flex-direction: column; }
+  .rf-cancel, .rf-save { width: 100%; justify-content: center; height: 44px; }
+
+  /* Factures table: scrollable */
+  .factures-card { overflow-x: auto; }
+  .factures-table { min-width: 500px; }
+
+  /* TC card headers */
+  .tc-header { padding: 12px 14px; }
+  .tc-motif { font-size: 14px; }
+  .tc-body { padding: 0 14px 14px; }
+}

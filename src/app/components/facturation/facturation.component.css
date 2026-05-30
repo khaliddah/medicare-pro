@@ -315,3 +315,48 @@
   .precu-sig-line { width: 160px; border-bottom: 1px solid #000; margin: 0 auto 8px; }
   .precu-thanks { font-size: 11pt; font-style: italic; color: #333; }
 }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Banner */
+  .comp-banner { padding: 16px; margin-bottom: 16px; flex-direction: column; align-items: flex-start; }
+  .comp-banner-title { font-size: 1.1rem; }
+
+  /* Stats cards: 1 per row on mobile */
+  .fact-stats { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+  .fact-stat-card { padding: 14px 16px; }
+  .fact-stat-value { font-size: 18px; }
+
+  /* Tabs: scrollable */
+  .fact-tabs-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0; scrollbar-width: none; }
+  .fact-tabs-bar::-webkit-scrollbar { display: none; }
+  .fact-tab { white-space: nowrap; padding: 10px 14px; font-size: 12px; }
+
+  /* Facture list header: hidden on mobile */
+  .fact-list-header { display: none; }
+
+  /* Facture rows → card layout */
+  .fact-row {
+    flex-direction: column; gap: 6px;
+    padding: 14px 16px; margin: 0;
+  }
+  .fcol-patient, .fcol-date, .fcol-service,
+  .fcol-montant, .fcol-mode, .fcol-action {
+    width: auto !important; flex: none !important;
+    min-width: 0 !important;
+  }
+  .fcol-patient strong { font-size: 15px; }
+  .fcol-date, .fcol-service { color: #64748B; font-size: 12px; }
+  .fcol-montant { font-size: 16px; }
+  .fcol-action { width: 100% !important; }
+  .fact-encaisser-btn, .fact-print-btn { width: 100%; justify-content: center; height: 44px; }
+
+  /* Inline encaisser form */
+  .fact-encaisser-form { padding: 14px 16px; }
+  .encaisser-montant-row { flex-wrap: wrap; gap: 10px; }
+  .encaisser-montant-input { width: 100%; box-sizing: border-box; height: 48px; font-size: 16px; }
+  .encaisser-actions { flex-direction: column; gap: 8px; }
+  .encaisser-confirm-btn, .encaisser-cancel-btn { width: 100%; justify-content: center; height: 48px; }
+}

@@ -28,6 +28,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   notifications: Notification[] = [];
   showNotifDropdown = false;
   showPlusMenu = false;
+  mobileNavOpen = false;
   currentDate = '';
   rdvTodayCount = 0;
   totalPatientsCount = 0;
@@ -115,6 +116,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       attente: this.dataService.getFileAttenteEnAttente()
     }).subscribe(({ consultation, attente }) => {
       this.enConsultationSidebar = consultation[0] || null;
+      console.log('EN CONSULTATION:', this.enConsultationSidebar);
 
       if (this.enConsultationSidebar) {
         this.dataService.getPatient(this.enConsultationSidebar.patientId).subscribe(p => {
@@ -190,9 +192,22 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.showNotifDropdown = false;
   }
 
+  toggleMobileNav(): void {
+    this.mobileNavOpen = !this.mobileNavOpen;
+    this.showNotifDropdown = false;
+  }
+
   navigateTo(path: string): void {
     this.showNotifDropdown = false;
+    this.mobileNavOpen = false;
     if (path) this.router.navigate([path]);
+  }
+
+  navigateToPatient(patient: any): void {
+    if (patient?.patientId) {
+      this.mobileNavOpen = false;
+      this.router.navigate(['/patients', patient.patientId]);
+    }
   }
 
   navigateToSection(scrollTarget: string): void {

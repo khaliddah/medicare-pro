@@ -218,3 +218,40 @@
 
 /* ===== EMPTY STATE ===== */
 .empty-state { text-align: center; color: #94a3b8; font-size: 13px; padding: 20px 0; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Banner */
+  .comp-banner { padding: 16px; margin-bottom: 16px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .comp-banner-title { font-size: 1.1rem; }
+  .comp-banner-actions { width: 100%; }
+
+  /* Period selector: scrollable row */
+  .period-selector-banner {
+    display: flex; overflow-x: auto; flex-wrap: nowrap;
+    gap: 4px; width: 100%; padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .period-selector-banner::-webkit-scrollbar { display: none; }
+  .period-pill-banner { white-space: nowrap; flex-shrink: 0; padding: 6px 12px; font-size: 12px; }
+
+  /* KPI cards */
+  .kpi2-card { padding: 14px; gap: 10px; }
+  .kpi2-icon { width: 40px; height: 40px; font-size: 17px; }
+  .kpi2-value { font-size: 22px; }
+
+  /* Chart cards */
+  .chart-header { padding: 12px 16px; }
+  .chart-header h6 { font-size: 13px; }
+  .chart-body { padding: 14px; }
+  .rev2-chart { height: 100px; gap: 4px; }
+  .rev2-label { font-size: 10px; }
+
+  /* Donut row */
+  .donut-row { gap: 10px; }
+
+  /* Stats rows */
+  .facture-rows { gap: 10px; }
+}

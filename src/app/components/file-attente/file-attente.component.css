@@ -439,3 +439,50 @@
   color: var(--teal); font-size: 13px; font-weight: 600;
   cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
 }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Banner */
+  .fa-banner { padding: 16px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .fa-banner-title { font-size: 1.1rem; }
+  .fa-banner-actions { width: 100%; }
+  .fa-btn-primary { width: 100%; justify-content: center; height: 44px; }
+
+  /* Call next button: sticky at top of scroll */
+  .call-next-btn { position: sticky; top: 60px; z-index: 50; border-radius: 8px; }
+
+  /* Queue card */
+  .queue-card-hd { padding: 14px 16px; }
+
+  /* Queue table → card layout */
+  .q-thead { display: none; }
+
+  .q-trow {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 14px 16px; align-items: flex-start;
+    border-top: 1px solid var(--slate-100);
+    background: white; transition: background 0.1s;
+  }
+  .q-trow:hover { background: var(--slate-50); }
+  .q-trow.row-urgent { background: var(--danger-light); border-left: 3px solid var(--danger); }
+
+  .qc-num { order: 1; flex-shrink: 0; }
+  .qc-patient { order: 2; flex: 1; min-width: 0; }
+  .qc-type { order: 3; }
+  .qc-heure { order: 4; font-size: 12px; color: var(--slate-500); }
+  .qc-attente { order: 5; }
+  .qc-actions { order: 6; margin-left: auto; flex-shrink: 0; }
+
+  .ico-btn { width: 36px; height: 36px; }
+
+  /* RDV list */
+  .rdv-row { padding: 12px 16px; flex-wrap: wrap; gap: 10px; }
+  .rdv-heure { font-size: 12px; }
+  .arrive-btn { width: 100%; justify-content: center; height: 44px; }
+
+  /* Consult card */
+  .consult-card { flex-direction: column; gap: 12px; }
+  .consult-card .btn { width: 100%; justify-content: center; }
+}

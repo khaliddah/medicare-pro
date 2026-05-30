@@ -3,6 +3,11 @@
   <!-- ══ TOPBAR ══ -->
   <header class="topbar">
 
+    <!-- HAMBURGER (mobile only) -->
+    <button class="hamburger" (click)="toggleMobileNav()" aria-label="Menu">
+      <i class="bi" [class.bi-list]="!mobileNavOpen" [class.bi-x-lg]="mobileNavOpen"></i>
+    </button>
+
     <!-- BRAND -->
     <div class="tb-brand">
       <div class="tb-logo-icon">
@@ -129,6 +134,60 @@
 
     </div>
   </header>
+
+  <!-- ══ MOBILE EN CONSULTATION BAR ══ -->
+  <div class="mobile-consult-bar" *ngIf="enConsultationSidebar !== null && enConsultationSidebar !== undefined">
+    <div class="mobile-consult-content">
+      <span class="mobile-consult-dot"></span>
+      <span class="mobile-consult-label">EN CONSULTATION</span>
+      <span class="mobile-consult-name">{{ enConsultationSidebar!.patientNom }}</span>
+      <a class="mobile-consult-open" (click)="navigateToPatient(enConsultationSidebar)">
+        Ouvrir →
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ MOBILE SUIVANT BAR ══ -->
+  <div class="mobile-next-bar" *ngIf="suivantPatient && !enConsultationSidebar">
+    <span class="mobile-next-icon">⏳</span>
+    <span class="mobile-next-label">SUIVANT :</span>
+    <span class="mobile-next-name">{{ suivantPatient.patientNom }}</span>
+  </div>
+
+  <!-- ══ MOBILE NAV BACKDROP ══ -->
+  <div class="mobile-backdrop" *ngIf="mobileNavOpen" (click)="toggleMobileNav()"></div>
+
+  <!-- ══ MOBILE NAV PANEL ══ -->
+  <div class="mobile-nav-panel" [class.mobile-nav-open]="mobileNavOpen">
+    <a class="mobile-nav-item" [class.active]="isActive('/dashboard')" (click)="navigateTo('/dashboard')">
+      <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+    <a class="mobile-nav-item" [class.active]="isActive('/patients')" (click)="navigateTo('/patients')">
+      <i class="bi bi-people-fill"></i> Patients
+      <span class="tb-nb" *ngIf="totalPatientsCount > 0">{{ totalPatientsCount }}</span>
+    </a>
+    <a class="mobile-nav-item" [class.active]="isActive('/file-attente')" (click)="navigateTo('/file-attente')">
+      <i class="bi bi-list-ol"></i> File d'attente
+      <span class="tb-nb" *ngIf="fileAttenteEnAttenteCount > 0">{{ fileAttenteEnAttenteCount }}</span>
+    </a>
+    <a class="mobile-nav-item" [class.active]="isActive('/agenda')" (click)="navigateTo('/agenda')">
+      <i class="bi bi-calendar3"></i> Agenda
+      <span class="tb-nb" *ngIf="rdvTodayCount > 0">{{ rdvTodayCount }}</span>
+    </a>
+    <div class="mobile-nav-sep"></div>
+    <a class="mobile-nav-item" [class.active]="isActive('/consultation') || isActive('/ordonnance') || isActive('/examens')" (click)="navigateTo('/consultation')">
+      <i class="bi bi-clipboard2-pulse"></i> Consultation
+    </a>
+    <a class="mobile-nav-item" [class.active]="isActive('/facturation')" (click)="navigateTo('/facturation')">
+      <i class="bi bi-credit-card"></i> Facturation
+    </a>
+    <a class="mobile-nav-item" [class.active]="isActive('/statistiques')" (click)="navigateTo('/statistiques')">
+      <i class="bi bi-bar-chart-fill"></i> Statistiques
+    </a>
+    <a class="mobile-nav-item" [class.active]="isActive('/parametres')" (click)="navigateTo('/parametres')">
+      <i class="bi bi-gear-fill"></i> Paramètres
+    </a>
+  </div>
 
   <!-- ══ MAIN ══ -->
   <div class="main-wrapper">
